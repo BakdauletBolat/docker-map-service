@@ -1,0 +1,23 @@
+.switch-btns{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    top:10px;    z-index: 100;
+    left:20px;
+    &__item{
+        background-color: white;
+        padding:10px 40px;
+        cursor:pointer;
+        font-weight: bold;
+        margin-right: 5px;
+        border-radius:5px;
+
+        &--active{
+            background-color: rgb(85, 130, 255);
+            color: white;
+        }
+    }
+
+
+}

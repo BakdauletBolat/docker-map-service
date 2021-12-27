@@ -1,0 +1,53 @@
+.rectangle-grid{
+    margin-top:60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-gap:10px;
+    &__item{
+        position: relative;
+        color: black;
+        background-color:white;
+        height: 200px;
+        cursor: pointer;
+        border-radius: 5px;
+        overflow: hidden;
+        border-radius: 34px;
+        transition: 0.2s ease;
+        display: block;
+        &:hover{
+            transition: 0.2s ease;
+            background-color:darken($lavender_web, 4%);
+        }
+    }
+    &__icon{
+        width:100%;
+        height:100%;
+        object-fit: cover;
+    }
+    &__text{
+        position: absolute;
+        text-align: center;
+        width:100%;
+        bottom:25px;
+        font-size: 18px;
+        z-index: 101;
+        color:white;
+        font-weight: 700;
+        left:0px;
+        margin:0px;
+    }
+}
+.rural-cards{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left:0;
+    display: flex;
+    align-items: flex-end;
+    height: 350px;
+}
+
+.swiper-cards{
+    width: 100%;
+    height: 250px;
+}

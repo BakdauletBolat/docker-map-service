@@ -1,0 +1,48 @@
+.header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    // Navigation
+    &__nav {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__nav-item{
+        display: block;
+        padding:20px 10px;   
+        &:last-child{
+            padding-right: 0px;
+        }    
+    }
+
+    
+    //main-title
+    &__main-title{
+        font-size:20px;
+        font-weight: 700; 
+        text-align: center
+    }
+
+
+    //Map
+    &__map{
+        display: flex;
+        align-items: center;
+    }
+    &__map-img {
+        width:38px;
+        height:38px;
+        margin-right:10px;
+    }
+    &__map-text {
+        font-size:14px;
+        font-weight:700;
+        margin:0;
+    }
+}
+
+
+
+
+

@@ -1,0 +1,61 @@
+.body{
+    &__main-title{
+        font-size:24px;
+        text-align: center; 
+        text-transform: uppercase;
+        font-weight:700;
+    }
+    &__main-title-flex{
+        display: flex;
+        align-items: center;
+    }
+    &__main-title-text{
+        text-align: center; 
+        width: 100%;
+    }
+    &__main-text{
+        font-size: 16px;
+
+    }
+    &__main-btn{
+        font-size:14px;
+    }
+    &__main-content{
+        border-radius: 24px;
+        position: absolute;
+        top: 150px;
+        left: 0;
+        padding:50px;
+        background-color: white;
+        z-index: 130;
+    }
+}
+
+.labels{
+    font-size:100px;
+}
+.main-all{
+    position: relative;
+}
+
+.all-inf{
+    position: absolute;
+    top:65px;
+    background-color: white;
+    z-index: 101;
+    left:50%;
+    border-radius: 15px;
+    height: 90%;
+    width: 98%;
+    transform: translateX(-50%);
+    overflow: scroll;
+    box-shadow: 0px 4px 9px 5px rgba(0, 0, 0, 0.05);;
+}
+.form-create{
+    position: absolute;
+    top:0px;
+    padding: 20px;
+    background-color: white;
+    z-index: 101;
+    right:20px;
+}

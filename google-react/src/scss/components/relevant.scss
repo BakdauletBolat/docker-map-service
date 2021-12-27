@@ -1,0 +1,28 @@
+.relevant-title{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.relevant{
+    margin-bottom: 20px;
+}
+
+.relevant-row{
+    display: flex;
+}
+
+.relevant-number{
+    background-color: rgb(233, 178, 0);
+    border-radius: 5px;
+    font-size: 20px;
+    color:white;
+    padding: 5px 15px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.divider{
+    height: 2px;
+    margin-top: 10px;
+    background-color: #f2f2f2;
+}

@@ -1,0 +1,66 @@
+@import './_vars';
+@import './components/components.scss';
+
+.map-background{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+}
+
+
+.black{
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    top:0;
+    left:0;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+}
+.toggleMapStyle{
+    position: absolute;
+    top:20px;
+    left:20px;
+    z-index: 120;
+    display: flex;
+    justify-content: center;
+}
+.toggleMapStyle__item{
+    cursor: pointer;
+    background-color: white;
+    padding: 10px 20px;
+
+    &:hover{
+        background-color: darken(white,4);
+    }
+}
+
+.border-card{
+    border-width: 20px;
+}
+
+table, th, td {
+    border: 2px #5582ff solid!important;
+  }
+
+th {
+    font-size: 20px!important;
+}
+
+td{
+    font-size: 16px!important;
+}
+
+.header-table{
+    font-size: 20px!important;
+    font-weight: 700;
+}
+
+.header-table td, .header-table th{
+    font-size: 20px!important;
+    background-color: #95b2ff;
+    
+}

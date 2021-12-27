@@ -1,0 +1,52 @@
+version: "3"
+services:
+  nginx:
+    restart: always  
+    build: ./nginx
+    ports:
+      - 8000:8000
+    volumes:
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    depends_on:
+      - web
+  db:
+    restart: always  
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=bbb
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=database
+  web:
+    restart: always  
+    build: ./mapbackend
+    command: gunicorn mapbackend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+
+  nginx-react:
+    restart: always  
+    build:
+      context: ./google-react
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+

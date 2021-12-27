@@ -1,0 +1,47 @@
+@import './main.scss';
+@import './header.scss';
+@import './body.scss';
+@import './rectangle-grid.scss';
+@import './switch-btns.scss';
+@import './infoBox.scss';
+@import './tables.scss';
+@import './card.scss';
+@import './relevant.scss';
+
+
+.disabled-link {
+    pointer-events: none;
+  }
+
+.itemRow{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 10fr 10fr 10fr;
+    align-items: flex-start;
+    justify-content: space-between;
+    
+}
+.itemRow-toped{
+    margin-top:20px;
+}
+.itemId{
+    padding: 11px 20px;
+    border-radius: 5px;
+    background: wheat;
+}
+.itemNameT{
+    padding: 11px 20px;
+    border-radius: 5px;
+    text-align: center;
+    background-color:wheat;
+}
+.body__oz{
+    height:200px;
+    overflow: scroll;
+}
+
+
+.text-left{
+    text-align: left;
+}
+
