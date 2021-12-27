@@ -11,7 +11,7 @@ import SwiperCore, {
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import axios from "axios";
-
+import {hostName} from '../state';
 
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
@@ -27,8 +27,8 @@ function MainPage() {
   const [disabledT,setDisabledT] = useState(false);
 
   useEffect(() => {
-
-    axios.get('http://0.0.0.0:8000/api/cities/rural-list')
+    console.log(hostName)
+    axios.get(`http://${hostName}:8000/api/cities/rural-list`)
       .then(res => {
         setDataRurals(res.data);
         setMapCenter({
