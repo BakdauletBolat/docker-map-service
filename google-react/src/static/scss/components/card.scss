@@ -3,7 +3,7 @@
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     grid-gap:40px 60px;
     max-width: 1240px;
-    padding: 0px 20px;
+    padding: 20px 20px;
     justify-content: space-between;
     margin: 0 auto;
 }
@@ -42,7 +42,10 @@
 .rectangle-card{
     border:1px solid rgba(0, 0, 0, 0.05);
     padding: 20px;
+    width: 100%;
     border-radius: 5px;
+    position: relative;
+    z-index: 10000;
     background-color: white;
     &__header{
         display: flex;

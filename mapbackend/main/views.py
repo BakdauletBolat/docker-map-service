@@ -1,8 +1,10 @@
+from django.views import generic
 from .serilizers import PolyLineSerializer,PolylinesTypesSerilizer,RelevantSerializer
 from .models import PolyLine,PolyLineTypes, Relevant
 from rest_framework.response import Response
 from django.shortcuts import render
 from rest_framework import viewsets,permissions
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 from .serilizers import PolyLineSerializer
 # Create your views here.
@@ -15,6 +17,14 @@ class PolyLineViewSet(viewsets.ModelViewSet):
     ]
     queryset = PolyLine.objects.all()
     serializer_class = PolyLineSerializer
+
+
+# class ListCreatePolyLine(ListCreateAPIView):
+
+#     serializer_class = PolyLineSerializer
+#     queryset = PolyLine.objects.all()
+
+#     def post(self,request):
 
 
 class PolyLineTypesViewSet(viewsets.ModelViewSet):

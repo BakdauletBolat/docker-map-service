@@ -1,5 +1,5 @@
-let currentUrl = window.location.href;
+let currentUrl = window.location.hostname;
 
-const urlParts = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(currentUrl);
+// const urlParts = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(currentUrl);
 
-export const hostName = urlParts[1]; ;
+export const hostName = currentUrl; ;

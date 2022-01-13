@@ -1,55 +1,58 @@
-import { Link, useRouteMatch } from "react-router-dom";
-import React, { useEffect, useRef, useState } from 'react';
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Map from '../components/newMap2';
+import Map from '../components/map-simple';
 import SwiperCore, {
   Navigation, Scrollbar,
   EffectCoverflow, Pagination
 } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
-import axios from "axios";
-import {hostName} from '../state';
-
+import CityService from "../network/city-service";
+import { useSelector, useDispatch } from 'react-redux';
+import {setRurals} from '../features/city/citySlice';
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
 
 function MainPage() {
-  const [dataRurals, setDataRurals] = useState([]);
+
+  const cityService = new CityService();
+
+  const rurals = useSelector((state) => state.city.rurals)
+  const dispatch = useDispatch();
+
   const [mapCenter, setMapCenter] = useState({
-    lat: null,
-    lng: null
-  })
+    lat: 43.1,
+    lng: 43.1
+  });
 
   const [activeRural, setActiveRural] = useState();
-  const [disabledT,setDisabledT] = useState(false);
 
   useEffect(() => {
-    console.log(hostName)
-    axios.get(`http://${hostName}:8000/api/cities/rural-list`)
-      .then(res => {
-        setDataRurals(res.data);
-        setMapCenter({
-          lat: parseFloat(res.data[0].lat),
-          lng: parseFloat(res.data[0].lng)
-        })
-        setActiveRural(res.data[0])
-      })
 
+    cityService.getRurals()
+      .then(res => {
+        dispatch(setRurals(res));
+        setMapCenter({
+          lat: parseFloat(res[0].lat),
+          lng: parseFloat(res[0].lng)
+        })
+        setActiveRural(res[0]);
+      })
 
   }, [])
 
   function displayRural() {
     return (
-      dataRurals.map(item => (
+      rurals.map(item => (
         <SwiperSlide key={item.id}>
-              <Link to={`/rural/${item.id}`} className={disabledT ? '': 'rectangle-grid__item'}>              
-                <img src={item.image} className="rectangle-grid__icon" />
-                <div class="black"></div>
-                <p className="rectangle-grid__text">{item.name} ауылдық округі</p> 
-              </Link>
+          <Link to={`/rural/${item.id}`} className='rectangle-grid__item'>
+            <img src={item.image} className="rectangle-grid__icon" />
+            <div className="black"></div>
+            <p className="rectangle-grid__text">{item.name} ауылдық округі</p>
+          </Link>
         </SwiperSlide>
       ))
     )
@@ -59,15 +62,14 @@ function MainPage() {
     <div className="body">
       <div className="container">
         <div className="body__main-content">
-          <div className="body__main-title">Төлеби ауданының гео картасы</div>
+          <div className="body__main-title">Төлеби ауданының ахуалдық орталығы</div>
           <div className="body__main-text">Ауылдық округтер саны 12</div>
           <div className="body__main-text">{activeRural?.name} ауылдық округі</div>
           <div className="body__main-text">Құрамында {activeRural?.localities.length} елді мекен</div>
         </div>
         <div>
           <div className="map">
-            {mapCenter.lat !== null ? <Map mapCenter={mapCenter}></Map> : ""} 
-            
+            {mapCenter.lat !== null ? <Map mapCenter={mapCenter}></Map> : ""}
           </div>
           <div className="rural-cards">
             <Swiper
@@ -87,16 +89,14 @@ function MainPage() {
               slidesPerView={4}
               onSlideChange={(e) => {
                 setMapCenter({
-                  lat: dataRurals[e.activeIndex].lat,
-                  lng: dataRurals[e.activeIndex].lng
+                  lat: rurals[e.activeIndex].lat,
+                  lng: rurals[e.activeIndex].lng
                 })
-                setActiveRural(dataRurals[e.activeIndex])
-    
+                setActiveRural(rurals[e.activeIndex])
               }}
               onSwiper={(swiper) => console.log(swiper)}
             >
-
-              {dataRurals.length > 1 ? displayRural() : ''}
+              {rurals.length > 1 ? displayRural() : ''}
             </Swiper>
           </div>
         </div>

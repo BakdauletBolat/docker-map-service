@@ -1,10 +1,22 @@
 import axios from 'axios';
-import React from 'react';
-function Reactangle({ item }) {
+import React, { useEffect } from 'react';
+function RectangleCard({ item }) {
     const deleteItem = () => {
         axios.delete(`http://127.0.0.1:8000/api/polyline/${item.id}`)
         .then(res=>console.log(res));
     }
+
+    const calculateJ = () => {
+        return item?.road?.goodSituation * 100 / item?.km 
+    }
+
+    const calculateK = () => {
+        return parseInt(item?.road?.badSituation) * 100 / item?.km 
+    }
+
+    useEffect(()=>{
+        console.log(item);
+    },[item])
     return (
         <div>
             <div className="rectangle-card">
@@ -41,12 +53,12 @@ function Reactangle({ item }) {
                 </div>
                 <div className="rectangle-card__footer">
                     <div className="rectangle-card__btn">
-                        <img height="50px" src={require('../../images/icons/growth.png')} alt="" />
-                        <div>Жақсы жағдайда 100%</div>
+                        <img height="50px" src={require('../../static/images/icons/growth.png')} alt="" />
+                        <div>Жақсы жағдайда {calculateJ()} %</div>
                     </div>
                     <div className="rectangle-card__btn rectangle-card__btn--red">
-                        <img height="50px" src={require('../../images/icons/loss.png')} alt="" />
-                        <div>Қанағатсыз жағдайда 0%</div>
+                        <img height="50px" src={require('../../static/images/icons/loss.png')} alt="" />
+                        <div>Қанағатсыз жағдайда {calculateK()} %</div>
                     </div>
                 </div>
             </div>
@@ -54,4 +66,4 @@ function Reactangle({ item }) {
     );
 }
 
-export default Reactangle;
+export default RectangleCard;

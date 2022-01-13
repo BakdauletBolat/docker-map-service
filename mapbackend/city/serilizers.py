@@ -1,6 +1,5 @@
-from django.db.models import fields
 from rest_framework import serializers
-from .models import RuralDistrict,Localities,LocalitiesWater,Diametr,LocalitiesGas,LocalitiesElectr
+from .models import LocalitiesGas,LocalitiesElectr,RuralDistrict,Localities,LocalitiesWater,Diametr
 from main.serilizers import PolyLineSerializer
 
 class DiametrSerilizer(serializers.ModelSerializer):
@@ -11,8 +10,8 @@ class DiametrSerilizer(serializers.ModelSerializer):
 
 class LocalitiesWaterSerilizer(serializers.ModelSerializer):
 
-    diametress = DiametrSerilizer(many=True)
-
+    diametress = DiametrSerilizer(many=True,required=False)
+    
     class Meta:
         model = LocalitiesWater
         fields = ('__all__')
@@ -32,12 +31,19 @@ class LocalitiesGasSerilizer(serializers.ModelSerializer):
 
 
 
+class RuralDistrictASerilizer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = RuralDistrict
+        fields = ('__all__')
+
 class LocalitiesSerilizer(serializers.ModelSerializer):
 
     localitiesWater = LocalitiesWaterSerilizer()
     localitiesElectr = LocalitiesElectrSerilizer()
     localitiesGas = LocalitiesGasSerilizer()
     polylines = PolyLineSerializer(many=True)
+    rural = RuralDistrictASerilizer()
 
     class Meta:
         model = Localities

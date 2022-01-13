@@ -1,216 +1,141 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import Map from '../components/map.js';
-import axios from "axios";
+import React, { useState, useRef, useEffect } from "react";
+import Map from '../components/map-interface.js';
 import RoadInf from '../components/road-inf';
 import GasInf from '../components/gas-inf';
-import {useParams} from 'react-router-dom';
+import { useParams,useHistory } from 'react-router-dom';
 import WaterInf from "../components/water-inf";
 import ElectrInf from "../components/electr-inf";
-import {Link} from 'react-router-dom';
+import btns from "../staticData/btns.js";
 import Relevant from "../components/relevent/relevant";
-
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setLocalty, setPolylines, setRelevants } from '../features/city/citySlice';
+import { setActiveEl } from "../features/app/appSlice.js";
+import CityService from "../network/city-service";
+import CreateIcon from '../static/icons/createIcon.png';
+import Button from "../components/button.jsx";
+import VericalButton from "../components/VerticalButton.jsx";
+import { IoArrowBack } from 'react-icons/io5';
+import SidebarModal from "../components/SidebarModal.jsx";
+import Modalize from './Modalize';
+// import ModalBody from "../components/modal/ModalBody.jsx";
+import PolyLineForm from "../components/form/PolylineForm.jsx";
 
 
 function MapPage() {
-  
-  const [isPolyLineCreate, setPolyLineCreate] = useState(false)
-  const [polylines, setPolylines] = useState([])
-  const [localities,setLocalites] = useState({});
-  const [relevants,setRelevants] = useState([]);
-  const [path, setPath] = useState([]);
-  const [polyLengthInMeters, setpolyLengthInMeters] = useState([])
-  const [isActiveAllInf, setIsActiveAllInf] = useState(false)
-  const [isActiveRelevant, setIsActiveRelevant] = useState(false)
 
-  const [activeEl, setActiveEl] = useState(1);
+  const [isPolyLineCreate, setPolyLineCreate] = useState(false);
 
-  const {localtiesId} = useParams();
+  const cityService = new CityService();
+  const dispatch = useDispatch();
+  let history = useHistory();
 
-  const btns = [
-    {
-      id: 1,
-      title: "Жол"
-    },
-    {
-      id: 2,
-      title: "Су"
-    },
-    {
-      id: 3,
-      title: "Электр"
-    },
-    {
-      id: 4,
-      title: "Газ"
-    }
-  ]
-  useEffect(() => {
-    console.log(localtiesId);
-    // window.location.reload()
-    axios.get(`http://127.0.0.1:8000/api/cities/localties/${localtiesId}`)
-    .then(res=>setLocalites(res.data));
-    axios.get(`http://127.0.0.1:8000/api/new-polylines?typeMarkerId=${activeEl}&localtiesId=${localtiesId}`)
-      .then(res => {
-        console.log(res.data)
-        setPolylines(res.data)
-      })
-    axios.get(`http://127.0.0.1:8000/api/relevants?typeId=${activeEl}&localtiesId=${localtiesId}`)
-    .then(res => {
-      console.log(res.data)
-      setRelevants(res.data)
-    })
-  }, [activeEl])
+  const localty = useSelector(state => state.city.localty);
+  const polylines = useSelector(state => state.city.polylines);
+  const relevants = useSelector(state => state.city.relevants);
 
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    diametr: "",
-    sh_count: ""
-  })
+  const [isActiveAllInf, setIsActiveAllInf] = useState(false);
+  const [isActiveRelevant, setIsActiveRelevant] = useState(false);
 
+  const activeEl = useSelector(state => state.app.activeEl);
+  const activePolyline = useSelector(state => state.city.activePolyline);
 
-  const polyLineEl = useRef(null);
-  const polyLinesEl = useRef([]);
+  const { localtiesId } = useParams();
 
-  const updatePolylines = () => {
-    console.log(polyLinesEl.current);
+  const modRef = useRef(null)
+
+  const openModalize = () => {
+    setPolyLineCreate(!isPolyLineCreate)
+    modRef.current.open();
   }
+
+  
+
+  useEffect(() => {
+    cityService.getLocaltyById(localtiesId)
+      .then(data => { dispatch(setLocalty(data)); console.log(data) });
+
+    cityService.getPolyLinesByTypeAndLocalty(activeEl, localtiesId)
+      .then(data => dispatch(setPolylines(data)));
+
+    cityService.getRelevantsByTypeAndLocalty(activeEl, localtiesId)
+      .then(data => dispatch(setRelevants(data)));
+
+  }, [activeEl,localtiesId])
 
 
   const displayAllInf = () => {
-    if (activeEl == 1) {
-       return <RoadInf item={polylines} ></RoadInf>
-    } 
-    if (activeEl == 2) {
-      return <WaterInf item={localities} ></WaterInf>
-   } 
-   if (activeEl == 3) {
-    return <ElectrInf item={localities} ></ElectrInf>
- } 
-    if (activeEl == 4) {
-      return <GasInf item={localities} ></GasInf>
-   } 
-  }
-
-  const onChange = (e) => {
-
-    setForm({ ...form, [e.target.name]: e.target.value })
-    console.log(form)
-  }
-
-  const savePolyLine = () => {
-    const config = {
-      'Content-type': "application/json"
+    if (activeEl === 1) {
+      return <RoadInf item={polylines} ></RoadInf>
     }
-    const { name, description,sh_count, diametr } = form
-    const newPath = [];
-    polyLineEl.current.getPath().getArray().map(pos => {
-      newPath.push({
-        lat: pos.lat(),
-        lng: pos.lng()
-      })
-    })
-    const body = {
-      name,
-      description,
-      sh_count,
-      diametr,
-      km: polyLengthInMeters,
-      typeMarker: activeEl,
-      positions: newPath
+    if (activeEl === 2) {
+      return <WaterInf item={localty} ></WaterInf>
     }
-    axios.post('http://127.0.0.1:8000/api/polyline/', body, config)
-      .then(res => setPolylines([...polylines, res.data]))
-    polyLineEl.current.setPath([])
-    setPolyLineCreate(false)
-    setPath([])
+    if (activeEl === 3) {
+      return <ElectrInf item={localty} ></ElectrInf>
+    }
+    if (activeEl === 4) {
+      return <GasInf item={localty} ></GasInf>
+    }
   }
 
 
-  const displayInput = () => {
-    const { name, description,diametr,sh_count } = form
-    return (
-      <div className="col-3 row mt-3 form-create">
-        <div className="mb-3">
-          <label className="form-label">Имя обьекта</label>
-          <input type="text" name="name" onChange={onChange} value={name} className="form-control" id="exampleFormControlInput1" placeholder="Имя обьекта" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Шерпа саны</label>
-          <input type="text" name="sh_count" onChange={onChange} value={sh_count} className="form-control" id="exampleFormControlInput1" placeholder="Шерпа саны" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Газ трубасының диаметірі</label>
-          <input type="text" name="diametr" onChange={onChange} value={diametr} className="form-control" id="exampleFormControlInput1" placeholder="Газ трубасының диаметірі" />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Описания обьекта</label>
-          <textarea name="description" className="form-control" value={description} onChange={onChange} id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Километр обьекта</label>
-          <input type="text" name="km" onChange={onChange} value={polyLengthInMeters} className="form-control" id="exampleFormControlInput1" placeholder="Километр" />
-        </div>
-        <div className="mb-3">
-          <div className="col-4"><button type="button" onClick={savePolyLine} className="btn btn-success">Сохранить</button></div>
-        </div>
-      </div>
-    )
-  }
+  const points = ['50%', '100%'];
 
   return (
     <div>
-        <div className="container-fluid">
-        <div className="row main-all">
-          <div className="col-12">
-            <div className="switch-btns" >
-              {
-                btns.map(btn => (
-                  <div key={btn.id} onClick={() => setActiveEl(btn.id)} className={btn.id == activeEl ? "switch-btns__item switch-btns__item--active" : "switch-btns__item"} >
-                    {btn.title}
-                  </div>
-                ))
-              }
-              <div onClick={() => setIsActiveAllInf(!isActiveAllInf)} className={isActiveAllInf ? "switch-btns__item switch-btns__item--active" : "switch-btns__item"} >
-                Толық ақпарат
-              </div>
-              <div onClick={() => setPolyLineCreate(!isPolyLineCreate)} className={isPolyLineCreate ? "switch-btns__item switch-btns__item--active" : "switch-btns__item"} >
-                Жасау
-              </div>
-              <div onClick={() => setIsActiveRelevant(!isActiveRelevant)} className={isActiveRelevant ? "switch-btns__item switch-btns__item--active" : "switch-btns__item"} >
-                Өзекті мәселелер
-              </div>
-              <Link onClick={updatePolylines} className="switch-btns__item" to={'/rural/'+localtiesId}>
-                Артқа
-              </Link>
-              
+      <div className="sidebar">
+        <div className="sidebar__header">
+          <div className="sidebar__header-left">
+            <div onClick={history.goBack} className="back-icon">
+              <IoArrowBack className="icon" size={40} />
+            </div>
+            <h1 className="sidebar__header-title">
+              {localty.name}
+            </h1>
+          </div>
+          <div className="sidebar__header-right">
+            <div>
+              <Button onClick={openModalize} title="Жасау" icon={CreateIcon}></Button>
             </div>
           </div>
-          
-            {isActiveAllInf ? (
-              <div className="all-inf">
-                {displayAllInf()}
-                </div>
-             ) : ''}
-
-             {isActiveRelevant && (<div className="all-inf"><Relevant relevants={relevants}></Relevant></div>)}
-         
-          {isPolyLineCreate ? displayInput() : ""}
-          <div className="col-12" style={{ padding: 0 + 'px' }}>
-            <Map
-              disableDefaultUI={true}
-              polyLineEl={polyLineEl}
-              activeEl={activeEl}
-              setPath={setPath}
-              path={path}
-              polylines={polylines}
-              polyLinesEl={polyLinesEl}
-              polyLengthInMeters={polyLengthInMeters}
-              setpolyLengthInMeters={setpolyLengthInMeters}
-              isPolyLineCreate={isPolyLineCreate}
-              setPolyLineCreate={setPolyLineCreate}></Map>
+        </div>
+        <div className="sidebar__body">
+          <div className="sidebar__body-row">
+            {
+              btns.map(btn => (
+                <VericalButton key={btn.id} onClick={() => dispatch(setActiveEl(btn.id))}
+                  activeItem={btn.id === activeEl}
+                  icon={btn.icon}
+                  title={btn.title}></VericalButton>
+              ))
+            }
           </div>
+          <div className="sidebar__body-row margin-top">
+            <VericalButton onClick={() => setIsActiveAllInf(!isActiveAllInf)}
+              activeItem={isActiveAllInf}
+              title="Жалпы ақпарат"></VericalButton>
+            <VericalButton onClick={() => setIsActiveRelevant(!isActiveRelevant)}
+              activeItem={isActiveRelevant}
+              title="Өзекті мәселелер"></VericalButton>
+          </div>
+        </div>
+        <Modalize points={points} refProp={modRef}>
+          <PolyLineForm></PolyLineForm>
+        </Modalize>
+        {activePolyline && <SidebarModal></SidebarModal>}
+      </div>
+
+      <div className="container-fluid" style={{ padding: 0 + 'px' }}>
+        {isActiveAllInf ? (
+          <div className="all-inf">
+            {displayAllInf()}
+          </div>
+        ) : ''}
+        {isActiveRelevant && (<div className="all-inf"><Relevant relevants={relevants}></Relevant></div>)}
+        <div style={{ padding: 0 + 'px' }}>
+          <Map
+            isPolyLineCreate={isPolyLineCreate}
+            setPolyLineCreate={setPolyLineCreate}></Map>
         </div>
       </div>
     </div>

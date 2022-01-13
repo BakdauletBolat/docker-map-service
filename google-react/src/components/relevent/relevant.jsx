@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/esm/Table';
-import ReleventItem from './releventItem';
-
 
 export default function Relevant({ relevants }) {
     useEffect(() => {
@@ -15,22 +13,22 @@ export default function Relevant({ relevants }) {
                     <h2 className="inf-title">Өзекті мәселелер</h2>
                     <div class="relevant-container">
 
-                        <Table bordered hover>
-                            <thead className='header-table'>
+                        <Table className='rwd-table'>
+                            <thead >
                                 <tr>
-                                    <th style={{textAlign:'center'}}>№</th>
-                                    <th style={{textAlign:'center'}}>Өзекті мәселенің атауы</th>
-                                    <th style={{textAlign:'center'}}>Шешу жолдары</th>
-                                    <th style={{textAlign:'center'}}>Күтілетін нәтиже</th>
+                                    <th style={{textAlign:'center', verticleAlign:'center'}}>№</th>
+                                    <th style={{textAlign:'center', verticleAlign:'center'}}>Өзекті мәселенің атауы</th>
+                                    <th style={{textAlign:'center', verticleAlign:'center'}}>Шешу жолдары</th>
+                                    <th style={{textAlign:'center', verticleAlign:'center'}}>Күтілетін нәтиже</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {relevants.map((item, index) => (
                                     <tr>
-                                        <td style={{textAlign:'center'}}>{index+1}</td>
-                                        <td style={{textAlign:'center'}}>{item.question}</td>
-                                        <td style={{textAlign:'center'}}>{item.solution}</td>
-                                        <td style={{textAlign:'center'}}>{item.waiting_result}</td>
+                                        <td style={{textAlign:'center', verticleAlign:'center'}}>{index+1}</td>
+                                        <td style={{textAlign:'center', verticleAlign:'center'}}>{item.question}</td>
+                                        <td style={{textAlign:'center', verticleAlign:'center'}}>{item.solution}</td>
+                                        <td style={{textAlign:'center', verticleAlign:'center'}}>{item.waiting_result}</td>
                                     </tr>
                                 ))}
 

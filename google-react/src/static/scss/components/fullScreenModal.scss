@@ -1,0 +1,22 @@
+.fullScreenModal{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: white;
+    z-index: 1001;
+    display: none;
+
+    &--active{
+        display: block;
+    }
+
+    &__close{
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+}

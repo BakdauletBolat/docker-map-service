@@ -1,5 +1,8 @@
-import { useLoadScript, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import React, { useEffect, useRef, useState } from 'react'
+import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import React, { useEffect, useState } from 'react';
+import { FaSatellite, FaMapMarked } from 'react-icons/fa';
+import VericalButton from "./VerticalButton";
+
 const exampleMapStyles = [
     {
         featureType: "administrative",
@@ -69,8 +72,6 @@ function MapContainer(props) {
         }
     }, [props.mapCenter])
 
-    const ref = useRef(null);
-
     const [map, setMap] = useState(null);
 
     const { isLoaded, loadError } = useLoadScript({
@@ -93,13 +94,14 @@ function MapContainer(props) {
         const onUnmount = (mapInstanse) => {
             console.log(mapInstanse)
         }
+
         return <GoogleMap
             options={{
+                mapTypeId: 'satellite',
                 styles: exampleMapStyles,
                 disableDefaultUI: true,
             }}
             mapContainerStyle={containerStyle}
-            //   center={props.mapCenter}
             zoom={14}
             onLoad={onLoad}
             onUnmount={onUnmount}
@@ -113,9 +115,15 @@ function MapContainer(props) {
 
     return (
         <div>
-            <div className='toggleMapStyle'>
-                <div className='toggleMapStyle__item' onClick={() => changeMapStyle('roadmap')}>Карта</div>
-                <div className='toggleMapStyle__item' onClick={() => changeMapStyle('satellite')}>Спутник</div>
+            <div className="toggleMapStyle">
+                <div className="v-mr">
+                    <VericalButton onClick={() => changeMapStyle('satellite')}
+                        icon={<FaSatellite size={30} />}
+                        title={'Спутник'}></VericalButton>
+                </div>
+                <VericalButton onClick={() => changeMapStyle('roadmap')}
+                    icon={<FaMapMarked size={30} />}
+                    title={'Карта'}></VericalButton>
             </div>
             {isLoaded ? (
                 renderMap()

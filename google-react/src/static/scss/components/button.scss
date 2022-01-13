@@ -1,0 +1,54 @@
+.button{
+    background-color: #ffb647;
+    display: flex;
+    padding: 13px 27px;
+    font-weight: 700;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+
+    &__text{
+        margin-left: 5px;
+    }
+
+    &:hover{
+        background-color: darken(#ffb647,5);
+    }
+}
+
+.verticalButton{
+    padding: 19px 15px;
+    background-color: #34495E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color:white;
+    cursor: pointer;
+    border-radius: 12px;
+    &__title{
+        margin-top: 5px;
+    }
+
+    &:hover{
+        background-color: darken(#34495E, 5);
+    }
+}
+
+.verticalButton-active{
+    background-color: darken(#34495E, 5);
+}
+
+.icon {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        background-color: darken(white,10);
+    }
+}
+
+.v-mr{
+    margin-right: 10px;
+}
