@@ -44,40 +44,40 @@ class Localities(models.Model):
 
 class LocalitiesWater(models.Model):
 
-    streetCount = BIntegerField(verbose_name='Көше саны',null=True,blank=True)
-    populationCount = BIntegerField(verbose_name='Халық саны',null=True,blank=True)
-    subscribersCount = BIntegerField(verbose_name='Абонент саны ',null=True,blank=True)
-    springSource = BCharField(verbose_name='Бұлақ көзі',max_length=255,null=True,blank=True)
-    waterDebit = BCharField(verbose_name='Судың дебеті',max_length=255,null=True,blank=True)
-    waterReserves = BCharField(verbose_name='Жер асты су қоры хаттамасы',max_length=255,null=True,blank=True)
-    waterLength = BCharField(verbose_name='Су құбырының ұзындығы (км)',max_length=255,null=True,blank=True)
-    diametress = BManyToManyField(Diametr,verbose_name='Диаметры',related_name='localitiesWater',default=1)
-    yearConstruction = BIntegerField(verbose_name='Салынған жылы',null=True,blank=True)
-    zaramdyQ = BCharField(verbose_name='Жарамды құбырлар  (ш.қ)', max_length=255,null=True,blank=True)
-    currentQ = BCharField(verbose_name='Жаңартылып жатқаны (2021-2022ж)',max_length=255,null=True,blank=True)
-    nysan = models.TextField(verbose_name='2022ж ағымдағы жөндеуден өтетін  су құбырлары мен нысандары (ш.қ)',null=True,blank=True)
-    waterStructure = BCharField(verbose_name='Су құбырының құрылымы',max_length=255,null=True,blank=True)
-    newPipes = BCharField(verbose_name='Жаңартылған құбырлар (км)',max_length=255,null=True,blank=True)
-    newYearConstruction = BIntegerField(verbose_name='Жаңартылған жылы',null=True,blank=True)
-    needToUpdate = BCharField(verbose_name='Жаңартуды қажет ететіні (км) ',max_length=255,null=True,blank=True)
-    wateMetersCount = BIntegerField(verbose_name='Су есептегіш құралдары орнатылған (саны)',null=True,blank=True)
-    waterMatersDontCount = BIntegerField(verbose_name='Су есептегіш құралдары орнатылмаған (саны)',null=True,blank=True)
-    localities = BOneToOneField(Localities,reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesWater')
+    streetCount = models.CharField(verbose_name='Көше саны',null=True,blank=True,max_length=255)
+    populationCount = models.CharField(verbose_name='Халық саны',null=True,blank=True,max_length=255)
+    subscribersCount = models.CharField(verbose_name='Абонент саны ',null=True,blank=True,max_length=255)
+    springSource = models.CharField(verbose_name='Бұлақ көзі',max_length=255,null=True,blank=True)
+    waterDebit = models.CharField(verbose_name='Судың дебеті',max_length=255,null=True,blank=True)
+    waterReserves = models.CharField(verbose_name='Жер асты су қоры хаттамасы',max_length=255,null=True,blank=True)
+    waterLength = models.CharField(verbose_name='Су құбырының ұзындығы (км)',max_length=255,null=True,blank=True)
+    diametress = models.ManyToManyField(Diametr,verbose_name='Диаметры',related_name='localitiesWater',blank=True)
+    yearConstruction = models.CharField(verbose_name='Салынған жылы',null=True,blank=True,max_length=255)
+    zaramdyQ = models.CharField(verbose_name='Жарамды құбырлар  (ш.қ)', max_length=255,null=True,blank=True)
+    currentQ = models.CharField(verbose_name='Жаңартылып жатқаны (2021-2022ж)',max_length=255,null=True,blank=True)
+    nysan = models.CharField(verbose_name='2022ж ағымдағы жөндеуден өтетін',null=True,blank=True,max_length=255)
+    waterStructure = models.CharField(verbose_name='Су құбырының құрылымы',max_length=255,null=True,blank=True)
+    newPipes = models.CharField(verbose_name='Жаңартылған құбырлар (км)',max_length=255,null=True,blank=True)
+    newYearConstruction = models.CharField(verbose_name='Жаңартылған жылы',null=True,blank=True,max_length=255)
+    needToUpdate = models.CharField(verbose_name='Жаңартуды қажет ететіні (км) ',max_length=255,null=True,blank=True)
+    wateMetersCount = models.CharField(verbose_name='Су есептегіш құралдары орнатылған (саны)',null=True,blank=True,max_length=255)
+    waterMatersDontCount = models.CharField(verbose_name='Су есептегіш құралдары орнатылмаған (саны)',null=True,blank=True,max_length=255)
+    localities = models.OneToOneField(Localities, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesWater')
 
 
-    def filiable_fields(self):
-        rTo = []
+    # def filiable_fields(self):
+    #     rTo = []
 
-        for fields in self._meta.fields:
-            if fields.attname == 'id':
-                continue
-            rTo.append(fields.getDesk())
+    #     for fields in self._meta.fields:
+    #         if fields.attname == 'id':
+    #             continue
+    #         rTo.append(fields.getDesk())
 
-        return rTo
+    #     return rTo
 
 
     def __str__(self):
-        return f"Су бойынша {self.localities.name} елді мекенінің информациясы"
+        return f"Су бойынша елді мекенінің информациясы"
 
     class Meta:
         verbose_name = 'Су бойынша'

@@ -18,17 +18,14 @@ class RuralDistrictAdmin(admin.ModelAdmin):
 admin.site.register(RuralDistrict, RuralDistrictAdmin)
 
 
-class LocaltiesWaterTabularInline(admin.TabularInline):
+# class LocaltiesWaterStackedInline(admin.StackedInline):
 
-    model = LocalitiesWater
+#     model = LocalitiesWater
 
 
 class LocaltiesAdmin(admin.ModelAdmin):
-
-    inlines = [
-        LocaltiesWaterTabularInline
-    ]
-
+    pass
+    # inlines = (LocaltiesWaterStackedInline,)
 
 admin.site.register(Localities,LocaltiesAdmin)
 admin.site.register(Diametr)
