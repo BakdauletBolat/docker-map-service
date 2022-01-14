@@ -77,7 +77,7 @@ class LocalitiesWater(models.Model):
 
 
     def __str__(self):
-        return f"Су бойынша елді мекенінің информациясы"
+        return f"Су бойынша {self.localities.name} елді мекенінің информациясы"
 
     class Meta:
         verbose_name = 'Су бойынша'
