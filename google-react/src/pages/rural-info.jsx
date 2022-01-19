@@ -3,6 +3,8 @@ import {
 } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Table from 'react-bootstrap/esm/Table';
+import Tabs from 'react-bootstrap/esm/Tabs';
+import Tab from 'react-bootstrap/esm/Tab';
 import Map from '../components/map-simple';
 import SwiperCore, {
   Navigation, Scrollbar,
@@ -43,7 +45,7 @@ function RuralInfo(props) {
     console.log(localties)
     localties.map(localty => {
       localty.polylines.filter(item => item.typeMarker == activeEl).map(polyline => {
-        
+
         allKm += polyline.km;
         col += 1;
         goodKm += parseInt(polyline.road.goodSituation);
@@ -93,61 +95,115 @@ function RuralInfo(props) {
     return (
       <div className={className}>
         <div onClick={() => setStatus(!status)} className="fullScreenModal__close">
-          <IoCloseCircle size={30}></IoCloseCircle>
+          <IoCloseCircle color='white' size={30}></IoCloseCircle>
         </div>
         <div>
           <h2 className='inf-title'>{localties[0]?.rural?.name} ауылдық округі</h2>
-          {localties.map(localty => (
-            <div>
-             <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
-            <Table className='rwd-table' key={localty.id}
-            >
-              <thead>
-                <tr>
-                  <th style={{ textAlign: 'center' }} rowSpan="2">№</th>
-                  <th rowSpan="2" style={{ textAlign: 'center' }}>Атауы</th>
-                  <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /км/</th>
-                  <th rowSpan="2" style={{ textAlign: 'center' }}>Ені<br />/метр/</th>
-                  <th rowSpan="2" style={{ textAlign: 'center' }}>Санаты</th>
-                  <th colSpan="3" rowSpan="1" style={{ textAlign: 'center' }}>Жабындысы</th>
-                  <th rowSpan="2" style={{ textAlign: 'center' }}>Пайдалануға берілген жылы</th>
-                </tr>
-                <tr>
-                  <th style={{ textAlign: 'center' }}>Асфальт <br /> /км/</th>
-                  <th style={{ textAlign: 'center' }}>Шағал тас <br /> /км/</th>
-                  <th style={{ textAlign: 'center' }}>Топырақ <br /> /км/</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className='header_table'>
-                  <td style={{ textAlign: 'center' }}>{localty.polylines.filter(item => item.typeMarker == activeEl).length}</td>
-                  <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
-                  <td style={{ textAlign: 'center' }}>12.12</td>
-                  <td style={{ textAlign: 'center' }}>6</td>
-                  <td style={{ textAlign: 'center' }}>V</td>
-                  <td style={{ textAlign: 'center' }}>12.12</td>
-                  <td style={{ textAlign: 'center' }}>-</td>
-                  <td style={{ textAlign: 'center' }}>-</td>
-                  <td style={{ textAlign: 'center' }}></td>
-                </tr>
-                {localty.polylines.filter(item => item.typeMarker == activeEl).map((item, index) => (
-                  <tr key={item.id + index}>
-                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                    <td style={{ textAlign: 'center' }} headers="length en">{item.name}</td>
-                    <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000}</td>
-                    <td style={{ textAlign: 'center' }}>{item.road?.width}</td>
-                    <td style={{ textAlign: 'center' }}>V</td>
-                    <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000} </td>
-                    <td style={{ textAlign: 'center' }}>-</td>
-                    <td style={{ textAlign: 'center' }}>-</td>
-                    <td style={{ textAlign: 'center' }}>{item.road?.yearConstruction}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-            </div>
-          ))}
-
+          <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
+            <Tab eventKey="1" title="Жол бойынша" className="tabs">
+              {localties.map(localty => (
+                <div>
+                  <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
+                  <Table className='rwd-table' key={localty.id}
+                  >
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: 'center' }} rowSpan="2">№</th>
+                        <th rowSpan="2" style={{ textAlign: 'center' }}>Атауы</th>
+                        <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /км/</th>
+                        <th rowSpan="2" style={{ textAlign: 'center' }}>Ені<br />/метр/</th>
+                        <th rowSpan="2" style={{ textAlign: 'center' }}>Санаты</th>
+                        <th colSpan="3" rowSpan="1" style={{ textAlign: 'center' }}>Жабындысы</th>
+                        <th rowSpan="2" style={{ textAlign: 'center' }}>Пайдалануға берілген жылы</th>
+                      </tr>
+                      <tr>
+                        <th style={{ textAlign: 'center' }}>Асфальт <br /> /км/</th>
+                        <th style={{ textAlign: 'center' }}>Шағал тас <br /> /км/</th>
+                        <th style={{ textAlign: 'center' }}>Топырақ <br /> /км/</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className='header_table'>
+                        <td style={{ textAlign: 'center' }}>{localty.polylines.filter(item => item.typeMarker == activeEl).length}</td>
+                        <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
+                        <td style={{ textAlign: 'center' }}>12.12</td>
+                        <td style={{ textAlign: 'center' }}>6</td>
+                        <td style={{ textAlign: 'center' }}>V</td>
+                        <td style={{ textAlign: 'center' }}>12.12</td>
+                        <td style={{ textAlign: 'center' }}>-</td>
+                        <td style={{ textAlign: 'center' }}>-</td>
+                        <td style={{ textAlign: 'center' }}></td>
+                      </tr>
+                      {localty.polylines.filter(item => item.typeMarker == activeEl).map((item, index) => (
+                        <tr key={item.id + index}>
+                          <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                          <td style={{ textAlign: 'center' }} headers="length en">{item.name}</td>
+                          <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000}</td>
+                          <td style={{ textAlign: 'center' }}>{item.road?.width}</td>
+                          <td style={{ textAlign: 'center' }}>V</td>
+                          <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000} </td>
+                          <td style={{ textAlign: 'center' }}>-</td>
+                          <td style={{ textAlign: 'center' }}>-</td>
+                          <td style={{ textAlign: 'center' }}>{item.road?.yearConstruction}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              ))}
+            </Tab>
+            <Tab eventKey="2" title="Ауыз су бойынша" className="tabs">
+              {localties.map(localty => (
+                <div>
+                  <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
+                  <Table className='rwd-table' key={localty.id}
+                  >
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: 'center' }}>№</th>
+                        <th style={{ textAlign: 'center' }}>Халық саны </th>
+                        <th style={{ textAlign: 'center' }}>Абонент саны </th>
+                        <th style={{ textAlign: 'center' }}>Су көзі </th>
+                        <th style={{ textAlign: 'center' }}>Судың дебеті тәулік/м3 </th>
+                        <th style={{ textAlign: 'center' }}>Жер асты су қоры хаттамасы </th>
+                        <th style={{ textAlign: 'center' }}>Су құбырының ұзындығы (ш.қ) </th>
+                        <th style={{ textAlign: 'center' }}>Салынған жылы </th>
+                        <th style={{ textAlign: 'center' }}>Жарамды құбырлар  (ш.қ)</th>
+                        <th style={{ textAlign: 'center' }}>Жаңартылып жатқаны (2021-2022ж) </th>
+                        <th style={{ textAlign: 'center' }}>Су құбырының құрылымы</th>
+                        <th style={{ textAlign: 'center' }}>2022ж ағымдағы жөндеуден ...</th>
+                        <th style={{ textAlign: 'center' }}>Орнатылғаны </th>
+                        <th style={{ textAlign: 'center' }}>Орнатылмағаны</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.populationCount}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.subscribersCount}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.springSource}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.waterDebit}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.waterReserves}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.waterLength}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.yearConstruction}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.zaramdyQ}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.currentQ}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.waterStructure}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.nysan}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.wateMetersCount}</td>
+                        <td style={{ textAlign: 'center' }}>{localty.localitiesWater?.waterMatersDontCount}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
+              ))}
+            </Tab>
+            <Tab eventKey="3" title="Электр бойынша" className="tabs">
+              3
+            </Tab>
+            <Tab eventKey="4" title="Газ бойынша" className="tabs">
+              4
+            </Tab>
+          </Tabs>
         </div>
       </div>
     )

@@ -48,6 +48,18 @@
     border-width: 20px;
 }
 
+.nav-tabs{
+    background-color:  #34495E!important;
+    color: white!important;
+}
+
+.nav-link{
+    color: white!important;
+    text-decoration: none!important;
+}
+.nav-link.active{
+    background-color:  #283847!important;
+}
 // table, th, td {
 //     border: 2px #5582ff solid!important;
 //   }
