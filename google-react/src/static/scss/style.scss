@@ -60,6 +60,42 @@
 .nav-link.active{
     background-color:  #283847!important;
 }
+
+.spinner-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding: 80px;
+    bottom: 40px;
+    left:50%;
+    color: white;
+    transform: translateX(-50%);
+    background-color: #34495E;
+    border-radius: 15px;
+
+    &__text{
+        margin-left: 5px;
+    }
+}
+
+.not-found{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding: 80px;
+    bottom: 40px;
+    left:50%;
+    color: white;
+    transform: translateX(-50%);
+    background-color: #34495E;
+    border-radius: 15px;
+
+    &__text{
+        margin-left: 5px;
+    }
+}
 // table, th, td {
 //     border: 2px #5582ff solid!important;
 //   }

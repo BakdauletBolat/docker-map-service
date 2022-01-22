@@ -12,7 +12,9 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import CityService from "../network/city-service";
 import { useSelector, useDispatch } from 'react-redux';
-import {setRurals} from '../features/city/citySlice';
+import { setRurals } from '../features/city/citySlice';
+import LoadingScreen from "./LoadingScreen";
+import NotFoundScreen from './NotFoundScreen';
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
 
@@ -20,7 +22,7 @@ function MainPage() {
 
   const cityService = new CityService();
 
-  const rurals = useSelector((state) => state.city.rurals)
+  const rurals = useSelector((state) => state.city.rurals);
   const dispatch = useDispatch();
 
   const [mapCenter, setMapCenter] = useState({
@@ -30,8 +32,10 @@ function MainPage() {
 
   const [activeRural, setActiveRural] = useState();
 
-  useEffect(() => {
+  const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    setIsLoading(true);
     cityService.getRurals()
       .then(res => {
         dispatch(setRurals(res));
@@ -40,21 +44,57 @@ function MainPage() {
           lng: parseFloat(res[0].lng)
         })
         setActiveRural(res[0]);
+        setIsLoading(false);
       })
 
   }, [])
 
   function displayRural() {
+
+    if (isLoading) {
+      return <LoadingScreen />
+    }
+
+    if (rurals.length <= 0) {
+      return <NotFoundScreen></NotFoundScreen>
+    }
+
     return (
-      rurals.map(item => (
-        <SwiperSlide key={item.id}>
-          <Link to={`/rural/${item.id}`} className='rectangle-grid__item'>
-            <img src={item.image} className="rectangle-grid__icon" />
-            <div className="black"></div>
-            <p className="rectangle-grid__text">{item.name} ауылдық округі</p>
-          </Link>
-        </SwiperSlide>
-      ))
+      <Swiper
+        observer={true}
+        observeParents={true}
+        className="swiper-cards"
+        effect={'coverflow'} grabCursor={true}
+        centeredSlides={true} slidesPerView={'auto'}
+        coverflowEffect={{
+          "rotate": 50,
+          "stretch": 1,
+          "depth": 150,
+          "modifier": 1,
+          "slideShadows": false
+        }} pagination={true}
+        navigation
+        slidesPerView={4}
+        onSlideChange={(e) => {
+          setMapCenter({
+            lat: rurals[e.activeIndex].lat,
+            lng: rurals[e.activeIndex].lng
+          })
+          setActiveRural(rurals[e.activeIndex])
+        }}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {rurals.map(item => (
+          <SwiperSlide key={item.id}>
+            <Link to={`/rural/${item.id}`} className='rectangle-grid__item'>
+              <img src={item.image} className="rectangle-grid__icon" />
+              <div className="black"></div>
+              <p className="rectangle-grid__text">{item.name} ауылдық округі</p>
+            </Link>
+          </SwiperSlide>
+        ))}
+
+      </Swiper>
     )
 
   }
@@ -71,33 +111,8 @@ function MainPage() {
           <div className="map">
             {mapCenter.lat !== null ? <Map mapCenter={mapCenter}></Map> : ""}
           </div>
-          <div className="rural-cards">
-            <Swiper
-              observer={true}
-              observeParents={true}
-              className="swiper-cards"
-              effect={'coverflow'} grabCursor={true}
-              centeredSlides={true} slidesPerView={'auto'}
-              coverflowEffect={{
-                "rotate": 50,
-                "stretch": 1,
-                "depth": 150,
-                "modifier": 1,
-                "slideShadows": false
-              }} pagination={true}
-              navigation
-              slidesPerView={4}
-              onSlideChange={(e) => {
-                setMapCenter({
-                  lat: rurals[e.activeIndex].lat,
-                  lng: rurals[e.activeIndex].lng
-                })
-                setActiveRural(rurals[e.activeIndex])
-              }}
-              onSwiper={(swiper) => console.log(swiper)}
-            >
-              {rurals.length > 1 ? displayRural() : ''}
-            </Swiper>
+          <div className="rural-cards">           
+              {displayRural()}
           </div>
         </div>
       </div>

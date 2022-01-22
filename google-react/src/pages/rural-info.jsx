@@ -20,13 +20,15 @@ import { setLocalties } from '../features/city/citySlice';
 import CityService from "../network/city-service";
 import VericalButton from "../components/VerticalButton";
 import { FaList } from 'react-icons/fa';
-
+import NotFoundScreen from "./NotFoundScreen";
+import LoadingScreen from "./LoadingScreen";
 
 function RuralInfo(props) {
 
   let { ruralId } = useParams();
   SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
 
+  const [isLoading, setIsLoading] = useState(false);
   const localties = useSelector((state) => state.city.localties);
   const dispatch = useDispatch();
   const cityService = new CityService();
@@ -66,6 +68,7 @@ function RuralInfo(props) {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     cityService.getLocaltiesByRuralId(ruralId)
       .then(data => {
         dispatch(setLocalties(data.localities));
@@ -75,7 +78,8 @@ function RuralInfo(props) {
             lat: data.localities[0].lat,
             lng: data.localities[0].lng
           })
-          setActiveLocalties(data.localities[0])
+          setActiveLocalties(data.localities[0]);
+          setIsLoading(false);
         }
       })
 
@@ -212,17 +216,52 @@ function RuralInfo(props) {
 
 
   function displayRural() {
+
+    if (isLoading) {
+      return <LoadingScreen />
+    }
+
+    if (localties?.length <= 0) {
+      return <NotFoundScreen></NotFoundScreen>
+    }
+
     return (
-      localties?.map(item => (
-        <SwiperSlide key={item.id}>
-          <Link to={`/localties/${item.id}`} className='rectangle-grid__item'>
-            <img src={item.image} className="rectangle-grid__icon" />
-            <div className="black"></div>
-            <p className="rectangle-grid__text">{item.name} елді мекені</p>
-          </Link>
-        </SwiperSlide>
-      ))
+      <Swiper
+        className="swiper-cards"
+        observer={true}
+        observeParents={true}
+        effect={'coverflow'} grabCursor={true}
+        centeredSlides={true} slidesPerView={'auto'}
+        coverflowEffect={{
+          "rotate": 50,
+          "stretch": 1,
+          "depth": 150,
+          "modifier": 1,
+          "slideShadows": false
+        }} pagination={true}
+        navigation
+        slidesPerView={3}
+        onSlideChange={(e) => {
+          setMapCenter({
+            lat: localties[e.activeIndex].lat,
+            lng: localties[e.activeIndex].lng
+          })
+          setActiveLocalties(localties[e.activeIndex])
+        }}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {localties?.map(item => (
+          <SwiperSlide key={item.id}>
+            <Link to={`/localties/${item.id}`} className='rectangle-grid__item'>
+              <img src={item.image} className="rectangle-grid__icon" />
+              <div className="black"></div>
+              <p className="rectangle-grid__text">{item.name} елді мекені</p>
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     )
+
 
   }
 
@@ -248,33 +287,7 @@ function RuralInfo(props) {
               <Map mapCenter={mapCenter}></Map>
             </div>
             <div className="rural-cards">
-              <Swiper
-                className="swiper-cards"
-                observer={true}
-                observeParents={true}
-                effect={'coverflow'} grabCursor={true}
-                centeredSlides={true} slidesPerView={'auto'}
-                coverflowEffect={{
-                  "rotate": 50,
-                  "stretch": 1,
-                  "depth": 150,
-                  "modifier": 1,
-                  "slideShadows": false
-                }} pagination={true}
-                navigation
-                slidesPerView={3}
-                onSlideChange={(e) => {
-                  setMapCenter({
-                    lat: localties[e.activeIndex].lat,
-                    lng: localties[e.activeIndex].lng
-                  })
-                  setActiveLocalties(localties[e.activeIndex])
-                }}
-                onSwiper={(swiper) => console.log(swiper)}
-              >
-
-                {localties !== undefined ? displayRural() : ''}
-              </Swiper>
+            {displayRural()}
             </div>
           </div>
         </div>
@@ -282,9 +295,10 @@ function RuralInfo(props) {
         <div>
           Нет
         </div>
-      )}
+      )
+      }
       <ModalFullScreen ></ModalFullScreen>
-    </div>
+    </div >
   );
 }
 
