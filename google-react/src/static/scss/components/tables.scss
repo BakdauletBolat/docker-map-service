@@ -4,9 +4,13 @@
 .rwd-table tr {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
 }
 .rwd-table th {
   display: none;
+  text-align: center;
+  vertical-align: middle;
 }
 .rwd-table td:first-child {
   padding-top: .5em;
@@ -26,7 +30,8 @@
   }
 }
 .rwd-table th, .rwd-table td {
-  text-align: left;
+  text-align: center;
+  vertical-align: middle;
 }
 @media (min-width: 480px) {
   .rwd-table th, .rwd-table td {

@@ -41,32 +41,7 @@ function RuralInfo(props) {
   const [activeLocalties, setActiveLocalties] = useState({});
   const history = useHistory();
 
-  const kilemetres = () => {
-
-    let allKm = 0, goodKm = 0, badKm = 0, col = 0;
-    console.log(localties)
-    localties.map(localty => {
-      localty.polylines.filter(item => item.typeMarker == activeEl).map(polyline => {
-
-        allKm += polyline.km;
-        col += 1;
-        goodKm += parseInt(polyline.road.goodSituation);
-        badKm += parseInt(polyline.road.badSitiation);
-      })
-    });
-
-
-
-    let goodPercent = goodKm * 100 / allKm;
-
-    goodPercent = parseInt(goodPercent);
-
-    let badPercent = 100 - goodPercent;
-
-    return { allKm, goodKm, badKm, goodPercent, badPercent, col }
-
-  }
-
+  
   useEffect(() => {
     setIsLoading(true);
     cityService.getLocaltiesByRuralId(ruralId)
@@ -90,8 +65,6 @@ function RuralInfo(props) {
   const activeEl = 1;
 
 
-  const kilemetresObject = kilemetres();
-
   function ModalFullScreen() {
 
     const className = status ? 'fullScreenModal fullScreenModal--active' : 'fullScreenModal'
@@ -108,7 +81,7 @@ function RuralInfo(props) {
               {localties.map(localty => (
                 <div>
                   <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
-                  <Table className='rwd-table' key={localty.id}
+                  <Table responsive className='rwd-table' key={localty.id}
                   >
                     <thead>
                       <tr>
@@ -160,24 +133,27 @@ function RuralInfo(props) {
               {localties.map(localty => (
                 <div>
                   <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
-                  <Table className='rwd-table' key={localty.id}
+                  <Table responsive className='rwd-table' key={localty.id}
                   >
                     <thead>
                       <tr>
-                        <th style={{ textAlign: 'center' }}>№</th>
-                        <th style={{ textAlign: 'center' }}>Халық саны </th>
-                        <th style={{ textAlign: 'center' }}>Абонент саны </th>
-                        <th style={{ textAlign: 'center' }}>Су көзі </th>
-                        <th style={{ textAlign: 'center' }}>Судың дебеті тәулік/м3 </th>
-                        <th style={{ textAlign: 'center' }}>Жер асты су қоры хаттамасы </th>
-                        <th style={{ textAlign: 'center' }}>Су құбырының ұзындығы (ш.қ) </th>
-                        <th style={{ textAlign: 'center' }}>Салынған жылы </th>
-                        <th style={{ textAlign: 'center' }}>Жарамды құбырлар  (ш.қ)</th>
-                        <th style={{ textAlign: 'center' }}>Жаңартылып жатқаны (2021-2022ж) </th>
-                        <th style={{ textAlign: 'center' }}>Су құбырының құрылымы</th>
-                        <th style={{ textAlign: 'center' }}>2022ж ағымдағы жөндеуден ...</th>
-                        <th style={{ textAlign: 'center' }}>Орнатылғаны </th>
-                        <th style={{ textAlign: 'center' }}>Орнатылмағаны</th>
+                        <th rowSpan={2}>Халық саны </th>
+                        <th rowSpan={2}>Абонент саны </th>
+                        <th rowSpan={2}>Су көзі </th>
+                        <th rowSpan={2}>Судың дебеті тәулік/м3 </th>
+                        <th rowSpan={2}>Жер асты су қоры хаттамасы </th>
+                        <th rowSpan={2}>Су құбырының ұзындығы (ш.қ) </th>
+                        <th colSpan={4}>Оның ішінде</th>
+                        <th rowSpan={2}>2022ж ағымдағы жөндеуден өтетін су құбырлары мен нысандары (ш.қ)</th>
+                        <th colSpan={2}>Су есептегіш құралдары</th>
+                      </tr>
+                      <tr>
+                        <th>Салынған жылы </th>
+                        <th>Жарамды құбырлар  (ш.қ)</th>
+                        <th>Жаңартылып жатқаны (2021-2022ж) </th>
+                        <th>Су құбырының құрылымы</th>
+                        <th>Орнатылғаны </th>
+                        <th>Орнатылмағаны</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -202,10 +178,127 @@ function RuralInfo(props) {
               ))}
             </Tab>
             <Tab eventKey="3" title="Электр бойынша" className="tabs">
-              3
+            {localties.map(localty => (
+              <div>
+                <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
+              <Table className='rwd-table' responsive
+              >   
+                <thead>
+                  <tr>
+                    <th rowSpan={3}>Елді мекен атауы</th>
+                    <th rowSpan={3}>Электр жүйесінің ұзындығы (км)</th>
+                    <th colSpan={7}>Электр бағанасы. Оның ішінде:</th>
+                  </tr>
+                  <tr>
+                    <th rowSpan={2}>Бағаналарды ң жалпы саны (дана)</th>
+                    <th colSpan={3}>Бетонды бағаналар</th>
+                    <th colSpan={3}>Ағаш бағаналардың саны</th>
+                  </tr>
+                  <tr>
+                    <th>ОЖТ меншігінде</th>
+                    <th>Коммуналдық меншікте</th>
+                    <th>Өздері орнатқан (само строй)</th>
+                    <th>ОЖТ меншігінде</th>
+                    <th>Коммуналдық меншікте</th>
+                    <th>Өздері орнатқан (само строй)</th>
+                  </tr>
+  
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>{localty.name}</td>
+                      <td>{localty.localitiesElectr?.length ? localty.localitiesElectr?.length / 1000: '-'}</td>
+                      <td>{localty.localitiesElectr?.baganaNumber ? localty.localitiesElectr?.baganaNumber : '-'}</td>
+                      <td>{localty.localitiesElectr?.bOJT ? localty.localitiesElectr?.bOJT : '-'}</td>
+                      <td>{localty.localitiesElectr?.bCOM ? localty.localitiesElectr?.bCOM : '-'}</td>
+                      <td>{localty.localitiesElectr?.bOZ ? localty.localitiesElectr?.bOZ : '-'}</td>
+                      <td>{localty.localitiesElectr?.aOJT ? localty.localitiesElectr?.aOJT : '-'}</td>
+                      <td>{localty.localitiesElectr?.aCOM ? localty.localitiesElectr?.aCOM : '-'}</td>
+                      <td>{localty.localitiesElectr?.aOZ ? localty.localitiesElectr?.aOZ : '-'}</td>
+                    </tr>
+                </tbody>
+              </Table>
+              <Table className='rwd-table' responsive> 
+                <thead>
+                  <tr>
+                    <th colSpan={7}>Электр желілерінің ұзындығы</th>
+                    <th colSpan={3}>Трансформатордың саны</th>
+                  </tr>
+                  <tr>
+                    <th rowSpan={2}>СИП кабель жалпы ұзындығы</th>
+                    <th colSpan={3}>СИП кабель</th>
+                    <th colSpan={3}>Темір электр сымдары</th>
+                    <th rowSpan={2}>Жалпы саны</th>
+                    <th colSpan={2}>Оның ішінде</th>
+                  </tr>
+                  <tr>
+                    <th>ОЖТ меншігінде</th>
+                    <th>Коммуналдық меншікте</th>
+                    <th>Өздері тартқан</th>
+                    <th>ОЖТ меншігінде</th>
+                    <th>Коммуналдық меншікте</th>
+                    <th>Өздері тартқан</th>
+                    <th>ОЖТ меншігінде</th>
+                    <th>Коммуналдық меншікте</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{localty.localitiesElectr?.cipLength ? localty.localitiesElectr?.cipLength : '-'}</td>
+                    <td>{localty.localitiesElectr?.cipOJT ? localty.localitiesElectr?.cipOJT : '-'}</td>
+                    <td>{localty.localitiesElectr?.cipCOM ? localty.localitiesElectr?.cipCOM : '-'}</td>
+                    <td>{localty.localitiesElectr?.cipOZ ? localty.localitiesElectr?.cipOZ : '-'}</td>
+                    <td>{localty.localitiesElectr?.tmOJT ? localty.localitiesElectr?.tmOJT : '-'}</td>
+                    <td>{localty.localitiesElectr?.tmCOM ? localty.localitiesElectr?.tmCOM : '-'}</td>
+                    <td>{localty.localitiesElectr?.tmOOZ ? localty.localitiesElectr?.tmOOZ : '-'}</td>
+                    <td>{localty.localitiesElectr?.trbaganaNumber ? localty.localitiesElectr?.trbaganaNumber : '-'}</td>
+                    <td>{localty.localitiesElectr?.trOJT ? localty.localitiesElectr?.trOJT : '-'}</td>
+                    <td>{localty.localitiesElectr?.trCOM ? localty.localitiesElectr?.trCOM : '-'}</td>
+                  </tr>
+                </tbody>
+              </Table>
+              </div>)
+              )}
             </Tab>
             <Tab eventKey="4" title="Газ бойынша" className="tabs">
-              4
+              {localties.map(localty => (
+                <div>
+                   <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
+                  <Table className="rwd-table" responsive>
+                  <thead>
+                    <tr>
+
+                      <th rowSpan={2}>Абонент саны</th>
+                      <th rowSpan={2}>Газ құбыры жүйесінің ұзындығы (ш.қ км)</th>
+                      <th colSpan={6}>Оның ішінде:</th>
+                      <th rowSpan={2}>Салынған жылы</th>
+                    </tr>
+                    <tr>
+                      <th>Жоғары қысымды газ құбырлары (ш.қ (км)</th>
+                      <th>Орта қысымды газ құбырлары (ш.қ)</th>
+                      <th>Төмен қысымды құбырлар</th>
+                      <th>Газ тұтыну көлемі (м3сағат)</th>
+                      <th>ГРПШ саны</th>
+                      <th>Құрылымы</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {/* <td>{localty.localitiesGas?.populationCount ? localty.localitiesGas?.populationCount : '-'}</td> */}
+                      <td>{localty.localitiesGas?.subscribersCount ? localty.localitiesGas?.subscribersCount : '-'}</td>
+                      <td>{localty.localitiesGas?.gasLength ? localty.localitiesGas?.gasLength : '-'}</td>
+                      <td>{localty.localitiesGas?.jGasLength ? localty.localitiesGas?.jGasLength : '-'}</td>
+                      <td>{localty.localitiesGas?.oGasLength ? localty.localitiesGas?.oGasLength : '-'}</td>
+                      <td>{localty.localitiesGas?.tomenKysym ? localty.localitiesGas?.tomenKysym : '-'}</td>
+                      <td>{localty.localitiesGas?.volumeGas ? localty.localitiesGas?.volumeGas : '-'}</td>
+                      <td>{localty.localitiesGas?.grpsh ? localty.localitiesGas?.grpsh : '-'}</td>
+                      <td>{localty.localitiesGas?.typeGas ? localty.localitiesGas?.typeGas : '-'}</td>
+                      <td>{localty.localitiesGas?.yearConstruction ? localty.localitiesGas?.yearConstruction : '-'}</td>
+                    </tr>
+                  </tbody>
+                  </Table>
+                </div>
+              ))}
             </Tab>
           </Tabs>
         </div>
@@ -287,7 +380,7 @@ function RuralInfo(props) {
               <Map mapCenter={mapCenter}></Map>
             </div>
             <div className="rural-cards">
-            {displayRural()}
+              {displayRural()}
             </div>
           </div>
         </div>

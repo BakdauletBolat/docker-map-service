@@ -23,6 +23,7 @@
     &__main-title{
         color: black;
         margin-left: 5px;
+        text-align: left;
         text-decoration: none;
     }
     &__buttons-group{
@@ -35,6 +36,7 @@
         border-radius: 12px;
         position: absolute;
         top: 150px;
+        max-width: 450px;
         left: 10px;
         padding:50px;
         background-color: white;
