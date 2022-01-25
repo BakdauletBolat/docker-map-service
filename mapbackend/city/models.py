@@ -85,28 +85,30 @@ class LocalitiesWater(models.Model):
 
 class LocalitiesElectr(models.Model):
 
-    length = BIntegerField('Электр жүйесінің ұзындығы ')
-    cipLength = BIntegerField('CIP жүйесінің ұзындығы')
-    baganaNumber = BIntegerField('Бағаналардың жалпы саны (дана)')
-    bOJT = BIntegerField('Бағаналар ОЖТ меншігінде')
-    aOJT = BIntegerField('Ағаш ОЖТ меншігінде')
-    cipOJT = BIntegerField('СИП ОЖТ меншігінде')
-    tmOJT = BIntegerField('Темір электр ОЖТ меншігінде')
+    length = BIntegerField('Электр жүйесінің ұзындығы ',null=True,blank=True)
+    cipLength = BIntegerField('CIP жүйесінің ұзындығы',null=True,blank=True)
+    baganaNumber = BIntegerField('Бағаналардың жалпы саны (дана)',null=True,blank=True)
+    bOJT = BIntegerField('Бағаналар ОЖТ меншігінде',null=True,blank=True)
+    aOJT = BIntegerField('Ағаш ОЖТ меншігінде',null=True,blank=True)
+    cipOJT = BIntegerField('СИП ОЖТ меншігінде',null=True,blank=True)
+    tmOJT = BIntegerField('Темір электр ОЖТ меншігінде',null=True,blank=True)
+    trOJT = BIntegerField('Трансформатор ОЖТ меншігінде',null=True,blank=True)
 
-    bCOM = BIntegerField('Бағаналар Комуналдық меншік')
-    aCOM = BIntegerField('Ағаш Комуналдық меншік')
-    cipCOM = BIntegerField('СИП Комуналдық меншік')
-    tmOCOM = BIntegerField('Темір электр Комуналдық меншік')
+    bCOM = BIntegerField('Бағаналар Комуналдық меншік',null=True,blank=True)
+    aCOM = BIntegerField('Ағаш Комуналдық меншік',null=True,blank=True)
+    cipCOM = BIntegerField('СИП Комуналдық меншік',null=True,blank=True)
+    tmOCOM = BIntegerField('Темір электр Комуналдық меншік',null=True,blank=True)
+    trCOM = BIntegerField('Коммуналдық меншікте',null=True,blank=True)
 
-    bOZ = BIntegerField('Бағаналар Өздері орнатқан ')
-    aOZ = BIntegerField('Ағаш Өздері орнатқан ')
-    cipOZ = BIntegerField('СИП Өздері орнатқан')
-    tmOOZ = BIntegerField('Темір Өздері орнатқан')
+    bOZ = BIntegerField('Бағаналар Өздері орнатқан ',null=True,blank=True)
+    aOZ = BIntegerField('Ағаш Өздері орнатқан ',null=True,blank=True)
+    cipOZ = BIntegerField('СИП Өздері орнатқан',null=True,blank=True)
+    tmOOZ = BIntegerField('Темір Өздері орнатқан',null=True,blank=True)
 
-    trbaganaNumber = BIntegerField('Трансформатордағы бағаналардың жалпы саны (дана)')
-    trNumber = BIntegerField('Трансформатор (КТПН)  саны ')
-    trCip = BIntegerField('СИП кабель ВЛ-06 кВт (метр)')
-    trVl = BIntegerField('ВЛ-04 кВт (метр)')
+    trbaganaNumber = BIntegerField('Трансформатордағы бағаналардың жалпы саны (дана)',null=True,blank=True)
+    trNumber = BIntegerField('Трансформатор (КТПН)  саны ',null=True,blank=True)
+    trCip = BIntegerField('СИП кабель ВЛ-06 кВт (метр)',null=True,blank=True)
+    trVl = BIntegerField('ВЛ-04 кВт (метр)',null=True,blank=True)
 
     localities = BOneToOneField(Localities, reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesElectr')
 
@@ -130,14 +132,20 @@ class LocalitiesElectr(models.Model):
 
 
 class LocalitiesGas(models.Model):
-    subscribersCount = BIntegerField('Абонент саны ')
-    gasLength = BCharField('Газ  құбыры жүйесінің ұзындығы',max_length=255)
-    bottomGasLength = BCharField('Жер асты газ құбырлары (метр)',max_length=255)
-    topGasLength = BCharField('Жер үсті газ құбырлары (метр)', max_length=255)
-    typeGas = BCharField('Құбырлардың құрылымы',max_length=255)
-    volumeGas = BCharField('Газ тұтыну көлемі ',max_length=255)
-    grpsh = BCharField('ГРПШ-6 саны', max_length=255)
-    yearConstruction = BIntegerField('Салынған жылы')
+    populationCount = BIntegerField('Халық саны',null=True,blank=True)
+    subscribersCount = BIntegerField('Абонент саны ',null=True,blank=True)
+    gasLength = BCharField('Газ  құбыры жүйесінің ұзындығы',max_length=255,null=True,blank=True)
+    bottomGasLength = BCharField('Жер асты газ құбырлары (метр)',max_length=255,null=True,blank=True)
+    topGasLength = BCharField('Жер үсті газ құбырлары (метр)', max_length=255,null=True,blank=True)
+    typeGas = BCharField('Құбырлардың құрылымы',max_length=255,null=True,blank=True)
+    volumeGas = BCharField('Газ тұтыну көлемі ',max_length=255,null=True,blank=True)
+    grpsh = BCharField('ГРПШ-6 саны', max_length=255,null=True,blank=True)
+
+    jGasLength = BCharField('Жоғары қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
+    oGasLength = BCharField('Төмен қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
+    tomenKysym = BCharField('Төмен қысымды құбырлар',max_length=255,null=True,blank=True)
+
+    yearConstruction = BIntegerField('Салынған жылы',null=True,blank=True)
     localities = BOneToOneField(Localities,reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesGas')
 
     def filiable_fields(self):
