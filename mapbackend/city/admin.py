@@ -7,6 +7,7 @@ from .models import RuralDistrict, Localities, Diametr, LocalitiesWater, Localit
 
 class LocaltiesInline(admin.TabularInline):
     model = Localities
+    
 
 
 class RuralDistrictAdmin(admin.ModelAdmin):
@@ -23,8 +24,17 @@ class LocaltiesWaterStackedInline(admin.StackedInline):
     model = LocalitiesWater
 
 
+class LocaltiesElectrStackedInline(admin.StackedInline):
+
+    model = LocalitiesElectr
+
+class LocalitiesGasStackedInline(admin.StackedInline):
+
+    model = LocalitiesGas
+
+
 class LocaltiesAdmin(admin.ModelAdmin):
-    inlines = (LocaltiesWaterStackedInline,)
+    inlines = (LocaltiesWaterStackedInline,LocaltiesElectrStackedInline,LocalitiesGasStackedInline)
 
 admin.site.register(Localities,LocaltiesAdmin)
 admin.site.register(Diametr)

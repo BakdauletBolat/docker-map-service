@@ -52,7 +52,7 @@ function MapPage() {
 
   useEffect(() => {
     cityService.getLocaltyById(localtiesId)
-      .then(data => { dispatch(setLocalty(data)); console.log(data) });
+      .then(data => { dispatch(setLocalty(data)) });
 
     cityService.getPolyLinesByTypeAndLocalty(activeEl, localtiesId)
       .then(data => dispatch(setPolylines(data)));
@@ -133,9 +133,12 @@ function MapPage() {
         ) : ''}
         {isActiveRelevant && (<div className="all-inf"><Relevant relevants={relevants}></Relevant></div>)}
         <div style={{ padding: 0 + 'px' }}>
-          <Map
+          {localty.lat ? (
+            <Map
             isPolyLineCreate={isPolyLineCreate}
+            localty={localty}
             setPolyLineCreate={setPolyLineCreate}></Map>
+          ): ''}
         </div>
       </div>
     </div>

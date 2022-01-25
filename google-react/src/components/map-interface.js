@@ -60,10 +60,10 @@ const exampleMapStyles = [
   },
 ];
 
-function Map({ isPolyLineCreate }) {
+function Map({ isPolyLineCreate,localty }) {
 
   const polylines = useSelector(state => state.city.polylines);
-  const activeEl = useSelector(state => state.app.activeEl)
+  const activeEl = useSelector(state => state.app.activeEl);
 
   const [map, setMap] = useState(null);
   const [drawerManager, setDrawerManager] = useState();
@@ -73,7 +73,7 @@ function Map({ isPolyLineCreate }) {
   const changeMapStyle = (type) => {
     map.setOptions({
       mapTypeId: type,
-    })
+    });
   }
 
   useEffect(() => {
@@ -85,7 +85,7 @@ function Map({ isPolyLineCreate }) {
     }
 
 
-  }, [activeEl, isPolyLineCreate]);
+  }, [activeEl, isPolyLineCreate,localty]);
 
 
   const { isLoaded, loadError } = useLoadScript({
@@ -141,7 +141,8 @@ function Map({ isPolyLineCreate }) {
 
   const renderMap = () => {
     const onLoadMap = (mapInstanse) => {
-      mapInstanse.setCenter({ lat: 42.19911137426314, lng: 69.95388661187184 });
+      console.log(localty.lat);
+      mapInstanse.setCenter({ lat: localty.lat, lng: localty.lng });
       setMap(mapInstanse);
     }
 
