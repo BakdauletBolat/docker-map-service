@@ -11,10 +11,17 @@ export const citySlice = createSlice({
     relevants: [],
     polyLineForm: {
       name: "",
-      km: "",
+      km: 0,
       color: "",
       positionGroup: [],
-      road: {}
+      road: {
+        beton: 0,
+        width: 0,
+        hectar: 0,
+        goodSituation: 0,
+        badSituation: 0,
+        yearConstruction: 2000
+      }
     }
   },
   reducers: {
