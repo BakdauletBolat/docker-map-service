@@ -40,16 +40,17 @@ function PolyLineForm() {
 
     const onSubmit = () => {
         cityService.createPolyLines({...polyLineForm,localities:localty.id,typeMarker: activeEl})
-        .then(data=>dispatch(setPolylines([...polylines,data])))
+        .then(data=>{
+            dispatch(setPolylines([...polylines,data]))
+            dispatch(setPolyLineForm({
+                name: "",
+          km: "",
+          color: "",
+          positionGroup: [],
+          road: {}
+            }))
+        })
         .catch(e=>console.log(e))
-
-        dispatch(setPolyLineForm({
-            name: "",
-      km: "",
-      color: "",
-      positionGroup: [],
-      road: {}
-        }))
     }
 
     const {name,km,road: {beton,yearConstruction,width,hectar,goodSituation,badSituation}} = polyLineForm;
