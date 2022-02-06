@@ -168,7 +168,7 @@ function Map({ isPolyLineCreate,localty }) {
       <GoogleMap
         options={{
           mapTypeId: 'roadmap',
-          styles: exampleMapStyles,
+          // styles: exampleMapStyles,
           disableDefaultUI: true,
         }}
         mapContainerClassName="App-map"
