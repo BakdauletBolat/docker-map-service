@@ -53,14 +53,14 @@ function MainPage() {
         <div>
         <h2 className='inf-title'>Төлеби ауданы</h2>
           <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
-            <Tab eventKey="1" title="Жол бойынша" className="tabs">
+            <Tab eventKey="1" title="Жол саласы бойынша" className="tabs">
               <Table className="rwd-table" responsiv>
                 <thead>
                   <tr>
                     <th rowSpan={2}>р/с</th>
                     <th rowSpan={2}>Жолдардың саны</th>
                     <th rowSpan={2}>Жалпы ұзындығы (ш. қ)</th>
-                    <th>Оның ішінде</th>
+                    <th colSpan={3}>Оның ішінде</th>
                   </tr>
                   <tr>
                     <th>Қанағатты жағдайда (ш. қ)</th>
