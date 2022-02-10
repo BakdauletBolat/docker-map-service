@@ -58,6 +58,7 @@ function MainPage() {
                 <thead>
                   <tr>
                     <th rowSpan={2}>р/с</th>
+                    <th rowSpan={2}>Жолдардың саната</th>
                     <th rowSpan={2}>Жолдардың саны</th>
                     <th rowSpan={2}>Жалпы ұзындығы (ш. қ)</th>
                     <th colSpan={3}>Оның ішінде</th>
