@@ -54,7 +54,58 @@ function MainPage() {
         <h2 className='inf-title'>Төлеби ауданы</h2>
           <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
             <Tab eventKey="1" title="Жол бойынша" className="tabs">
-              1
+              <Table className="rwd-table" responsiv>
+                <thead>
+                  <tr>
+                    <th rowSpan={2}>р/с</th>
+                    <th rowSpan={2}>Жолдардың саны</th>
+                    <th rowSpan={2}>Жалпы ұзындығы (ш. қ)</th>
+                    <th>Оның ішінде</th>
+                  </tr>
+                  <tr>
+                    <th>Қанағатты жағдайда (ш. қ)</th>
+                    <th>Қанағатсыз жағдайда (ш. қ)</th>
+                    <th>Пайызы (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Облыстық маңызы бар жолдар</td>
+                    <td>15</td>
+                    <td>259.88</td>
+                    <td>230.51</td>
+                    <td>29.37</td>
+                    <td>88.7 %</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Аудандық маңызы бар жолдар</td>
+                    <td>34</td>
+                    <td>144.88</td>
+                    <td>125.8</td>
+                    <td>18.25</td>
+                    <td>87.4 %</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Елді мекеннің ішкі көшелері</td>
+                    <td>477</td>
+                    <td>680</td>
+                    <td>496</td>
+                    <td>183</td>
+                    <td>73.0 %</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>Барлығы</td>
+                    <td>526</td>
+                    <td>1084</td>
+                    <td>852</td>
+                    <td>231</td>
+                    <td>78.6 %</td>
+                  </tr>
+                </tbody>
+              </Table>
             </Tab>
             <Tab eventKey="2" title="Ауыз су бойынша" className="tabs">
               <Table className="rwd-table" responsive>
