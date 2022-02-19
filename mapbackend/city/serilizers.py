@@ -50,6 +50,29 @@ class LocalitiesSerilizer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+
+
+
+class RuralDistrictRawSerilizer(serializers.ModelSerializer):
+    localtiesCount = serializers.SerializerMethodField()
+
+    def get_localtiesCount(self,obj):
+        return len(obj.localities.all())
+
+    class Meta:
+        model = RuralDistrict
+        fields = ('__all__')
+
+
+class LocalitiesRawSerilizer(serializers.ModelSerializer):
+
+    rural = RuralDistrictRawSerilizer(read_only=True)
+
+    class Meta:
+        model = Localities
+        fields = ('__all__')
+
+
 class RuralDistrictSerilizer(serializers.ModelSerializer):
 
     localities = LocalitiesSerilizer(many=True)

@@ -3,14 +3,20 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from rest_framework.response import Response
 from .models import LocalitiesElectr, LocalitiesGas, RuralDistrict, Localities, LocalitiesWater
-from .serilizers import LocalitiesElectrSerilizer, LocalitiesGasSerilizer, LocalitiesWaterSerilizer, RuralDistrictSerilizer, LocalitiesSerilizer
-from rest_framework import generics, serializers
+from .serilizers import (LocalitiesElectrSerilizer, LocalitiesGasSerilizer, LocalitiesRawSerilizer, LocalitiesWaterSerilizer, 
+                            RuralDistrictSerilizer, LocalitiesSerilizer,RuralDistrictRawSerilizer)
+from rest_framework import generics
 # Create your views here.
 
 
 class RuralDistrictList(generics.ListCreateAPIView):
     queryset = RuralDistrict.objects.all()
     serializer_class = RuralDistrictSerilizer
+
+
+class RuralDisrictRawList(generics.ListAPIView):
+    queryset = RuralDistrict.objects.all()
+    serializer_class = RuralDistrictRawSerilizer
 
 
 class LocalitiesWaterListCreate(generics.ListCreateAPIView):
@@ -46,6 +52,16 @@ class RuralDistrictById(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         print(self.kwargs['pk'])
         queryset = RuralDistrict.objects.filter(id=self.kwargs['pk'])
+        return queryset
+
+
+class RuralDistrictByRawId(generics.ListAPIView):
+
+    serializer_class = LocalitiesRawSerilizer
+
+    def get_queryset(self):
+        print(self.kwargs['pk'])
+        queryset = Localities.objects.filter(rural_id=self.kwargs['pk'])
         return queryset
 
 
