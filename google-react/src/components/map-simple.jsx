@@ -93,6 +93,7 @@ function MapContainer(props) {
 
         const onUnmount = (mapInstanse) => {
             console.log(mapInstanse)
+            setMap(null);
         }
 
         return <GoogleMap

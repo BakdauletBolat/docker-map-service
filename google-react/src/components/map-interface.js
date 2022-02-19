@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import VericalButton from "./VerticalButton";
-import { FaSatellite,FaMapMarked } from 'react-icons/fa';
-import { useLoadScript, GoogleMap, DrawingManager } from "@react-google-maps/api";
+import { FaSatellite, FaMapMarked } from 'react-icons/fa';
+import { useLoadScript, GoogleMap, DrawingManager, Polyline } from "@react-google-maps/api";
 // import ReactangleCard from "./card/rectangle";
 import PolyLineItem from "./PolylineItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,7 +60,10 @@ const exampleMapStyles = [
   },
 ];
 
-function Map({ isPolyLineCreate,localty }) {
+function Map({ isPolyLineCreate, localty }) {
+
+  const [p,setP] = useState(null);
+
 
   const polylines = useSelector(state => state.city.polylines);
   const activeEl = useSelector(state => state.app.activeEl);
@@ -85,12 +88,12 @@ function Map({ isPolyLineCreate,localty }) {
     }
 
 
-  }, [activeEl, isPolyLineCreate,localty]);
+  }, [activeEl, isPolyLineCreate, localty]);
 
-
-  const { isLoaded, loadError } = useLoadScript({
+ 
+ const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBUVRGCl79p01aB2YhioP6s3bURSLV0qDE",
-    libraries:libraries
+    libraries: libraries
   })
 
   const clearAllMarkers = () => {
@@ -132,9 +135,19 @@ function Map({ isPolyLineCreate,localty }) {
       }))
     }
 
+    setP(polyline);   
     dispatch(setPolyLineForm({
       ...polyLineForm,
       positionGroup: [...polyLineForm.positionGroup, positionGroup]
+    }))
+  }
+
+  function deleteRemove() {
+    p.setMap(null);
+    setP(null);
+    dispatch(setPolyLineForm({
+      ...polyLineForm,
+      positionGroup: [...polyLineForm.positionGroup.slice(0,-1)]
     }))
   }
 
@@ -147,9 +160,19 @@ function Map({ isPolyLineCreate,localty }) {
     }
 
     const onUnmountMap = (mapInstanse) => {
-      console.log(mapInstanse);
+      console.log(mapInstanse)
+      setMap(null);
+
     }
     return <>
+     <div className="mb-3" style={{
+        position: 'absolute',
+        top: 20,
+        right: 135,
+        zIndex: 100
+      }}>
+        {p != null ? <div className="col-4"><button type="button" onClick={deleteRemove} className="btn btn-danger">Очистить последний элемент</button></div> : ''}       
+      </div>
       <div style={{
         position: 'absolute',
         top: 20,
@@ -157,10 +180,10 @@ function Map({ isPolyLineCreate,localty }) {
         zIndex: 100
       }}>
         <div className="sidebar__body-row">
-          <VericalButton onClick={()=>changeMapStyle('satellite')}
+          <VericalButton onClick={() => changeMapStyle('satellite')}
             icon={<FaSatellite size={30} />}
             title={'Спутник'}></VericalButton>
-          <VericalButton onClick={()=>changeMapStyle('roadmap')}
+          <VericalButton onClick={() => changeMapStyle('roadmap')}
             icon={<FaMapMarked size={30} />}
             title={'Карта'}></VericalButton>
         </div>
@@ -192,6 +215,12 @@ function Map({ isPolyLineCreate,localty }) {
           options={{
             drawingMode: window.google.maps.drawing.OverlayType.CONTROL,
             drawingControl: true,
+            polylineOptions: {
+              strokeColor: "#009900",
+              strokeOpacity: 2,
+              clickable:true,
+              strokeWeight: 2
+            },
             drawingControlOptions: {
               position: window.google.maps.ControlPosition.TOP_CENTER,
               drawingModes: [
@@ -199,11 +228,12 @@ function Map({ isPolyLineCreate,localty }) {
               ],
             },
           }}
+          
           onLoad={onLoadDrawerManager}
           onPolylineComplete={onPolyLineComplete}
         />
-        </GoogleMap>
-      </>  
+      </GoogleMap>
+    </>
   }
 
   if (loadError) {

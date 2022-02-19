@@ -41,6 +41,14 @@
         padding:50px;
         background-color: white;
         z-index: 130;
+
+        @media screen and (max-width: 500px) {
+            top: 15px;
+            max-width: 100%;
+            margin:0px 15px;
+            left: 0px;
+            padding: 20px;
+        }
     }
 }
 

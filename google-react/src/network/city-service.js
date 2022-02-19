@@ -4,7 +4,12 @@ class CityService {
     url = `http://${window.location.hostname}:8000`;
 
     async getRurals() {
-        return await axios.get(`${this.url}/api/cities/rural-list`)
+        return await axios.get(`${this.url}/api/cities/rural-list/`)
+                     .then(response=>response.data)
+    }
+
+    async getRuralsRaw() {
+        return await axios.get(`${this.url}/api/cities/rural-list-raw/`)
                      .then(response=>response.data)
     }
 
@@ -27,6 +32,11 @@ class CityService {
 
     async getLocaltiesByRuralId(id) {
         return await axios.get(`${this.url}/api/cities/rural/${id}`)
+                     .then(response=>response.data)
+    }
+
+    async getLocaltiesByRuralRawId(id) {
+        return await axios.get(`${this.url}/api/cities/rural-raw/${id}/`)
                      .then(response=>response.data)
     }
 
