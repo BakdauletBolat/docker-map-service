@@ -15,7 +15,8 @@ class PolyLineAdmin(CloneModelAdmin):
     # Enables/Disables the Duplicate action in the Change view (Defaults to True)
     include_duplicate_object_link = True
 
-    list_display = ('id','name','typeMarker','color')
+    list_display = ('id','name','typeMarker','color','localities')
+    list_filter = ('localities',)
     list_editable = ('typeMarker','color')
     list_display_links = ('name',)
     
