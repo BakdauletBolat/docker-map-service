@@ -8,6 +8,7 @@ from .models import RuralDistrict, Localities, Diametr, LocalitiesWater, Localit
 class LocaltiesInline(admin.TabularInline):
     model = Localities
     
+    
 
 
 class RuralDistrictAdmin(admin.ModelAdmin):
@@ -35,6 +36,9 @@ class LocalitiesGasStackedInline(admin.StackedInline):
 
 class LocaltiesAdmin(admin.ModelAdmin):
     inlines = (LocaltiesWaterStackedInline,LocaltiesElectrStackedInline,LocalitiesGasStackedInline)
+    list_display = ('id','name','lat','lng','rural')
+    list_editable = ('lat','lng')
+    list_filter = ('rural',)
 
 admin.site.register(Localities,LocaltiesAdmin)
 admin.site.register(Diametr)
