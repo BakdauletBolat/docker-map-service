@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import VericalButton from "./VerticalButton";
 import { FaSatellite, FaMapMarked } from 'react-icons/fa';
-import { useLoadScript, GoogleMap, DrawingManager, Polyline } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap, DrawingManager } from "@react-google-maps/api";
 // import ReactangleCard from "./card/rectangle";
 import PolyLineItem from "./PolylineItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,53 +12,6 @@ import { setActivePolyLine, setPolyLineForm } from '../features/city/citySlice';
 
 const libraries = ['drawing',];
 
-const exampleMapStyles = [
-  {
-    featureType: "administrative",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      },
-    ],
-  },
-  {
-    featureType: "landscape",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      },
-    ],
-  },
-  {
-    featureType: "poi",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      },
-    ],
-  },
-  {
-    featureType: "transit",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      },
-    ],
-  },
-  {
-    featureType: "water",
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off"
-      },
-    ],
-  },
-];
 
 function Map({ isPolyLineCreate, localty }) {
 
@@ -154,13 +107,13 @@ function Map({ isPolyLineCreate, localty }) {
 
   const renderMap = () => {
     const onLoadMap = (mapInstanse) => {
-      console.log(localty.lat);
-      mapInstanse.setCenter({ lat: localty.lat, lng: localty.lng });
+      // console.log(localty.lat,localty.lng);
+      // mapInstanse.setCenter({ lat: localty.lat, lng: localty.lng });
       setMap(mapInstanse);
     }
 
     const onUnmountMap = (mapInstanse) => {
-      console.log(mapInstanse)
+    
       setMap(null);
 
     }
@@ -194,6 +147,7 @@ function Map({ isPolyLineCreate, localty }) {
           // styles: exampleMapStyles,
           disableDefaultUI: true,
         }}
+        center={{lat: localty.lat,lng: localty.lng}}
         mapContainerClassName="App-map"
         onCenterChangedEnd={() => {
           if (map) {

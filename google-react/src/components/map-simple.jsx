@@ -1,4 +1,4 @@
-import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import { GoogleMap,useJsApiLoader } from "@react-google-maps/api";
 import React, { useEffect, useState } from 'react';
 import { FaSatellite, FaMapMarked } from 'react-icons/fa';
 import VericalButton from "./VerticalButton";
@@ -74,9 +74,14 @@ function MapContainer(props) {
 
     const [map, setMap] = useState(null);
 
-    const { isLoaded, loadError } = useLoadScript({
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
         googleMapsApiKey: "AIzaSyBUVRGCl79p01aB2YhioP6s3bURSLV0qDE"
-    })
+      })
+
+    // const { isLoaded, loadError } = useLoadScript({
+    //     googleMapsApiKey: "AIzaSyBUVRGCl79p01aB2YhioP6s3bURSLV0qDE"
+    // })
 
     const changeMapStyle = (styleId) => {
         map.setOptions({
@@ -84,17 +89,19 @@ function MapContainer(props) {
         })
     }
 
-    const renderMap = () => {
-        const onLoad = (mapInstanse) => {
-            console.log(mapInstanse)
-            mapInstanse.setCenter(props.mapCenter);
-            setMap(mapInstanse);
-        }
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        map.panTo(props.mapCenter);
+        setMap(map);
+      }, []);
 
-        const onUnmount = (mapInstanse) => {
-            console.log(mapInstanse)
-            setMap(null);
-        }
+
+      const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+      }, []);
+
+    const renderMap = () => {
 
         return <GoogleMap
             options={{
@@ -110,9 +117,9 @@ function MapContainer(props) {
         </GoogleMap>
     }
 
-    if (loadError) {
-        return <div>Map cannot be loaded right now, sorry.</div>
-    }
+    // if (loadError) {
+    //     return <div>Map cannot be loaded right now, sorry.</div>
+    // }
 
     return (
         <div>

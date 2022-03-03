@@ -20,7 +20,7 @@ function PolyLineItem({ poly, pushPolylines, clearAllMarkers }) {
     const dispatch = useDispatch();
 
     const activeEl = useSelector(state => state.app.activeEl);
-    const activePolyline = useSelector(state => state.city.activePolyline);
+    // const activePolyline = useSelector(state => state.city.activePolyline);
 
     useEffect(() => {
         console.log(activeEl)

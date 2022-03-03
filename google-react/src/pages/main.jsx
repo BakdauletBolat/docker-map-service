@@ -14,7 +14,7 @@ import CityService from "../network/city-service";
 import { useSelector, useDispatch } from 'react-redux';
 import { setRurals,setRuralsRow } from '../features/city/citySlice';
 import LoadingScreen from "./LoadingScreen";
-import { IoArrowBack, IoCloseCircle } from 'react-icons/io5';
+import {IoCloseCircle } from 'react-icons/io5';
 import VericalButton from "../components/VerticalButton";
 import { FaList } from 'react-icons/fa';
 import Table from 'react-bootstrap/esm/Table';
@@ -78,8 +78,6 @@ function MainPage() {
             slidesPerView: 4
           }
         }}
-        observer={true}
-        observeParents={true}
         className="swiper-cards"
         effect={'coverflow'} grabCursor={true}
         centeredSlides={true}
@@ -170,7 +168,7 @@ function ModalFullScreen({status,setStatus}) {
       <h2 className='inf-title'>Төлеби ауданы</h2>
         <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
           <Tab eventKey="1" title="Жол саласы бойынша" className="tabs">
-            <Table className="rwd-table" responsiv>
+            <Table className="rwd-table" responsive>
               <thead>
                 <tr>
                   <th rowSpan={2}>р/с</th>
