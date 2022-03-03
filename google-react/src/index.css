@@ -12,7 +12,22 @@ code {
     monospace;
 }
 
-
+.leaflet-container{
+  height: 100vh;
+}
+.sr-only {
+  display: none;
+}
+.hello {
+  border-radius: 30px;
+  height: 30px;
+  width: 30px;
+  background-color: greenyellow;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .App{
   height:100vh;
 }
