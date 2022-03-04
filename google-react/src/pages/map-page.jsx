@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,forwardRef } from "react";
 import Map from '../components/map-interface.js';
 import RoadInf from '../components/road-inf';
 import GasInf from '../components/gas-inf';
@@ -8,7 +8,7 @@ import ElectrInf from "../components/electr-inf";
 import btns from "../staticData/btns.js";
 import Relevant from "../components/relevent/relevant";
 import { useSelector, useDispatch } from 'react-redux';
-import { setLocalty, setPolylines, setRelevants } from '../features/city/citySlice';
+import { setLocalty, setPolylines, setRelevants,setPolyLineForm } from '../features/city/citySlice';
 import { setActiveEl } from "../features/app/appSlice.js";
 import CityService from "../network/city-service";
 import CreateIcon from '../static/icons/createIcon.png';
@@ -41,6 +41,7 @@ function MapPage() {
 
   const localty = useSelector(state => state.city.localty);
   const polylines = useSelector(state => state.city.polylines);
+  const polyLineForm = useSelector(state => state.city.polyLineForm);
   const relevants = useSelector(state => state.city.relevants);
 
   const [isActiveAllInf, setIsActiveAllInf] = useState(false);
@@ -51,11 +52,88 @@ function MapPage() {
 
   const { localtiesId } = useParams();
 
-  const modRef = useRef(null)
+  const modRef = useRef(null);
+
+  const ref = useRef(null);
+
+
+  const mapRef = useRef(null);
+
+  const setMapRef = (refValue) => {
+    mapRef.current = refValue;
+  }
+
+  const setEditRef = (refValue) => {
+    ref.current = refValue;
+  }
 
   const openModalize = () => {
     setPolyLineCreate(!isPolyLineCreate)
     modRef.current.open();
+  }
+
+  const saveAndClear = () => {
+    if (ref.current) {
+      const layersF = ref.current._layers;
+    let positionGroup = [];
+    Object.entries(layersF).forEach(([key, element]) => {
+
+      const paths = element._latlngs;
+
+      console.log(paths);
+
+      let positions = {
+        positions: paths.map(path => ({
+          lat: path.lat,
+          lng: path.lng
+        }))
+      }
+      positionGroup.push(positions);
+    });
+
+    dispatch(setPolyLineForm({
+      ...polyLineForm,
+      positionGroup: positionGroup
+    }));
+    }
+
+    const layers = ref.current._layers;
+
+    Object.entries(layers).forEach(([key, element]) => {
+      ref.current.removeLayer(element);
+      console.log('cleared');
+    });
+
+  
+  }
+
+  const savePoints = () => {
+    if (ref.current) {
+      const layers = ref.current._layers;
+
+      let positionGroup = [];
+
+      Object.entries(layers).forEach(([key, element]) => {
+
+        const paths = element._latlngs;
+
+        console.log(paths);
+
+        let positions = {
+          positions: paths.map(path => ({
+            lat: path.lat,
+            lng: path.lng
+          }))
+        }
+        positionGroup.push(positions);
+      });
+
+      dispatch(setPolyLineForm({
+        ...polyLineForm,
+        positionGroup: positionGroup
+      }));
+    }
+
   }
 
   
@@ -129,7 +207,7 @@ function MapPage() {
           </div>
         </div>
         <Modalize points={points} refProp={modRef}>
-          <PolyLineForm></PolyLineForm>
+          <PolyLineForm  saveAndClear={saveAndClear}></PolyLineForm>
         </Modalize>
         {activePolyline && <SidebarModal></SidebarModal>}
       </div>
@@ -144,8 +222,12 @@ function MapPage() {
         <div style={{ padding: 0 + 'px' }}>
           {localty.lat ? (
             <Map
+            ref={ref}
+            setEditRef={setEditRef}
+            setMapRef={setMapRef}
             isPolyLineCreate={isPolyLineCreate}
             localty={localty}
+            savePoints={savePoints}
             setPolyLineCreate={setPolyLineCreate}></Map>
           ): ''}
         </div>

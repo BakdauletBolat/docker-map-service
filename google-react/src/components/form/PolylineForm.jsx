@@ -6,7 +6,7 @@ import CityService from "../../network/city-service";
 import { useState } from "react";
 // import { useAlert } from 'react-alert'
 
-function PolyLineForm() {
+function PolyLineForm({saveAndClear}) {
 
     const cityService = new CityService();
     const alert = useAlert();
@@ -45,6 +45,7 @@ function PolyLineForm() {
     }
 
     const onSubmit = () => {
+        saveAndClear();
         setIsLoading(true);
 
         if (polyLineForm.positionGroup.length <= 0) {

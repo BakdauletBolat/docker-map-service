@@ -124,7 +124,7 @@ import { FaSatellite, FaMapMarked } from 'react-icons/fa';
 //   }
 
 
- 
+
 
 //   const onPolyLineComplete = polyline => {
 //     const paths = polyline.getPath().getArray();
@@ -220,7 +220,7 @@ import { FaSatellite, FaMapMarked } from 'react-icons/fa';
 
 
 import React, { useEffect, useState, useRef } from 'react';
-import { MapContainer, Popup, TileLayer, FeatureGroup, LayersControl, Marker, Polyline, Tooltip } from 'react-leaflet';
+import { MapContainer, Popup, TileLayer, FeatureGroup, LayersControl, Marker, Polyline, Tooltip,MapConsumer } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw";
 import RectangleCard from './card/rectangle';
 import { useSelector, useDispatch } from 'react-redux';
@@ -228,7 +228,7 @@ import L from "leaflet";
 import RoadIcon from '../static/icons/road.svg';
 import { setPolyLineForm } from '../features/city/citySlice';
 
-function Map({ localty }) {
+function Map({ localty, setEditRef,savePoints,setMapRef }) {
 
   const polylines = useSelector(state => state.city.polylines);
   const polyLineForm = useSelector(state => state.city.polyLineForm);
@@ -237,9 +237,6 @@ function Map({ localty }) {
   const [isSaved, setIsSaved] = useState(false);
 
   const [multilines, setMultilines] = useState([]);
-  
-
-  const ref = useRef(null);
 
 
   useEffect(() => {
@@ -273,31 +270,7 @@ function Map({ localty }) {
   }
 
   const createPositions = () => {
-
-    const layers = ref.current._layers;
-
-    let positionGroup = [];
-
-    Object.entries(layers).forEach(([key, element]) => {
-
-      const paths = element._latlngs;
-
-      console.log(paths);
-
-      let positions = {
-        positions: paths.map(path => ({
-          lat: path.lat,
-          lng: path.lng
-        }))
-      }
-      positionGroup.push(positions);
-    });
-
-    dispatch(setPolyLineForm({
-      ...polyLineForm,
-      positionGroup: positionGroup
-    }))
-
+    savePoints();
     setIsSaved(false);
   }
 
@@ -379,8 +352,15 @@ function Map({ localty }) {
         </LayersControl>
         {renderPolyLines()}
         {renderMarkers()}
-        <FeatureGroup ref={ref}>
+        <MapConsumer>
+        {(map) => {
+          setMapRef(map);
+          return null
+        }}
+        </MapConsumer>
+        <FeatureGroup ref={(ref)=>setEditRef(ref)}>
           <EditControl
+            
             position='topright'
             onEdited={(e) => { setIsSaved(true) }}
             onCreated={(e) => { setIsSaved(true) }}
@@ -388,14 +368,14 @@ function Map({ localty }) {
             draw={{
               polyline: {
                 shapeOptions: {
-                  color:'red',
+                  color: 'red',
                   weight: 1
                 }
               },
               rectangle: false,
-              polygon:false,
-              circle:false,
-              marker:false,
+              polygon: false,
+              circle: false,
+              marker: false,
               circlemarker: false
             }}
           />
