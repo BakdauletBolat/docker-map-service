@@ -16,18 +16,22 @@ import AlertTemplate from 'react-alert-template-basic';
 const options = {
   // you can also just use 'bottom center'
   position: positions.BOTTOM_RIGHT,
-  timeout: 5000,
+  timeout: 3000,
   offset: '30px',
+
   // you can also just use 'scale'
-  transition: transitions.SCALE
+  transition: transitions.SCALE,
+  containerStyle: {
+    zIndex: 500
+  }
 }
 
 
 ReactDOM.render(
-  
+
   <Provider store={store}>
     <AlertProvider template={AlertTemplate} {...options}>
-    <App />
+      <App />
     </AlertProvider>
   </Provider>,
   document.getElementById('root')

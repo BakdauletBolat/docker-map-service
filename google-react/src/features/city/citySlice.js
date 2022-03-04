@@ -14,7 +14,7 @@ export const citySlice = createSlice({
     polyLineForm: {
       name: "",
       km: 0,
-      color: "",
+      color: "#303030",
       positionGroup: [],
       road: {
         beton: 0,

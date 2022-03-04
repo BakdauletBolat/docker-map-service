@@ -18,15 +18,29 @@ code {
 .sr-only {
   display: none;
 }
-.hello {
-  border-radius: 30px;
-  height: 30px;
-  width: 30px;
-  background-color: greenyellow;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.save-button{
+  position: absolute;
+  top:11px;
+  right:80px;
+  background-color: #34495E;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 10px 20px;
+  z-index: 1000;
+  border:none;
+  cursor: pointer;
+}
+.save-button.disabled {
+  background-color: #787f86;
+  cursor:no-drop; 
+}
+.custom-alert-template{
+  z-index: 3000;
+  position: absolute;
+  top:50%;
+  left:50%;
+  background-color: black;
 }
 .App{
   height:100vh;

@@ -4,7 +4,7 @@ import {useDispatch,useSelector} from 'react-redux';
 import { useAlert } from 'react-alert'
 import CityService from "../../network/city-service";
 import { useState } from "react";
-
+// import { useAlert } from 'react-alert'
 
 function PolyLineForm() {
 
@@ -17,6 +17,8 @@ function PolyLineForm() {
     const activeEl = useSelector(state => state.app.activeEl);
     const localty = useSelector(state => state.city.localty);
     const polylines = useSelector(state=>state.city.polylines);
+
+    // const alert = useAlert()
 
     const [isLoading,setIsLoading] = useState();
 
@@ -47,7 +49,7 @@ function PolyLineForm() {
 
         if (polyLineForm.positionGroup.length <= 0) {
             console.log('Позиционная группа обязатк');
-            alert.error('Позиционная группа обязательно');
+            alert.error('Позиционная группа обязательно или вы не сохранили точки');
             setIsLoading(false);
             return
            
@@ -60,7 +62,7 @@ function PolyLineForm() {
             dispatch(setPolyLineForm({
                 name: "",
           km: "",
-          color: "",
+          color: "#303030",
           positionGroup: [],
           road: {
               beton:0,
@@ -74,7 +76,7 @@ function PolyLineForm() {
             }))
         })
         .catch(e=>{
-            alert.error('Что то пошло не так ошибка');
+            alert.error('Что то пошло не так ошибка убедитесь что сохранили все данные');
             setIsLoading(false);
         })
     }

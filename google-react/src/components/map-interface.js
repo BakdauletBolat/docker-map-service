@@ -1,14 +1,15 @@
 // import React, { useState, useRef, useEffect } from "react";
 
 // import VericalButton from "./VerticalButton";
-// import { FaSatellite, FaMapMarked } from 'react-icons/fa';
+import { FaSatellite, FaMapMarked } from 'react-icons/fa';
+
 // import { useLoadScript, GoogleMap, DrawingManager, Polyline } from "@react-google-maps/api";
 // // import ReactangleCard from "./card/rectangle";
 // import PolyLineItem from "./PolylineItem";
 // import { useSelector, useDispatch } from "react-redux";
 
 // import { setIsActiveModal } from '../features/app/appSlice';
-// import { setActivePolyLine, setPolyLineForm } from '../features/city/citySlice';
+
 // import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // const libraries = ['drawing',];
 
@@ -123,7 +124,7 @@
 //   }
 
 
-//   const polyLineForm = useSelector(state => state.city.polyLineForm);
+ 
 
 //   const onPolyLineComplete = polyline => {
 //     const paths = polyline.getPath().getArray();
@@ -218,144 +219,190 @@
 
 
 
-import React, { useCallback, useEffect, useMemo, useState,useRef } from 'react';
-import { MapContainer,Popup,MapConsumer, TileLayer, FeatureGroup, Circle,LayersControl,Marker,Polyline,Tooltip} from 'react-leaflet';
+import React, { useEffect, useState, useRef } from 'react';
+import { MapContainer, Popup, TileLayer, FeatureGroup, LayersControl, Marker, Polyline, Tooltip } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw";
 import RectangleCard from './card/rectangle';
-import {useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import L from "leaflet";
+import RoadIcon from '../static/icons/road.svg';
+import { setPolyLineForm } from '../features/city/citySlice';
 
-
-function Map() {
-
-
+function Map({ localty }) {
 
   const polylines = useSelector(state => state.city.polylines);
+  const polyLineForm = useSelector(state => state.city.polyLineForm);
+  const dispatch = useDispatch();
 
-  const [mp,setMp] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const [multilines, setMultilines] = useState([]);
+  
 
   const ref = useRef(null);
 
 
-  useEffect(()=>{
-    console.log(polylines);
+  useEffect(() => {
     let multilinePositions = [];
-    polylines.map(polyline=>{
+    polylines.map(polyline => {
       let posG = [];
-      polyline.positionGroup.map(pos=>{
+      polyline.positionGroup.map(pos => {
         let posItem = []
-        pos.positions.map(position=>{
-          posItem.push([position.lat,position.lng]);
+        pos.positions.map(position => {
+          posItem.push([position.lat, position.lng]);
         });
         posG.push(posItem);
       })
 
       multilinePositions.push({
-          color: 'lime',
+        color: polyline.color,
         pos: posG
       });
     });
 
-    setMp(multilinePositions);
+    setMultilines(multilinePositions);
 
-    console.log(multilinePositions);
-  },[polylines]);
-
-  
-
-  const customMarker = (title) => {
-    return new L.divIcon({
-      html: `<div class='hello'>${title}</div>`,
-      className: 'hello',
-      iconSize: [30, 30],
-      popupAnchor: [2, -40]
-  });
-  }
-
-  const renderMarkers = () => {
-    return polylines.map((polyline)=>(
-      <>
-      <Marker icon={customMarker(polyline.name)}  position={polyline.positionGroup[0].positions[0]}>
-        <Tooltip>polyline.name</Tooltip>
-        <Popup><RectangleCard item={polyline}></RectangleCard></Popup>
-      </Marker>
-      </>
-    ));
-  }
+  }, [polylines]);
 
   const clearColors = (array) => {
-    array.map(item=>{
-      item.color = 'red';
+    array.map(item => {
+      item.color = '#303030';
     });
 
     return array;
   }
 
-  const renderPolyLines = () => {
-    return mp.map((positions,index)=>(
+  const createPositions = () => {
+
+    const layers = ref.current._layers;
+
+    let positionGroup = [];
+
+    Object.entries(layers).forEach(([key, element]) => {
+
+      const paths = element._latlngs;
+
+      console.log(paths);
+
+      let positions = {
+        positions: paths.map(path => ({
+          lat: path.lat,
+          lng: path.lng
+        }))
+      }
+      positionGroup.push(positions);
+    });
+
+    dispatch(setPolyLineForm({
+      ...polyLineForm,
+      positionGroup: positionGroup
+    }))
+
+    setIsSaved(false);
+  }
+
+  const customMarker = new L.divIcon({
+    html: `<img src = "${RoadIcon}" />`,
+    className: 'marker-item',
+    iconSize: [30, 30],
+  });
+
+  const renderSaveButton = () => {
+
+    const className = isSaved ? 'save-button' : 'save-button disabled'
+    return <button className={className} onClick={createPositions}>
+      Сохранить точки
+    </button>
+  }
+
+  const renderMarkers = () => {
+    return polylines.map((polyline, index) => (
       <>
-       <Polyline key={index} pathOptions={{color: positions.color}}  eventHandlers={
-         {
-           click: (e)=> {
-            let newMp = [...mp];
-            let cleared = clearColors(newMp);
-            cleared[index].color = 'blue';
-            setMp(cleared);
-           }
-         }
-       }  positions={positions.pos}></Polyline>
+        <Marker icon={customMarker} position={polyline.positionGroup[0].positions[0]} eventHandlers={
+          {
+            click: (e) => {
+              let newMp = [...multilines];
+              let cleared = clearColors(newMp);
+              cleared[index].color = 'blue';
+              setMultilines(cleared);
+            }
+          }
+        } >
+          <Tooltip>{polyline.name}</Tooltip>
+          <Popup><RectangleCard item={polyline}></RectangleCard></Popup>
+        </Marker>
       </>
     ));
-   
+  }
+
+  const renderPolyLines = () => {
+    return multilines.map((positions, index) => (
+      <>
+        <Polyline key={index} pathOptions={{ color: positions.color }} eventHandlers={
+          {
+            click: (e) => {
+              let newMp = [...multilines];
+              let cleared = clearColors(newMp);
+              cleared[index].color = 'blue';
+              setMultilines(cleared);
+            }
+          }
+        } positions={positions.pos}></Polyline>
+      </>
+    ));
+
   }
   return (
-    <MapContainer eventHandlers={{
-      click: (e)=> {
-        console.log(e.latlng);
-      }
-    }} center={[42.1946, 70.1223]} zoom={13}>
-      <LayersControl>
-      <LayersControl.BaseLayer checked name="Google map">
-          <TileLayer
-            url='https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
-            maxZoom={20}
-            subdomains={['mt1', 'mt2', 'mt3']}
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer checked name="Толеби">
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-        </LayersControl.BaseLayer>
-      
-      </LayersControl>
-      {renderPolyLines()}
-      {renderMarkers()}
-      {/* <MapConsumer>
-        {(map) => {
-          console.log("map center:", map.getCenter());
-          map.on("click", function (e) {
-            const { lat, lng } = e.latlng;
-            console.log(lat);
+    <>
+      {renderSaveButton()}
+      <MapContainer eventHandlers={{
+        click: (e) => {
+          console.log(e.latlng);
+        }
+      }} center={[localty.lat, localty.lng]} zoom={13}>
+        <LayersControl>
+          <LayersControl.BaseLayer checked name="Google map">
+            <TileLayer
+              url='https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+              maxZoom={20}
+              subdomains={['mt1', 'mt2', 'mt3']}
+            />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer checked name="Толеби">
+            <TileLayer
+              url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+              subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
 
-            
-          });
-          return null;
-        }}
-      </MapConsumer> */}
-      <FeatureGroup ref={ref}>
-        <EditControl
-          position='topright'
-          onEdited={(e) => { console.log('edited', e.layers._layers) }}
-          onCreated={(e) => { console.log('created', e) }}
-          onDeleted={() => { console.log('deleted') }}
-          draw={{
-            rectangle: false
-          }}
-        />
-      </FeatureGroup>
-    </MapContainer>
+            />
+          </LayersControl.BaseLayer>
+
+        </LayersControl>
+        {renderPolyLines()}
+        {renderMarkers()}
+        <FeatureGroup ref={ref}>
+          <EditControl
+            position='topright'
+            onEdited={(e) => { setIsSaved(true) }}
+            onCreated={(e) => { setIsSaved(true) }}
+            onDeleted={() => { setIsSaved(true) }}
+            draw={{
+              polyline: {
+                shapeOptions: {
+                  color:'red',
+                  weight: 1
+                }
+              },
+              rectangle: false,
+              polygon:false,
+              circle:false,
+              marker:false,
+              circlemarker: false
+            }}
+          />
+        </FeatureGroup>
+      </MapContainer>
+    </>
+
   )
 }
 export default Map;
