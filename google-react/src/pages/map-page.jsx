@@ -17,7 +17,7 @@ import VericalButton from "../components/VerticalButton.jsx";
 import { IoArrowBack } from 'react-icons/io5';
 import SidebarModal from "../components/SidebarModal.jsx";
 import Modalize from './Modalize';
-// import ModalBody from "../components/modal/ModalBody.jsx";
+import ModalBody from "../components/modal/ModalBody.jsx";
 import PolyLineForm from "../components/form/PolylineForm.jsx";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';

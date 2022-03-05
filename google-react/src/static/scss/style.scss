@@ -29,10 +29,12 @@
 .toggleMapStyle{
     position: absolute;
     top:20px;
-    left:20px;
+    left:0px;
+    padding-right:20px;
     z-index: 120;
     width: 100%;
     display: flex;
+    justify-content: flex-end;
 }
 .toggleMapStyle__item{
     cursor: pointer;

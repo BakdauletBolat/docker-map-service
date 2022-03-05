@@ -62,13 +62,15 @@ const containerStyle = {
 
 function MapContainer(props) {
 
+    console.log(props.mapCenter,'Map center');
+
     useEffect(() => {
         if (map) {
             map.setZoom(12);
             setTimeout(() => {
                 map.panTo(props.mapCenter);
                 map.setZoom(14);
-            }, 1000)
+            }, 500)
         }
     }, [props.mapCenter])
 
@@ -84,26 +86,28 @@ function MapContainer(props) {
         })
     }
 
-    const renderMap = () => {
-        const onLoad = (mapInstanse) => {
-            console.log(mapInstanse)
-            mapInstanse.setCenter(props.mapCenter);
-            setMap(mapInstanse);
-        }
+    const onLoad = (mapInstanse) => {
+        // console.log(mapInstanse)
+        mapInstanse.setCenter(props.mapCenter);
+        setMap(mapInstanse);
+    }
 
-        const onUnmount = (mapInstanse) => {
-            console.log(mapInstanse)
-            setMap(null);
-        }
+    const onUnmount = (mapInstanse) => {
+        console.log(mapInstanse)
+        setMap(null);
+    }
+
+    const renderMap = () => {
 
         return <GoogleMap
             options={{
-                mapTypeId: 'satellite',
-                styles: exampleMapStyles,
+                mapTypeId: 'roadmap',
+             
                 disableDefaultUI: true,
             }}
             mapContainerStyle={containerStyle}
             zoom={14}
+            
             onLoad={onLoad}
             onUnmount={onUnmount}
         >

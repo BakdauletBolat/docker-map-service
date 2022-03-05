@@ -1,10 +1,10 @@
 import React from "react";
 import Spinner from 'react-bootstrap/Spinner';
 
-function LoadingScreen() {
+function LoadingScreen({style}) {
     return ( 
         <>
-        <div className="spinner-container">
+        <div style={style} className="spinner-container">
         <Spinner animation="grow" style={{
             zIndex: 1000
         }} />

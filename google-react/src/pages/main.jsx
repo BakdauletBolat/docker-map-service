@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Map from '../components/map-simple';
 import SwiperCore, {
   Navigation, Scrollbar,
-  EffectCoverflow, Pagination
+  EffectCoverflow, Pagination,Keyboard
 } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
 import CityService from "../network/city-service";
 import { useSelector, useDispatch } from 'react-redux';
-import { setRurals,setRuralsRow } from '../features/city/citySlice';
+import { setRurals, setRuralsRow } from '../features/city/citySlice';
 import LoadingScreen from "./LoadingScreen";
 import { IoArrowBack, IoCloseCircle } from 'react-icons/io5';
 import VericalButton from "../components/VerticalButton";
@@ -22,7 +24,7 @@ import Tabs from 'react-bootstrap/esm/Tabs';
 import Tab from 'react-bootstrap/esm/Tab';
 import NotFoundScreen from './NotFoundScreen';
 
-SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
+SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar,Keyboard]);
 
 function MainPage() {
 
@@ -41,7 +43,9 @@ function MainPage() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  
+  const navigationPrevRef = React.useRef(null)
+  const navigationNextRef = React.useRef(null)
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,28 +75,37 @@ function MainPage() {
     return (
       <Swiper
         style={{
-          margin: '0px 15px'
+          margin: '0px 15px',
+          paddingTop: '100px'
         }}
         breakpoints={{
           500: {
             slidesPerView: 4
           }
         }}
-        observer={true}
-        observeParents={true}
-        className="swiper-cards"
-        effect={'coverflow'} grabCursor={true}
-        centeredSlides={true}
-        coverflowEffect={{
-          "rotate": 50,
-          "stretch": 1,
-          "depth": 150,
-          "modifier": 1,
-          "slideShadows": false
-        }} pagination={true}
   
-        slidesPerView={1}
+        className="swiper-cards"
+        keyboard={{ enabled: true }}
+        effect={'coverflow'}
+        centeredSlides={true}
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+        onBeforeInit={(swiper) => {
+          swiper.params.navigation.prevEl = navigationPrevRef.current;
+          swiper.params.navigation.nextEl = navigationNextRef.current;
 
+        }}
+        coverflowEffect={{
+          "rotate": 10,
+          "stretch": 1,
+          "depth": 0,
+          "modifier": 5,
+          "slideShadows": false
+        }}
+
+        slidesPerView={1}
         onSlideChange={(e) => {
           setMapCenter({
             lat: rurals[e.activeIndex].lat,
@@ -100,17 +113,23 @@ function MainPage() {
           })
           setActiveRural(rurals[e.activeIndex])
         }}
-        onSwiper={(swiper) => console.log(swiper)}
+
       >
         {rurals.map(item => (
           <SwiperSlide key={item.id}>
-            <Link to={`/rural/${item.id}`} className='rectangle-grid__item'>
+
+            <Link to={`/rural/${item.id}`} onClick={() => console.log('clicked')} className='rectangle-grid__item'>
               <img src={item.image} className="rectangle-grid__icon" />
               <div className="black"></div>
               <p className="rectangle-grid__text">{item.name} ауылдық округі</p>
             </Link>
           </SwiperSlide>
         ))}
+
+          <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={35} color="white"></FaArrowLeft></div>
+          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={35} color="white"></FaArrowRight></div>
+
+
 
       </Swiper>
     )
@@ -125,15 +144,15 @@ function MainPage() {
           <div className="body__main-text">{activeRural?.name} ауылдық округі</div>
           <div className="body__main-text">Құрамында {activeRural?.localtiesCount} елді мекен</div>
           <div className="body__buttons-group">
-              <VericalButton title={'Түйіндеме'} onClick={() => { setStatus(!status) }} icon={<FaList size={30}></FaList>}></VericalButton>
-            </div>
+            <VericalButton title={'Түйіндеме'} onClick={() => { setStatus(!status) }} icon={<FaList size={30}></FaList>}></VericalButton>
+          </div>
         </div>
         <div>
           <div className="map">
             {mapCenter.lat !== null ? <Map mapCenter={mapCenter}></Map> : ""}
           </div>
-          <div className="rural-cards">           
-              {displayRural()}
+          <div className="rural-cards">
+            {displayRural()}
           </div>
         </div>
       </div>
@@ -144,14 +163,14 @@ function MainPage() {
 
 export default MainPage;
 
-function ModalFullScreen({status,setStatus}) {
+function ModalFullScreen({ status, setStatus }) {
   const dispatch = useDispatch();
   const className = status ? 'fullScreenModal fullScreenModal--active' : 'fullScreenModal';
   const cityService = new CityService();
   const rurals = useSelector((state) => state.city.rurals);
   const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     setIsLoading(true);
     cityService.getRurals()
       .then(res => {
@@ -167,10 +186,10 @@ function ModalFullScreen({status,setStatus}) {
         <IoCloseCircle color='white' size={30}></IoCloseCircle>
       </div>
       <div>
-      <h2 className='inf-title'>Төлеби ауданы</h2>
+        <h2 className='inf-title'>Төлеби ауданы</h2>
         <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
-          <Tab eventKey="1" title="Жол саласы бойынша" className="tabs">
-            <Table className="rwd-table" responsiv>
+          <Tab eventKey="1" title="Жол" className="tabs">
+            <Table className="rwd-table" responsive>
               <thead>
                 <tr>
                   <th rowSpan={2}>р/с</th>
@@ -224,13 +243,13 @@ function ModalFullScreen({status,setStatus}) {
               </tbody>
             </Table>
           </Tab>
-          <Tab eventKey="2" title="Ауыз су бойынша" className="tabs">
+          <Tab eventKey="2" title="Ауыз су" className="tabs">
             <Table className="rwd-table" responsive>
               <thead>
                 <tr>
                   <th rowSpan={2}>Барлық елді мекендер (саны)</th>
                   <th colSpan={3}>Оның ішінде:</th>
-                  <th rowSpan={2}>Су құбырының жалпы ұзындығы (ш.қ, (км)</th>
+                  <th rowSpan={2}>Су құбырының жалпы ұзындығы (ш.қ, (ш. қ)</th>
                   <th colSpan={3}>Пайдаланудағы құбырлардың тозуы</th>
                 </tr>
                 <tr>
@@ -296,7 +315,7 @@ function ModalFullScreen({status,setStatus}) {
               </tbody>
             </Table>
           </Tab>
-          <Tab eventKey="3" title="Электр бойынша" className="tabs">
+          <Tab eventKey="3" title="Электр" className="tabs">
             <Table className="rwd-table" responsive>
               <thead>
                 <tr>
@@ -312,24 +331,24 @@ function ModalFullScreen({status,setStatus}) {
                 </tr>
               </thead>
               <tbody>
-                  <tr>
-                    <td>876,667</td>
-                    <td>685,625</td>
-                    <td>191,042</td>
-                    <td>21,7 %</td>
-                    <td>23 007</td>
-                    <td>382</td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <td>876,667</td>
+                  <td>685,625</td>
+                  <td>191,042</td>
+                  <td>21,7 %</td>
+                  <td>23 007</td>
+                  <td>382</td>
+                </tr>
+              </tbody>
             </Table>
           </Tab>
-          <Tab eventKey="4" title="Газ бойынша" className="tabs">
+          <Tab eventKey="4" title="Газ" className="tabs">
             <Table className="rwd-table" responsive>
               <thead>
                 <tr>
                   <th rowSpan={2}></th>
                   <th rowSpan={2}>Нысан атауы </th>
-                  <th rowSpan={2}>Бірлігі шақырымы (км)</th>
+                  <th rowSpan={2}>Бірлігі шақырымы (ш. қ)</th>
                   <th rowSpan={2}>БАРЛЫҒЫ</th>
                   <th colSpan={3}>Газ құбырлары меншігі. Оның ішінде: </th>
                 </tr>
@@ -405,7 +424,7 @@ function ModalFullScreen({status,setStatus}) {
                 <tr>
                   <th rowSpan={2}>Барлық елді мекендер (саны)</th>
                   <th colSpan={3}>Оның ішінде:</th>
-                  <th rowSpan={2}>Газ құбырларының жалпы ұзындығы (ш.қ, (км)</th>
+                  <th rowSpan={2}>Газ құбырларының жалпы ұзындығы (ш.қ, (ш. қ)</th>
                   <th colSpan={3}>Пайдаланудағы құбырлардың тозуы </th>
                 </tr>
                 <tr>

@@ -2,13 +2,14 @@ import {
   Link, useParams, useHistory
 } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Table from 'react-bootstrap/esm/Table';
 import Tabs from 'react-bootstrap/esm/Tabs';
 import Tab from 'react-bootstrap/esm/Tab';
 import Map from '../components/map-simple';
 import SwiperCore, {
   Navigation, Scrollbar,
-  EffectCoverflow, Pagination
+  EffectCoverflow, Pagination,Keyboard
 } from 'swiper';
 
 import { IoArrowBack, IoCloseCircle } from 'react-icons/io5';
@@ -23,7 +24,7 @@ import { FaList } from 'react-icons/fa';
 import NotFoundScreen from "./NotFoundScreen";
 import LoadingScreen from "./LoadingScreen";
 
-SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar]);
+SwiperCore.use([EffectCoverflow, Pagination, Navigation, Scrollbar,Keyboard]);
 
 function RuralInfo(props) {
 
@@ -65,6 +66,9 @@ function RuralInfo(props) {
 
   const [status, setStatus] = useState(false);
 
+  const navigationPrevRef = React.useRef(null)
+  const navigationNextRef = React.useRef(null)
+
   function displayRural() {
 
     if (isLoading) {
@@ -78,26 +82,36 @@ function RuralInfo(props) {
     return (
       <Swiper
         className="swiper-cards"
-        observer={true}
         style={{
-          margin: '0px 15px'
+          margin: '0px 15px',
+          paddingTop: '100px'
         }}
+        keyboard={{ enabled: true }}
         breakpoints={{
           500: {
             slidesPerView: 4
           }
         }}
-        observeParents={true}
-        effect={'coverflow'} grabCursor={true}
-        centeredSlides={true} slidesPerView={'auto'}
+
+        effect={'coverflow'}
+        centeredSlides={true}
         coverflowEffect={{
-          "rotate": 50,
+          "rotate": 10,
           "stretch": 1,
-          "depth": 150,
-          "modifier": 1,
+          "depth": 0,
+          "modifier": 5,
           "slideShadows": false
         }} pagination={true}
-        navigation
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+        grabCursor={true}
+        onBeforeInit={(swiper) => {
+          swiper.params.navigation.prevEl = navigationPrevRef.current;
+          swiper.params.navigation.nextEl = navigationNextRef.current;
+
+        }}
         slidesPerView={1}
         onSlideChange={(e) => {
           setMapCenter({
@@ -106,7 +120,7 @@ function RuralInfo(props) {
           })
           setActiveLocalties(localties[e.activeIndex])
         }}
-        onSwiper={(swiper) => console.log(swiper)}
+
       >
         {localties?.map(item => (
           <SwiperSlide key={item.id}>
@@ -117,6 +131,8 @@ function RuralInfo(props) {
             </Link>
           </SwiperSlide>
         ))}
+          <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={35} color="white"></FaArrowLeft></div>
+          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={35} color="white"></FaArrowRight></div>
       </Swiper>
     )
 
@@ -186,14 +202,6 @@ function ModalFullScreen({status,setStatus}) {
   const activeEl = 1;
 
 
-  if (isLoading) {
-    return <LoadingScreen />
-  }
-
-  if (localties.length <= 0) {
-    return <NotFoundScreen></NotFoundScreen>
-  }
-
   return (
     <div className={className}>
       <div onClick={() => setStatus(!status)} className="fullScreenModal__close">
@@ -202,7 +210,7 @@ function ModalFullScreen({status,setStatus}) {
       <div>
         <h2 className='inf-title'>{localties[0]?.rural?.name} ауылдық округі</h2>
         <Tabs defaultActiveKey="1" id="uncontrolled-tab-example">
-          <Tab eventKey="1" title="Жол бойынша" className="tabs">
+          <Tab eventKey="1" title="Жол " className="tabs">
             {localties.map(localty => (
               <div key={`${localty.id}${1}`}>
                 <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
@@ -212,16 +220,16 @@ function ModalFullScreen({status,setStatus}) {
                     <tr>
                       <th style={{ textAlign: 'center' }} rowSpan="2">№</th>
                       <th rowSpan="2" style={{ textAlign: 'center' }}>Атауы</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /км/</th>
+                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /ш. қ/</th>
                       <th rowSpan="2" style={{ textAlign: 'center' }}>Ені<br />/метр/</th>
                       <th rowSpan="2" style={{ textAlign: 'center' }}>Санаты</th>
                       <th colSpan="3" rowSpan="1" style={{ textAlign: 'center' }}>Жабындысы</th>
                       <th rowSpan="2" style={{ textAlign: 'center' }}>Пайдалануға берілген жылы</th>
                     </tr>
                     <tr>
-                      <th style={{ textAlign: 'center' }}>Асфальт <br /> /км/</th>
-                      <th style={{ textAlign: 'center' }}>Шағал тас <br /> /км/</th>
-                      <th style={{ textAlign: 'center' }}>Топырақ <br /> /км/</th>
+                      <th style={{ textAlign: 'center' }}>Асфальт <br /> /ш. қ/</th>
+                      <th style={{ textAlign: 'center' }}>Шағал тас <br /> /ш. қ/</th>
+                      <th style={{ textAlign: 'center' }}>Топырақ <br /> /ш. қ/</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -254,7 +262,7 @@ function ModalFullScreen({status,setStatus}) {
               </div>
             ))}
           </Tab>
-          <Tab eventKey="2" title="Ауыз су бойынша" className="tabs">
+          <Tab eventKey="2" title="Ауыз су " className="tabs">
             {localties.map(localty => (
               <div key={localty.id+"2"}>
                 <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
@@ -302,7 +310,7 @@ function ModalFullScreen({status,setStatus}) {
               </div>
             ))}
           </Tab>
-          <Tab eventKey="3" title="Электр бойынша" className="tabs">
+          <Tab eventKey="3" title="Электр " className="tabs">
             {localties.map(localty => (
               <div key={localty.id+"3"}>
                 <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
@@ -311,7 +319,7 @@ function ModalFullScreen({status,setStatus}) {
                   <thead>
                     <tr>
                       <th rowSpan={3}>Елді мекен атауы</th>
-                      <th rowSpan={3}>Электр жүйесінің ұзындығы (км)</th>
+                      <th rowSpan={3}>Электр жүйесінің ұзындығы (ш. қ)</th>
                       <th colSpan={7}>Электр бағанасы. Оның ішінде:</th>
                     </tr>
                     <tr>
@@ -385,7 +393,7 @@ function ModalFullScreen({status,setStatus}) {
               </div>)
             )}
           </Tab>
-          <Tab eventKey="4" title="Газ бойынша" className="tabs">
+          <Tab eventKey="4" title="Газ " className="tabs">
             {localties.map(localty => (
               
               <div key={localty.id+"4"}>
@@ -395,12 +403,12 @@ function ModalFullScreen({status,setStatus}) {
                     <tr>
 
                       <th rowSpan={2}>Абонент саны</th>
-                      <th rowSpan={2}>Газ құбыры жүйесінің ұзындығы (ш.қ км)</th>
+                      <th rowSpan={2}>Газ құбыры жүйесінің ұзындығы (ш.қ)</th>
                       <th colSpan={6}>Оның ішінде:</th>
                       <th rowSpan={2}>Салынған жылы</th>
                     </tr>
                     <tr>
-                      <th>Жоғары қысымды газ құбырлары (ш.қ (км)</th>
+                      <th>Жоғары қысымды газ құбырлары (ш.қ (ш. қ)</th>
                       <th>Орта қысымды газ құбырлары (ш.қ)</th>
                       <th>Төмен қысымды құбырлар</th>
                       <th>Газ тұтыну көлемі (м3сағат)</th>

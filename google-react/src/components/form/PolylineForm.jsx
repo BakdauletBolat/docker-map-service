@@ -45,7 +45,6 @@ function PolyLineForm({saveAndClear}) {
     }
 
     const onSubmit = () => {
-        saveAndClear();
         setIsLoading(true);
 
         if (polyLineForm.positionGroup.length <= 0) {
@@ -58,7 +57,9 @@ function PolyLineForm({saveAndClear}) {
         cityService.createPolyLines({...polyLineForm,localities:localty.id,typeMarker: activeEl})
         .then(data=>{
             setIsLoading(false);
+
             alert.success('Успешно создано');
+            saveAndClear();
             dispatch(setPolylines([...polylines,data]))
             dispatch(setPolyLineForm({
                 name: "",
