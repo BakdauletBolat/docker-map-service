@@ -105,7 +105,7 @@ function MainPage() {
           "slideShadows": false
         }}
 
-        slidesPerView={1}
+        slidesPerView={2}
         onSlideChange={(e) => {
           setMapCenter({
             lat: rurals[e.activeIndex].lat,
@@ -125,12 +125,6 @@ function MainPage() {
             </Link>
           </SwiperSlide>
         ))}
-
-          <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={35} color="white"></FaArrowLeft></div>
-          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={35} color="white"></FaArrowRight></div>
-
-
-
       </Swiper>
     )
 
@@ -153,6 +147,8 @@ function MainPage() {
           </div>
           <div className="rural-cards">
             {displayRural()}
+            <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={20} color="white"></FaArrowLeft></div>
+          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={20} color="white"></FaArrowRight></div>
           </div>
         </div>
       </div>

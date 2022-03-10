@@ -101,13 +101,26 @@
     &:hover{
         background-color: darken(#34495e,5);
     }
+
+    @media screen and (max-width:400px) {
+        padding: 10px;
+
+    }
 }
 
 .navigation-container__left{
-    bottom: 100px;
+    bottom: 120px;
     left: 20px;
+
+    @media screen and (max-width:400px) {
+        left: 5px;
+    }
 }
 .navigation-container__right {
-    bottom: 100px;
+    bottom: 120px;
     right: 20px;
+
+    @media screen and (max-width:400px) {
+        right: 5px;
+    }
 }

@@ -106,11 +106,7 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
   return (
     <>
       {renderSaveButton()}
-      <MapContainer eventHandlers={{
-        click: (e) => {
-          console.log(e.latlng);
-        }
-      }} center={[localty.lat, localty.lng]} zoom={13}>
+      <MapContainer  center={[localty.lat, localty.lng]} zoom={13}>
          
         <LayersControl>
           
@@ -138,9 +134,14 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
         </LayersControl>
         {renderPolyLines()}
         {renderMarkers()}
-        <MapConsumer>
+        <MapConsumer eventHandlers={{
+          click: (e) => {
+            console.log(e)
+          }
+        }}>
         {(map) => {
           setMapRef(map);
+          
           return null
         }}
         </MapConsumer>

@@ -66,8 +66,8 @@ function RuralInfo(props) {
 
   const [status, setStatus] = useState(false);
 
-  const navigationPrevRef = React.useRef(null)
-  const navigationNextRef = React.useRef(null)
+  const navigationPrevRef = React.useRef(null);
+  const navigationNextRef = React.useRef(null);
 
   function displayRural() {
 
@@ -80,6 +80,7 @@ function RuralInfo(props) {
     }
 
     return (
+      <>
       <Swiper
         className="swiper-cards"
         style={{
@@ -112,7 +113,7 @@ function RuralInfo(props) {
           swiper.params.navigation.nextEl = navigationNextRef.current;
 
         }}
-        slidesPerView={1}
+        slidesPerView={2}
         onSlideChange={(e) => {
           setMapCenter({
             lat: localties[e.activeIndex].lat,
@@ -131,9 +132,11 @@ function RuralInfo(props) {
             </Link>
           </SwiperSlide>
         ))}
-          <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={35} color="white"></FaArrowLeft></div>
-          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={35} color="white"></FaArrowRight></div>
+        
       </Swiper>
+     
+      </>
+      
     )
 
 
@@ -144,10 +147,12 @@ function RuralInfo(props) {
     <div className="body">
       <div className="container">
         <div className="body__main-content">
+  
           <div className="body__back">
             <div onClick={history.goBack} className="back-icon">
               <IoArrowBack className="icon" size={40} />
             </div>
+           
             <div className="body__main-title">Артқа</div>
           </div>
           <div className="body__main-text">{activeLocalties?.name} елді мекені</div>
@@ -161,6 +166,8 @@ function RuralInfo(props) {
           </div>
           <div className="rural-cards">
             {displayRural()}
+            <div className="navigation-container__left" ref={navigationPrevRef}><FaArrowLeft size={35} color="white"></FaArrowLeft></div>
+          <div className="navigation-container__right" ref={navigationNextRef}><FaArrowRight size={35} color="white"></FaArrowRight></div>
           </div>
         </div>
       </div>
