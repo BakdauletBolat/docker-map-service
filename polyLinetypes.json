@@ -1,0 +1,1 @@
+[{"model": "main.polylinetypes", "pk": 1, "fields": {"name": "Жол"}}, {"model": "main.polylinetypes", "pk": 2, "fields": {"name": "Су"}}, {"model": "main.polylinetypes", "pk": 3, "fields": {"name": "Электр"}}, {"model": "main.polylinetypes", "pk": 4, "fields": {"name": "Газ"}}]
