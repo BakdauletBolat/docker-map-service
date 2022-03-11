@@ -1,1 +1,28 @@
 \\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\
+
+
+//dump
+
+python manage.py dumpdata city.ruraldistrict > ruraldistrict.json
+python manage.py dumpdata city.localities > localities.json
+
+python manage.py dumpdata city.localitieswater city.localitieselectr city.localitiesgas > localitiesMore.json
+
+python manage.py dumpdata main.polyLinetypes > polyLinetypes.json
+
+python manage.py dumpdata main.polyLine > polyLine.json
+
+python manage.py dumpdata main.polylineroad main.positiongroup main.positions main.relevant > roadposrel.json
+
+
+//
+copy
+
+docker cp docker-map-service_web_1:/usr/src/app/ruraldistrict.json  /var/www/docker-map-service
+docker cp docker-map-service_web_1:/usr/src/app/localities.json /var/www/docker-map-service
+docker cp docker-map-service_web_1:/usr/src/app/localitiesMore.json /var/www/docker-map-service
+docker cp docker-map-service_web_1:/usr/src/app/polyLinetypes.json /var/www/docker-map-service
+docker cp docker-map-service_web_1:/usr/src/app/polyLine.json /var/www/docker-map-service
+docker cp docker-map-service_web_1:/usr/src/app/roadposrel.json /var/www/docker-map-service
+
+
