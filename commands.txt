@@ -3,7 +3,8 @@
 
 //dump
 
-python manage.py dumpdata city.ruraldistrict > ruraldistrict.json
+python manage.py dumpdata city.ruraldistrict city.diametr > ruraldistrict.json
+
 python manage.py dumpdata city.localities > localities.json
 
 python manage.py dumpdata city.localitieswater city.localitieselectr city.localitiesgas > localitiesMore.json
@@ -26,3 +27,17 @@ docker cp docker-map-service_web_1:/usr/src/app/polyLine.json /var/www/docker-ma
 docker cp docker-map-service_web_1:/usr/src/app/roadposrel.json /var/www/docker-map-service
 
 
+
+//loaddata
+
+
+python manage.py loaddata ruraldistrict.json
+python manage.py loaddata localities.json
+
+python manage.py loaddata localitiesMore.json
+
+python manage.py loaddata polyLinetypes.json
+
+python manage.py loaddata polyLine.json
+
+python manage.py loaddata roadposrel.json
