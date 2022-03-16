@@ -6,6 +6,18 @@ export default function RoadInf({ item }) {
     console.log(item)
   }, [])
 
+
+  const getRoadLength = () => {
+    let value = 0;
+    item.map((road)=>{
+      value += parseInt(road.road?.beton);
+    });
+
+    console.log(value);
+
+    return value;
+  }
+
   return (
     <div>
       {item ? (
@@ -31,12 +43,12 @@ export default function RoadInf({ item }) {
             </thead>
             <tbody>
               <tr className='header_table'>
-                <td style={{ textAlign: 'center' }}>8</td>
+                <td style={{ textAlign: 'center' }}>{item.length}</td>
                 <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
-                <td style={{ textAlign: 'center' }}>12.12</td>
+                <td style={{ textAlign: 'center' }}>{(getRoadLength() / 1000).toFixed(2)}</td>
                 <td style={{ textAlign: 'center' }}>6</td>
                 <td style={{ textAlign: 'center' }}>V</td>
-                <td style={{ textAlign: 'center' }}>12.12</td>
+                <td style={{ textAlign: 'center' }}>{(getRoadLength() / 1000).toFixed(2)}</td>
                 <td style={{ textAlign: 'center' }}>-</td>
                 <td style={{ textAlign: 'center' }}>-</td>
                 <td style={{ textAlign: 'center' }}></td>
