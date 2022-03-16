@@ -10,7 +10,7 @@ export default function GasInf({item}) {
         <div>
             {item ? (
                 <div>
-                   <h2 className="inf-title">Аққұм - Шақхта Тоғыс елді мекеніндегі ТАБИҒИ ГАЗ ЖҮЙЕЛЕРІ БОЙЫНША</h2>
+                   {/* <h2 className="inf-title">Аққұм - Шақхта Тоғыс елді мекеніндегі ТАБИҒИ ГАЗ ЖҮЙЕЛЕРІ БОЙЫНША</h2> */}
                     <div className="card-container">
                     <BasicCard img={require('../static/images/icons/rural.png')} title={item.name} preTitle="Елді мекен атауы"></BasicCard>
                     <BasicCard img={require('../static/images/icons/subscription.png')} title={item.localitiesGas?.subscribersCount} preTitle="Абонент саны"></BasicCard>

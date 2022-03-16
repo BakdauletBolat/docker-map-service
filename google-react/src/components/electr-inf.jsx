@@ -11,7 +11,7 @@ export default function ElectrInf({ item }) {
       {item ? (
         <div>
 
-          <h2 className='inf-title'>Аққұм елді мекені ЭЛЕКТР ЖҮЙЕЛЕРІ, БАҒАНАЛАР МЕН ТРАНСФОРМАТОР </h2>
+      
 
           <div className='card-container'>
             <BasicCard preTitle='Елді мекен атауы' title={item.name} img={require('../static/images/icons/rural.png')} />

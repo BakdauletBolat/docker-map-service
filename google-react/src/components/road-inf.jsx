@@ -10,7 +10,7 @@ export default function RoadInf({ item }) {
     <div>
       {item ? (
         <div>
-          <h2 className='inf-title'>АҚҚҰМ ЕЛДІ МЕКЕНІ КӨШЕЛЕРІНІҢ АҚПАРАТЫ</h2>
+         
           <Table className='rwd-table'
           >
             <thead>

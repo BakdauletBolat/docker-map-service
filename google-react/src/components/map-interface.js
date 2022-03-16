@@ -3,14 +3,16 @@ import { MapContainer, Popup, TileLayer, FeatureGroup, LayersControl, Marker, Po
 import { EditControl } from "react-leaflet-draw";
 import RectangleCard from './card/rectangle';
 import { useSelector, useDispatch } from 'react-redux';
-import L from "leaflet";
+import L, { map } from "leaflet";
 import RoadIcon from '../static/icons/road.svg';
 
-function Map({ localty, setEditRef,savePoints,setMapRef }) {
+function Map({ setEditRef,savePoints,setMapRef,localtiesId,mapRef }) {
 
   const polylines = useSelector(state => state.city.polylines);
   const polyLineForm = useSelector(state => state.city.polyLineForm);
   const dispatch = useDispatch();
+
+  const localty = useSelector(state => state.city.localty);
 
   const [isSaved, setIsSaved] = useState(false);
 
@@ -18,6 +20,10 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
 
 
   useEffect(() => {
+
+    if (mapRef.current != null) {
+      mapRef.current.setView([localty.lat,localty.lng],13);
+    }
     let multilinePositions = [];
     polylines.map(polyline => {
       let posG = [];
@@ -37,7 +43,7 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
 
     setMultilines(multilinePositions);
 
-  }, [polylines]);
+  }, [polylines,localty]);
 
   const clearColors = (array) => {
     array.map(item => {
@@ -68,8 +74,7 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
 
   const renderMarkers = () => {
     return polylines.map((polyline, index) => (
-      <>
-        <Marker icon={customMarker} position={polyline.positionGroup[0].positions[0]} eventHandlers={
+        <Marker key={polyline.id} icon={customMarker} position={polyline.positionGroup[0].positions[0]} eventHandlers={
           {
             click: (e) => {
               let newMp = [...multilines];
@@ -82,14 +87,12 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
           <Tooltip>{polyline.name}</Tooltip>
           <Popup><RectangleCard item={polyline}></RectangleCard></Popup>
         </Marker>
-      </>
     ));
   }
 
   const renderPolyLines = () => {
     return multilines.map((positions, index) => (
-      <>
-        <Polyline key={index} pathOptions={{ color: positions.color }} eventHandlers={
+        <Polyline key={positions.id} pathOptions={{ color: positions.color }} eventHandlers={
           {
             click: (e) => {
               let newMp = [...multilines];
@@ -99,14 +102,13 @@ function Map({ localty, setEditRef,savePoints,setMapRef }) {
             }
           }
         } positions={positions.pos}></Polyline>
-      </>
     ));
 
   }
   return (
     <>
       {renderSaveButton()}
-      <MapContainer  center={[localty.lat, localty.lng]} zoom={13}>
+      <MapContainer center={[localty.lat, localty.lng]} zoom={13}>
          
         <LayersControl>
           

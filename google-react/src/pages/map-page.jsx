@@ -139,6 +139,7 @@ function MapPage() {
   
 
   useEffect(() => {
+    console.log(localtiesId,'updated');
     cityService.getLocaltyById(localtiesId)
       .then(data => { dispatch(setLocalty(data)) });
 
@@ -223,10 +224,11 @@ function MapPage() {
           {localty.lat ? (
             <Map
             ref={ref}
+            localtiesId={localtiesId}
             setEditRef={setEditRef}
             setMapRef={setMapRef}
+            mapRef={mapRef}
             isPolyLineCreate={isPolyLineCreate}
-            localty={localty}
             savePoints={savePoints}
             setPolyLineCreate={setPolyLineCreate}></Map>
           ): ''}
