@@ -206,6 +206,14 @@ function ModalFullScreen({status,setStatus}) {
 
   }, [ruralId]);
 
+  const getRoadLength = (localty) => {
+    let value = 0;
+    localty.polylines.filter(item => item.typeMarker == activeEl).map((item=>{
+       value += parseInt(item.road?.beton);
+    }));
+
+    return value;
+  }
   const activeEl = 1;
 
 
@@ -243,10 +251,10 @@ function ModalFullScreen({status,setStatus}) {
                     <tr className='header_table'>
                       <td style={{ textAlign: 'center' }}>{localty.polylines.filter(item => item.typeMarker == activeEl).length}</td>
                       <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
-                      <td style={{ textAlign: 'center' }}>12.12</td>
+                      <td style={{ textAlign: 'center' }}>{(getRoadLength(localty) / 1000).toFixed(2)}</td>
                       <td style={{ textAlign: 'center' }}>6</td>
                       <td style={{ textAlign: 'center' }}>V</td>
-                      <td style={{ textAlign: 'center' }}>12.12</td>
+                      <td style={{ textAlign: 'center' }}>{(getRoadLength(localty) / 1000).toFixed(2)}</td>
                       <td style={{ textAlign: 'center' }}>-</td>
                       <td style={{ textAlign: 'center' }}>-</td>
                       <td style={{ textAlign: 'center' }}></td>
