@@ -57,12 +57,12 @@ export default function RoadInf({ item }) {
                 <tr key={item.id + index}>
                   <td style={{ textAlign: 'center' }}>{index + 1}</td>
                   <td style={{ textAlign: 'center' }} headers="length en">{item.name}</td>
-                  <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000}</td>
+                  <td style={{ textAlign: 'center' }}>{(item.km / 1000).toFixed(2)}</td>
                   <td style={{ textAlign: 'center' }}>{item.road?.width}</td>
                   <td style={{ textAlign: 'center' }}>V</td>
-                  <td style={{ textAlign: 'center' }}>{item.road?.beton / 1000} </td>
-                  <td style={{ textAlign: 'center' }}>-</td>
-                  <td style={{ textAlign: 'center' }}>-</td>
+                  <td style={{ textAlign: 'center' }}>{(item.road?.beton / 1000).toFixed(2)} </td>
+                  <td style={{ textAlign: 'center' }}>{(item.road?.shagal_tas / 1000).toFixed(2)}</td>
+                  <td style={{ textAlign: 'center' }}>{(item.road?.topirak / 1000).toFixed(2)}</td>
                   <td style={{ textAlign: 'center' }}>{item.road?.yearConstruction}</td>
                 </tr>
               ))}

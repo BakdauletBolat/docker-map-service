@@ -28,7 +28,7 @@ function RectangleCard({ item }) {
                 <div className="rectangle-card__body">
                     <div className="rectangle-card__item">
                         <div className="rectangle-card__item-pre">Ұзындығы</div>
-                        <div className="rectangle-card__item-title">{item.road?.beton} метр</div>
+                        <div className="rectangle-card__item-title">{item.km} метр</div>
                     </div>
                     <div className="rectangle-card__item">
                         <div className="rectangle-card__item-pre">Алаңы</div>
@@ -44,7 +44,11 @@ function RectangleCard({ item }) {
                     </div>
                     <div className="rectangle-card__item">
                         <div className="rectangle-card__item-pre">Топырақ, шқ.</div>
-                        <div className="rectangle-card__item-title">0</div>
+                        <div className="rectangle-card__item-title">{item.road?.topirak}</div>
+                    </div>
+                    <div className="rectangle-card__item">
+                        <div className="rectangle-card__item-pre">Шағалтас, шқ.</div>
+                        <div className="rectangle-card__item-title">{item.road?.shagal_tas}</div>
                     </div>
                     <div className="rectangle-card__item">
                         <div className="rectangle-card__item-pre">Санаты</div>
