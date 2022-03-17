@@ -86,7 +86,7 @@ class LocalitiesWater(models.Model):
 class LocalitiesElectr(models.Model):
 
     length = BIntegerField(verbose_name='Электр жүйесінің ұзындығы ',null=True,blank=True)
-    cipLength = BIntegerField(verbose_name='CIP жүйесінің ұзындығы',null=True,blank=True)
+    cipLength = BIntegerField(verbose_name='CIP жалпы ұзындығы',null=True,blank=True)
     baganaNumber = BIntegerField(verbose_name='Бағаналардың жалпы саны (дана)',null=True,blank=True)
     bOJT = BIntegerField(verbose_name='Бағаналар ОЖТ меншігінде',null=True,blank=True)
     aOJT = BIntegerField(verbose_name='Ағаш ОЖТ меншігінде',null=True,blank=True)
@@ -142,7 +142,7 @@ class LocalitiesGas(models.Model):
     grpsh = BCharField(verbose_name='ГРПШ-6 саны', max_length=255,null=True,blank=True)
 
     jGasLength = BCharField(verbose_name='Жоғары қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
-    oGasLength = BCharField(verbose_name='Төмен қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
+    oGasLength = BCharField(verbose_name='Орта қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
     tomenKysym = BCharField(verbose_name='Төмен қысымды құбырлар',max_length=255,null=True,blank=True)
 
     yearConstruction = BIntegerField(verbose_name='Салынған жылы',null=True,blank=True)
