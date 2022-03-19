@@ -31,6 +31,19 @@ code {
   border:none;
   cursor: pointer;
 }
+
+.update-button{
+  position: absolute;
+  top:11px;
+  right:280px;
+  background-color: #34495E;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 10px 20px;
+  z-index: 1000;
+  border:none;
+  cursor: pointer;
+}
 .save-button.disabled {
   background-color: #787f86;
   cursor:no-drop; 

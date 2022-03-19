@@ -1,8 +1,8 @@
 from django.db import models
-from city.models import Localities
 from model_clone import CloneMixin
 # Create your models here.
 
+from city.models import Localities
 
 
 class PolyLineTypes(models.Model):

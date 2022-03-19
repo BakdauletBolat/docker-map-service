@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box!important;
+}
+
+.leaflet-popup-content{
+    width: 370px!important;
+}
+
 .body{
     &__main-title{
         font-size:24px;

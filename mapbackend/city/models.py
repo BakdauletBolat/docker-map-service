@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 from city.newFields import BIntegerField,BOneToOneField,BManyToManyField,BCharField
 
@@ -63,7 +62,7 @@ class LocalitiesWater(models.Model):
     wateMetersCount = models.CharField(verbose_name='Су есептегіш құралдары орнатылған (саны)',null=True,blank=True,max_length=255)
     waterMatersDontCount = models.CharField(verbose_name='Су есептегіш құралдары орнатылмаған (саны)',null=True,blank=True,max_length=255)
     localities = models.OneToOneField(Localities, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesWater')
-
+    # polyline = models.ForeignKey("main.PolyLine",on_delete=models.CASCADE,null=True,blank=True)
 
     # def filiable_fields(self):
     #     rTo = []
@@ -110,6 +109,7 @@ class LocalitiesElectr(models.Model):
     trCip = BIntegerField(verbose_name='СИП кабель ВЛ-06 кВт (метр)',null=True,blank=True)
     trVl = BIntegerField(verbose_name='ВЛ-04 кВт (метр)',null=True,blank=True)
 
+    # polyline = models.ForeignKey("main.PolyLine",on_delete=models.CASCADE,null=True,blank=True)
     localities = BOneToOneField(Localities, reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesElectr')
 
     def filiable_fields(self):
@@ -134,7 +134,7 @@ class LocalitiesElectr(models.Model):
 class LocalitiesGas(models.Model):
     populationCount = BIntegerField(verbose_name='Халық саны',null=True,blank=True)
     subscribersCount = BIntegerField(verbose_name='Абонент саны ',null=True,blank=True)
-    gasLength = BCharField(verbose_name='Газ  құбыры жүйесінің ұзындығы',max_length=255,null=True,blank=True)
+    gasLength = BCharField(verbose_name='Газ құбыры жүйесінің ұзындығы',max_length=255,null=True,blank=True)
     bottomGasLength = BCharField(verbose_name='Жер асты газ құбырлары (метр)',max_length=255,null=True,blank=True)
     topGasLength = BCharField(verbose_name='Жер үсті газ құбырлары (метр)', max_length=255,null=True,blank=True)
     typeGas = BCharField(verbose_name='Құбырлардың құрылымы',max_length=255,null=True,blank=True)
@@ -144,6 +144,8 @@ class LocalitiesGas(models.Model):
     jGasLength = BCharField(verbose_name='Жоғары қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
     oGasLength = BCharField(verbose_name='Орта қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
     tomenKysym = BCharField(verbose_name='Төмен қысымды құбырлар',max_length=255,null=True,blank=True)
+
+    # polyline = models.ForeignKey("main.PolyLine",on_delete=models.CASCADE,null=True,blank=True)
 
     yearConstruction = BIntegerField(verbose_name='Салынған жылы',null=True,blank=True)
     localities = BOneToOneField(Localities,reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesGas')

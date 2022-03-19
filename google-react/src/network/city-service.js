@@ -8,6 +8,12 @@ class CityService {
                      .then(response=>response.data)
     }
 
+    async updatePos(data,id) {
+        console.log(id);
+        return axios.post(`${this.url}/api/update-pos/${id}/`,data)
+        .then(response=>response.data);
+    }
+
     async getRuralsRaw() {
         return await axios.get(`${this.url}/api/cities/rural-list-raw/`)
                      .then(response=>response.data)

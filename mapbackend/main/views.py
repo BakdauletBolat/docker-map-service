@@ -1,8 +1,9 @@
+import json
 from django.views import generic
 from .serilizers import PolyLineSerializer,PolylinesTypesSerilizer,RelevantSerializer
-from .models import PolyLine,PolyLineTypes, Relevant
+from .models import PolyLine,PolyLineTypes, PositionGroup, Positions, Relevant
 from rest_framework.response import Response
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets,permissions
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
@@ -44,6 +45,27 @@ class ListPolylines(APIView):
         polyLines = PolyLine.objects.filter(typeMarker_id=typeMarkerId,localities_id=localtiesId)
         polyS = PolyLineSerializer(polyLines,many=True)
         return Response(polyS.data)
+
+
+
+class UpdateAPIViewPolyline(APIView):
+
+    def post(self,request,pk):
+
+        polyline = get_object_or_404(PolyLine,id=pk)
+
+
+        data = json.loads(request.body)
+
+        for posGroup in polyline.positionGroup.all():
+            posGroup.delete()
+
+        for posGroup in data:
+            posGroupObject = PositionGroup.objects.create(polyline=polyline)
+            for path in posGroup:
+                Positions.objects.create(posGroup=posGroupObject, lat=path['lat'], lng=path['lng'])  
+
+        return Response({"json": f'updated {pk}'})
 
 
 class ListRelevants(APIView):

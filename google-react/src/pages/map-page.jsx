@@ -223,7 +223,7 @@ function MapPage() {
         <div style={{ padding: 0 + 'px' }}>
           {localty.lat ? (
             <Map
-            ref={ref}
+            editRef={ref}
             localtiesId={localtiesId}
             setEditRef={setEditRef}
             setMapRef={setMapRef}

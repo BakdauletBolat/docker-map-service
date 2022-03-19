@@ -9,6 +9,7 @@ export const citySlice = createSlice({
     localtiesRaw: [],
     localty: [],
     polylines: [],
+    updatePos: [],
     activePolyline: undefined,
     relevants: [],
     polyLineForm: {
@@ -29,6 +30,9 @@ export const citySlice = createSlice({
   reducers: {
     setRurals: (state, action) => {
       state.rurals = action.payload
+    },
+    setUpdatePos: (state, action) => {
+      state.updatePos = action.payload
     },
     setLocalties: (state, action) => {
       state.localties = action.payload
@@ -60,6 +64,6 @@ export const citySlice = createSlice({
 //export actions
 export const { setLocalties, setRurals, setLocalty, setPolylines, 
                setRelevants, setActivePolyLine, setPolyLineForm,
-               setRuralsRow,setLocaltiesRow } = citySlice.actions;
+               setRuralsRow,setLocaltiesRow,setUpdatePos } = citySlice.actions;
 
 export default citySlice.reducer;
