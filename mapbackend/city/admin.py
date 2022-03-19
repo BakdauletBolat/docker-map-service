@@ -42,6 +42,32 @@ class LocaltiesAdmin(admin.ModelAdmin):
 
 admin.site.register(Localities,LocaltiesAdmin)
 admin.site.register(Diametr)
-admin.site.register(LocalitiesWater)
-admin.site.register(LocalitiesElectr)
-admin.site.register(LocalitiesGas)
+
+
+@admin.register(LocalitiesWater)
+class LocalitesWaterAdmin(admin.ModelAdmin):
+
+    def get_localities_name(self,obj):
+        return obj.localities.name
+
+    list_display = ('id','get_localities_name','waterDebit')
+    list_editable = ('waterDebit',)
+    list_filter = ('localities',)
+
+@admin.register(LocalitiesElectr)
+class LocalitesElectrAdmin(admin.ModelAdmin):
+
+    def get_localities_name(self,obj):
+        return obj.localities.name
+
+    list_display = ('id','get_localities_name','length')
+    list_filter = ('localities',)
+
+@admin.register(LocalitiesGas)
+class LocalitesGasAdmin(admin.ModelAdmin):
+
+    def get_localities_name(self,obj):
+        return obj.localities.name
+
+    list_display = ('id','get_localities_name','subscribersCount')
+    list_filter = ('localities',)
