@@ -34,9 +34,9 @@ class PolyLineRoadAdmin(admin.ModelAdmin):
     def polyline_name(self,obj):
         return obj.polyline.name
 
-    list_display = ('id', 'polyline_name','width','hectar','beton','goodSituation','shagal_tas','topirak','goodSituation','badSituation','polyline')
+    list_display = ('id', 'polyline_name','beton','goodSituation','shagal_tas','topirak','badSituation')
     list_display_links =('id','polyline_name')
-    list_editable = ('goodSituation','badSituation','polyline','shagal_tas','topirak','beton')
+    list_editable = ('goodSituation','badSituation','shagal_tas','topirak','beton')
     list_filter = ('polyline__localities','polyline__typeMarker')
 
 
