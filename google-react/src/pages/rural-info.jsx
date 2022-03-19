@@ -225,6 +225,10 @@ function ModalFullScreen({status,setStatus}) {
     }
   } 
 
+  function getRandomNumberBetween(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
   const getAllInf = () => {
     let obj = {
       count: 0,
@@ -233,7 +237,39 @@ function ModalFullScreen({status,setStatus}) {
       width: 0,
       topirak: 0,
       shagal_tas: 0,
+      localitiesGas: {
+        subscribersCount: 0,
+        gasLength: 0,
+        bottomGasLength: 0,
+        topGasLength: 0,
+        typeGas: 0,
+        volumeGas: 0,
+        grpsh: 0,
+        jGasLength: 0,
+        oGasLength: 0,
+        tomenKysym: 0,
+      },
+      localtiesWater: {
+        streetCount: 0,
+        populationCount: 0,
+        subscribersCount: 0,
+        springSource: 0,
+        waterDebit:0,
+        waterReserves: 0,
+        waterLength: 0,
+        yearConstruction: 0,
+        zaramdyQ: 0,
+        currentQ: 0,
+        nysan: 0,
+        waterStructure: 0,
+        newPipes: 0,
+        newYearConstruction: 0,
+        needToUpdate: 0,
+        wateMetersCount: 0,
+        waterMatersDontCount: 0,
+      },  
       localtiesElectr: {
+        tozuPercent: getRandomNumberBetween(1.1,1.9),
         length: 0,
         cipLength: 0,
         baganaNumber: 0,
@@ -259,10 +295,60 @@ function ModalFullScreen({status,setStatus}) {
    
     localties.map(localty=>{
 
-      for (const [key, value] of Object.entries(obj.localtiesElectr)) {
-        console.log(`${key}: ${value}`);
-        obj.localtiesElectr[key] += obj.localtiesElectr[key] += getValueOrZero(localty.localitiesElectr?.[key])
-      }
+      // for (const [key, value] of Object.entries(obj.localtiesElectr)) {
+      //   obj.localtiesElectr[key] += obj.localtiesElectr[key] += getValueOrZero(localty.localitiesElectr?.[key])
+      // }
+
+      obj.localitiesGas.gasLength += getValueOrZero(localty.localitiesGas?.gasLength);
+      obj.localitiesGas.subscribersCount += getValueOrZero(localty.localitiesGas?.subscribersCount);
+      obj.localitiesGas.bottomGasLength += getValueOrZero(localty.localitiesGas?.bottomGasLength);
+      obj.localitiesGas.topGasLength += getValueOrZero(localty.localitiesGas?.topGasLength);
+      obj.localitiesGas.typeGas += getValueOrZero(localty.localitiesGas?.typeGas);
+      obj.localitiesGas.volumeGas += getValueOrZero(localty.localitiesGas?.volumeGas);
+      obj.localitiesGas.grpsh += getValueOrZero(localty.localitiesGas?.grpsh);
+      obj.localitiesGas.jGasLength += getValueOrZero(localty.localitiesGas?.jGasLength);
+      obj.localitiesGas.oGasLength += getValueOrZero(localty.localitiesGas?.oGasLength);
+      obj.localitiesGas.tomenKysym += getValueOrZero(localty.localitiesGas?.tomenKysym);
+
+
+      obj.localtiesElectr.length += getValueOrZero(localty.localitiesElectr?.length);
+      obj.localtiesElectr.cipLength += getValueOrZero(localty.localitiesElectr?.cipLength);
+      obj.localtiesElectr.baganaNumber += getValueOrZero(localty.localitiesElectr?.baganaNumber);
+      obj.localtiesElectr.bOJT += getValueOrZero(localty.localitiesElectr?.bOJT);
+      obj.localtiesElectr.aOJT += getValueOrZero(localty.localitiesElectr?.aOJT);
+      obj.localtiesElectr.cipOJT += getValueOrZero(localty.localitiesElectr?.cipOJT);
+      obj.localtiesElectr.tmOJT += getValueOrZero(localty.localitiesElectr?.tmOJT);
+      obj.localtiesElectr.trOJT += getValueOrZero(localty.localitiesElectr?.trOJT);
+      obj.localtiesElectr.bCOM += getValueOrZero(localty.localitiesElectr?.bCOM);
+      obj.localtiesElectr.aCOM += getValueOrZero(localty.localitiesElectr?.aCOM);
+      obj.localtiesElectr.cipCOM += getValueOrZero(localty.localitiesElectr?.cipCOM);
+      obj.localtiesElectr.tmOCOM += getValueOrZero(localty.localitiesElectr?.tmOCOM);
+      obj.localtiesElectr.trCOM += getValueOrZero(localty.localitiesElectr?.trCOM);
+      obj.localtiesElectr.bOZ += getValueOrZero(localty.localitiesElectr?.bOZ);
+      obj.localtiesElectr.cipOZ += getValueOrZero(localty.localitiesElectr?.cipOZ);
+      obj.localtiesElectr.trbaganaNumber += getValueOrZero(localty.localitiesElectr?.trbaganaNumber);
+      obj.localtiesElectr.trNumber += getValueOrZero(localty.localitiesElectr?.trNumber);
+      obj.localtiesElectr.trCip += getValueOrZero(localty.localitiesElectr?.trCip);
+      obj.localtiesElectr.trVl += getValueOrZero(localty.localitiesElectr?.trVl);
+
+
+      obj.localtiesWater.streetCount += getValueOrZero(localty.localitiesWater?.streetCount);
+      obj.localtiesWater.populationCount += getValueOrZero(localty.localitiesWater?.populationCount);
+      obj.localtiesWater.subscribersCount += getValueOrZero(localty.localitiesWater?.subscribersCount);
+      obj.localtiesWater.springSource += getValueOrZero(localty.localitiesWater?.springSource);
+      obj.localtiesWater.waterDebit += getValueOrZero(localty.localitiesWater?.waterDebit);
+      obj.localtiesWater.waterReserves += getValueOrZero(localty.localitiesWater?.waterReserves);
+      obj.localtiesWater.waterLength += getValueOrZero(localty.localitiesWater?.waterLength);
+      obj.localtiesWater.yearConstruction += getValueOrZero(localty.localitiesWater?.yearConstruction);
+      obj.localtiesWater.zaramdyQ += getValueOrZero(localty.localitiesWater?.zaramdyQ);
+      obj.localtiesWater.currentQ += getValueOrZero(localty.localitiesWater?.currentQ);
+      obj.localtiesWater.nysan += getValueOrZero(localty.localitiesWater?.nysan);
+      obj.localtiesWater.waterStructure += getValueOrZero(localty.localitiesWater?.waterStructure);
+      obj.localtiesWater.newPipes += getValueOrZero(localty.localitiesWater?.newPipes);
+      obj.localtiesWater.newYearConstruction += getValueOrZero(localty.localitiesWater?.newYearConstruction);
+      obj.localtiesWater.needToUpdate += getValueOrZero(localty.localitiesWater?.needToUpdate);
+      obj.localtiesWater.wateMetersCount += getValueOrZero(localty.localitiesWater?.wateMetersCount);
+      obj.localtiesWater.waterMatersDontCount += getValueOrZero(localty.localitiesWater?.waterMatersDontCount);
             
       localty.polylines.filter(item => item.typeMarker == activeEl).map(item=>{
         obj.count += 1;
@@ -274,8 +360,6 @@ function ModalFullScreen({status,setStatus}) {
       })
     });
 
-
-    console.log(obj)
    return obj;
 
   
@@ -381,41 +465,47 @@ function ModalFullScreen({status,setStatus}) {
           </Tab>
           <Tab eventKey="2" title="Ауыз су " className="tabs">
           <h2 className='inf-title'>{localties[0]?.rural?.name} ауылдық округі байынша</h2>
-          {/* <Table responsive className='rwd-table'
+          <Table responsive className='rwd-table'
                 >
                   <thead>
                     <tr>
-                      <th style={{ textAlign: 'center' }} rowSpan="2">№</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Атауы</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /ш. қ/</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ені<br />/метр/</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Санаты</th>
-                      <th colSpan="3" rowSpan="1" style={{ textAlign: 'center' }}>Жабындысы</th>
-                      
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Жақсы жағдайда</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Нашар жағдайда</th>
+                      <th rowSpan={2}>Халық саны </th>
+                      <th rowSpan={2}>Абонент саны </th>
+                      <th rowSpan={2}>Су көзі </th>
+                      {/* <th rowSpan={2}>Судың дебеті тәулік/м3 </th> */}
+                      <th rowSpan={2}>Жер асты су қоры хаттамасы </th>
+                      <th rowSpan={2}>Су құбырының ұзындығы (ш.қ) </th>
+                      <th colSpan={4}>Оның ішінде</th>
+                      <th rowSpan={2}>2022ж ағымдағы жөндеуден өтетін су құбырлары мен нысандары (ш.қ)</th>
+                      <th colSpan={2}>Су есептегіш құралдары</th>
                     </tr>
                     <tr>
-                      <th style={{ textAlign: 'center' }}>Асфальт <br /> /ш. қ/</th>
-                      <th style={{ textAlign: 'center' }}>Шағал тас <br /> /ш. қ/</th>
-                      <th style={{ textAlign: 'center' }}>Топырақ <br /> /ш. қ/</th>
+                      <th>Салынған жылы </th>
+                      <th>Жарамды құбырлар  (ш.қ)</th>
+                      <th>Жаңартылып жатқаны (2021-2022ж) </th>
+                      <th>Су құбырының құрылымы</th>
+                      <th>Орнатылғаны </th>
+                      <th>Орнатылмағаны</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className='header_table'>
-                      <td style={{ textAlign: 'center' }}>{getAllInf().count}</td>
-                      <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().km / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>6-12</td>
-                      <td style={{ textAlign: 'center' }}>IV-V</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().beton / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().shagal_tas / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().topirak / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().beton / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{((getAllInf().topirak+getAllInf().shagal_tas) / 1000).toFixed(2)}</td>
+                    <tr>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.populationCount}</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.subscribersCount}</td>
+                      <td style={{ textAlign: 'center' }}>Бұлақ / Ұңғыма</td>
+                      {/* <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterDebit}</td> */}
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterReserves}</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterLength}</td>
+                      <td style={{ textAlign: 'center' }}>-</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.zaramdyQ}</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.currentQ}</td>
+                      <td style={{ textAlign: 'center' }}>Темір және ПЭ құбырлар</td>
+                      <td style={{ textAlign: 'center' }}>-</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.wateMetersCount}</td>
+                      <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterMatersDontCount}</td>
                     </tr>
                   </tbody>
-                </Table> */}
+                </Table>
             {localties.map(localty => (
               <div key={localty.id+"2"}>
                 <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
@@ -465,11 +555,11 @@ function ModalFullScreen({status,setStatus}) {
           </Tab>
           <Tab eventKey="3" title="Электр " className="tabs">
           <h2 className='inf-title'>{localties[0]?.rural?.name} ауылдық округі байынша</h2>
-          {/* <Table className='rwd-table' responsive
+          <Table className='rwd-table' responsive
                 >
                   <thead>
                     <tr>
-                      <th rowSpan={3}>Елді мекен атауы</th>
+                      <th rowSpan={3}>Ауылдық округ атауы</th>
                       <th rowSpan={3}>Электр жүйесінің ұзындығы (ш. қ)</th>
                       <th colSpan={7}>Электр бағанасы. Оның ішінде:</th>
                     </tr>
@@ -490,15 +580,15 @@ function ModalFullScreen({status,setStatus}) {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{localty.name}</td>
-                      <td>{localty.localitiesElectr?.length ? localty.localitiesElectr?.length / 1000 : '-'}</td>
-                      <td>{localty.localitiesElectr?.baganaNumber ? localty.localitiesElectr?.baganaNumber : '-'}</td>
-                      <td>{localty.localitiesElectr?.bOJT ? localty.localitiesElectr?.bOJT : '-'}</td>
-                      <td>{localty.localitiesElectr?.bCOM ? localty.localitiesElectr?.bCOM : '-'}</td>
-                      <td>{localty.localitiesElectr?.bOZ ? localty.localitiesElectr?.bOZ : '-'}</td>
-                      <td>{localty.localitiesElectr?.aOJT ? localty.localitiesElectr?.aOJT : '-'}</td>
-                      <td>{localty.localitiesElectr?.aCOM ? localty.localitiesElectr?.aCOM : '-'}</td>
-                      <td>{localty.localitiesElectr?.aOZ ? localty.localitiesElectr?.aOZ : '-'}</td>
+                      <td>{localties[0]?.rural?.name}</td>
+                      <td>{getAllInf().localtiesElectr.length}</td>
+                      <td>{getAllInf().localtiesElectr.baganaNumber}</td>
+                      <td>{getAllInf().localtiesElectr.bOJT}</td>
+                      <td>{getAllInf().localtiesElectr.bCOM}</td>
+                      <td>{getAllInf().localtiesElectr.bOZ}</td>
+                      <td>{getAllInf().localtiesElectr.aOJT}</td>
+                      <td>{getAllInf().localtiesElectr.aCOM}</td>
+                      <td>{getAllInf().localtiesElectr.aOZ}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -528,19 +618,19 @@ function ModalFullScreen({status,setStatus}) {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{localty.localitiesElectr?.cipLength ? localty.localitiesElectr?.cipLength : '-'}</td>
-                      <td>{localty.localitiesElectr?.cipOJT ? localty.localitiesElectr?.cipOJT : '-'}</td>
-                      <td>{localty.localitiesElectr?.cipCOM ? localty.localitiesElectr?.cipCOM : '-'}</td>
-                      <td>{localty.localitiesElectr?.cipOZ ? localty.localitiesElectr?.cipOZ : '-'}</td>
-                      <td>{localty.localitiesElectr?.tmOJT ? localty.localitiesElectr?.tmOJT : '-'}</td>
-                      <td>{localty.localitiesElectr?.tmCOM ? localty.localitiesElectr?.tmCOM : '-'}</td>
-                      <td>{localty.localitiesElectr?.tmOOZ ? localty.localitiesElectr?.tmOOZ : '-'}</td>
-                      <td>{localty.localitiesElectr?.trbaganaNumber ? localty.localitiesElectr?.trbaganaNumber : '-'}</td>
-                      <td>{localty.localitiesElectr?.trOJT ? localty.localitiesElectr?.trOJT : '-'}</td>
-                      <td>{localty.localitiesElectr?.trCOM ? localty.localitiesElectr?.trCOM : '-'}</td>
+                      <td>{getAllInf().localtiesElectr.cipLength}</td>
+                      <td>{getAllInf().localtiesElectr.cipOJT}</td>
+                      <td>{getAllInf().localtiesElectr.cipCOM}</td>
+                      <td>{getAllInf().localtiesElectr.cipOZ}</td>
+                      <td>{getAllInf().localtiesElectr.tmOJT}</td>
+                      <td>{getAllInf().localtiesElectr.tmOCOM}</td>
+                      <td>{getAllInf().localtiesElectr.tmOOZ}</td>
+                      <td>{getAllInf().localtiesElectr.trbaganaNumber}</td>
+                      <td>{getAllInf().localtiesElectr.trOJT}</td>
+                      <td>{getAllInf().localtiesElectr.trCOM}</td>
                     </tr>
                   </tbody>
-                </Table> */}
+                </Table>
             {localties.map(localty => (
               <div key={localty.id+"3"}>
                 <h2 className='inf-title'>{localty.name} елді мекені бойынша</h2>
@@ -625,38 +715,35 @@ function ModalFullScreen({status,setStatus}) {
           </Tab>
           <Tab eventKey="4" title="Газ " className="tabs">
           <h2 className='inf-title'>{localties[0]?.rural?.name} ауылдық округі байынша</h2>
-          <Table responsive className='rwd-table'
-                >
+          <Table className="rwd-table" responsive>
                   <thead>
                     <tr>
-                      <th style={{ textAlign: 'center' }} rowSpan="2">№</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Атауы</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ұзындығы <br /> /ш. қ/</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Ені<br />/метр/</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Санаты</th>
-                      <th colSpan="3" rowSpan="1" style={{ textAlign: 'center' }}>Жабындысы</th>
-                      
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Жақсы жағдайда</th>
-                      <th rowSpan="2" style={{ textAlign: 'center' }}>Нашар жағдайда</th>
+                      <th rowSpan={2}>Абонент саны</th>
+                      <th rowSpan={2}>Газ құбыры жүйесінің ұзындығы (ш.қ)</th>
+                      <th colSpan={6}>Оның ішінде:</th>
+                      <th rowSpan={2}>Салынған жылы</th>
                     </tr>
                     <tr>
-                      <th style={{ textAlign: 'center' }}>Асфальт <br /> /ш. қ/</th>
-                      <th style={{ textAlign: 'center' }}>Шағал тас <br /> /ш. қ/</th>
-                      <th style={{ textAlign: 'center' }}>Топырақ <br /> /ш. қ/</th>
+                      <th>Жоғары қысымды газ құбырлары (ш.қ (ш. қ)</th>
+                      <th>Орта қысымды газ құбырлары (ш.қ)</th>
+                      <th>Төмен қысымды құбырлар</th>
+                      <th>Газ тұтыну көлемі (м3сағат)</th>
+                      <th>ГРПШ саны</th>
+                      <th>Құрылымы</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className='header_table'>
-                      <td style={{ textAlign: 'center' }}>{getAllInf().count}</td>
-                      <td style={{ textAlign: 'center' }} headers="length en">Барлығы</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().km / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>6-12</td>
-                      <td style={{ textAlign: 'center' }}>IV-V</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().beton / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().shagal_tas / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().topirak / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{(getAllInf().beton / 1000).toFixed(2)}</td>
-                      <td style={{ textAlign: 'center' }}>{((getAllInf().topirak+getAllInf().shagal_tas) / 1000).toFixed(2)}</td>
+                    <tr>
+                      {/* <td>{localty.localitiesGas?.populationCount ? localty.localitiesGas?.populationCount : '-'}</td> */}
+                      <td>{getAllInf().localitiesGas.subscribersCount}</td>
+                      <td>{getAllInf().localitiesGas.gasLength}</td>
+                      <td>{getAllInf().localitiesGas.jGasLength}</td>
+                      <td>{getAllInf().localitiesGas.oGasLength}</td>
+                      <td>{getAllInf().localitiesGas.tomenKysym}</td>
+                      <td>{getAllInf().localitiesGas.volumeGas}</td>
+                      <td>{getAllInf().localitiesGas.grpsh}</td>
+                      <td>Темір және полиэтиленді құбырлар</td>
+                      <td>-</td>
                     </tr>
                   </tbody>
                 </Table>

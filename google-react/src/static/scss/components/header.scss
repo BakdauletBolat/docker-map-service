@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    // Navigation
+
     &__nav {
         display: flex;
         justify-content: flex-end;
@@ -15,17 +15,13 @@
             padding-right: 0px;
         }    
     }
-
-    
-    //main-title
+ 
     &__main-title{
         font-size:20px;
         font-weight: 700; 
-        text-align: center
+        text-align: center;
     }
 
-
-    //Map
     &__map{
         display: flex;
         align-items: center;
