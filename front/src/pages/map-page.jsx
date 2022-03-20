@@ -213,7 +213,7 @@ function MapPage() {
         {activePolyline && <SidebarModal></SidebarModal>}
       </div>
 
-      <div className="container-fluid" style={{ padding: 0 + 'px' }}>
+      <div className="container-fluid" style="margin-left: 450px;height: 100vh;width: calc(100% - 450px);padding: 0px;">
         {isActiveAllInf ? (
           <div className="all-inf">
             {displayAllInf()}
