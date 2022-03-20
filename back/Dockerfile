@@ -10,7 +10,7 @@ RUN apk update \
     && apk add jpeg-dev zlib-dev libjpeg \
     && apk add -u zlib-dev \
     && pip3 install Pillow \
-    && apk del build-deps
+    && apk del build-deps 
     
 
 ENV PYTHONDONTWRITEBYTECODE 1
