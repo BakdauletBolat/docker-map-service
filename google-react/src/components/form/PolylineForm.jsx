@@ -83,7 +83,7 @@ function PolyLineForm({saveAndClear}) {
         })
     }
 
-    const {name,km,positionGroup,road: {beton,yearConstruction,width,hectar,goodSituation,badSituation}} = polyLineForm;
+    const {name,km,road: {beton,yearConstruction,width,hectar,goodSituation,badSituation}} = polyLineForm;
 
     
     return (

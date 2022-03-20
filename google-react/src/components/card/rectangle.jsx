@@ -1,12 +1,7 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import {useSelector} from 'react-redux';
 
 function RectangleCard({ item }) {
-    const deleteItem = () => {
-        axios.delete(`http://127.0.0.1:8000/api/polyline/${item.id}`)
-        .then(res=>console.log(res));
-    }
 
     const localty = useSelector(state => state.city.localty);
 
@@ -90,10 +85,7 @@ function RectangleCard({ item }) {
     }
     
 
-    const buildEditButton = () => {
-        return <div>Edit</div>
-    }
-
+ 
     const buildWater = () => {
         return (
             <div>
@@ -238,19 +230,19 @@ function RectangleCard({ item }) {
         )
     }
 
-    if (item.typeMarker == 1) {
+    if (item.typeMarker === 1) {
         return buildRoad();
     }
     
-    if (item.typeMarker == 2) {
+    if (item.typeMarker === 2) {
         return buildWater();
     }
 
-    if (item.typeMarker == 3) {
+    if (item.typeMarker === 3) {
         return buildElectr();
     }
 
-    if (item.typeMarker == 4) {
+    if (item.typeMarker === 4) {
         return buildGas();
     }
 

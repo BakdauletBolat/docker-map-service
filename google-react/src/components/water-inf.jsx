@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/esm/Table';
-import BasicCard from './card/basic';
+// import BasicCard from './card/basic';
 
 export default function WaterInf({ item }) {
   useEffect(() => {

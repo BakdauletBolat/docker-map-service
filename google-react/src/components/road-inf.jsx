@@ -4,16 +4,15 @@ import Table from 'react-bootstrap/esm/Table';
 export default function RoadInf({ item }) {
   useEffect(() => {
     console.log(item)
-  }, [])
+  }, [item])
 
 
   const getRoadLength = () => {
     let value = 0;
-    item.map((road)=>{
+    item.forEach((road)=>{
       value += parseInt(road.road?.beton);
     });
 
-    console.log(value);
 
     return value;
   }

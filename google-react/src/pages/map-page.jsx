@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,forwardRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Map from '../components/map-interface.js';
 import RoadInf from '../components/road-inf';
 import GasInf from '../components/gas-inf';
@@ -17,7 +17,7 @@ import VericalButton from "../components/VerticalButton.jsx";
 import { IoArrowBack } from 'react-icons/io5';
 import SidebarModal from "../components/SidebarModal.jsx";
 import Modalize from './Modalize';
-import ModalBody from "../components/modal/ModalBody.jsx";
+// import ModalBody from "../components/modal/ModalBody.jsx";
 import PolyLineForm from "../components/form/PolylineForm.jsx";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';

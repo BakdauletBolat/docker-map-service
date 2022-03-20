@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, Popup, TileLayer, FeatureGroup, LayersControl, Marker,
         Polyline, Tooltip,MapConsumer } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw";
@@ -6,7 +6,7 @@ import RectangleCard from './card/rectangle';
 import { useSelector, useDispatch } from 'react-redux';
 import {setPolylines} from '../features/city/citySlice';
 import { useParams } from 'react-router-dom';
-import L, { map } from "leaflet";
+import L from "leaflet";
 import RoadIcon from '../static/icons/road.svg';
 import WaterTap from '../static/icons/water-tap.svg';
 import GasIcon from '../static/icons/valve.png';
@@ -16,7 +16,6 @@ import CityService from '../network/city-service';
 function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
 
   const polylines = useSelector(state => state.city.polylines);
-  const polyLineForm = useSelector(state => state.city.polyLineForm);
 
   const dispatch = useDispatch();
 
@@ -31,16 +30,16 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
 
 
   useEffect(() => {
-    console.log(localty);
+
     if (mapRef.current != null) {
       mapRef.current.setView([localty.lat,localty.lng],13);
     }
     let multilinePositions = [];
-    polylines.map(polyline => {
+    polylines.forEach(polyline => {
       let posG = [];
-      polyline.positionGroup.map(pos => {
+      polyline.positionGroup.forEach(pos => {
         let posItem = []
-        pos.positions.map(position => {
+        pos.positions.forEach(position => {
           posItem.push([position.lat, position.lng]);
         });
         posG.push(posItem);
@@ -55,33 +54,33 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
 
     setMultilines(multilinePositions);
 
-  }, [polylines,localty]);
+  }, [polylines,localty,mapRef]);
 
   const clearColors = (array) => {
 
-    if (activeEl == 1) {
-      array.map(item => {
+    if (activeEl === 1) {
+      array.forEach(item => {
         item.color = '#303030';
       });
       return array;
     }
 
-    if (activeEl == 2) {
-      array.map(item => {
+    if (activeEl === 2) {
+      array.forEach(item => {
         item.color = '#4aabff';
       });
       return array;
     }
 
-    if (activeEl == 3) {
-      array.map(item => {
+    if (activeEl === 3) {
+      array.forEach(item => {
         item.color = '#00396b';
       });
       return array;
     }
 
-    if (activeEl == 4) {
-      array.map(item => {
+    if (activeEl === 4) {
+      array.forEach(item => {
         item.color = '#db8b00';
       });
       return array;
@@ -102,7 +101,7 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
     iconSize: [30, 30],
   });
 
-  if (activeEl == 1) {
+  if (activeEl === 1) {
     customMarker = new L.divIcon({
       html: `<img src = "${RoadIcon}" />`,
       className: 'marker-item',
@@ -110,7 +109,7 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
     });
   }
 
-  if (activeEl == 2) {
+  if (activeEl === 2) {
     customMarker = new L.divIcon({
       html: `<img src = "${WaterTap}" />`,
       className: 'marker-item',
@@ -118,7 +117,7 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
     });
   }
 
-  if (activeEl == 3) {
+  if (activeEl === 3) {
     customMarker = new L.divIcon({
       html: `<img src = "${ElectrIcon}" />`,
       className: 'marker-item',
@@ -126,7 +125,7 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
     });
   }
 
-  if (activeEl == 4) {
+  if (activeEl === 4) {
     customMarker = new L.divIcon({
       html: `<img src = "${GasIcon}" />`,
       className: 'marker-item',
@@ -222,8 +221,6 @@ function Map({ setEditRef,savePoints,setMapRef,editRef,mapRef }) {
       Object.entries(layers).forEach(([key, element]) => {
 
         const paths = element._latlngs;
-
-        console.log(paths);
 
         let positions = paths.map(path => ({
           lat: path.lat,

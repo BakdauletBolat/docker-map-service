@@ -4,7 +4,7 @@ import {
     Route,
     useRouteMatch
 } from "react-router-dom";
-import RuralInfo from './pages/rural-info';
+import RuralInfo from './pages/rural-info/rural-info';
 
 function Rural() {
     let { path } = useRouteMatch();

@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/esm/Table';
 export default function Relevant({ relevants }) {
     useEffect(() => {
         console.log(relevants)
-    }, [])
+    }, [relevants])
 
     return (
         <div>

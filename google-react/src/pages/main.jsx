@@ -16,7 +16,7 @@ import CityService from "../network/city-service";
 import { useSelector, useDispatch } from 'react-redux';
 import { setRurals, setRuralsRow } from '../features/city/citySlice';
 import LoadingScreen from "./LoadingScreen";
-import { IoArrowBack, IoCloseCircle } from 'react-icons/io5';
+import { IoCloseCircle } from 'react-icons/io5';
 import VericalButton from "../components/VerticalButton";
 import { FaList } from 'react-icons/fa';
 import Table from 'react-bootstrap/esm/Table';
@@ -163,7 +163,6 @@ function ModalFullScreen({ status, setStatus }) {
   const dispatch = useDispatch();
   const className = status ? 'fullScreenModal fullScreenModal--active' : 'fullScreenModal';
   const cityService = new CityService();
-  const rurals = useSelector((state) => state.city.rurals);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -174,7 +173,7 @@ function ModalFullScreen({ status, setStatus }) {
         setIsLoading(false);
       })
 
-  }, [])
+  }, [status])
 
   return (
     <div className={className}>

@@ -3,54 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { FaSatellite, FaMapMarked } from 'react-icons/fa';
 import VericalButton from "./VerticalButton";
 
-const exampleMapStyles = [
-    {
-        featureType: "administrative",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off"
-            },
-        ],
-    },
-    {
-        featureType: "landscape",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off"
-            },
-        ],
-    },
-    {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off"
-            },
-        ],
-    },
-    {
-        featureType: "transit",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off"
-            },
-        ],
-    },
-    {
-        featureType: "water",
-        elementType: "labels",
-        stylers: [
-            {
-                visibility: "off"
-            },
-        ],
-    },
-];
-
 const containerStyle = {
     position: 'absolute',
     top: 0,
@@ -61,8 +13,6 @@ const containerStyle = {
 }
 
 function MapContainer(props) {
-
-    console.log(props.mapCenter,'Map center');
 
     useEffect(() => {
         if (map) {
