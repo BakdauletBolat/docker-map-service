@@ -21,7 +21,7 @@ services:
       - POSTGRES_DB=database
   web:
     restart: always  
-    build: ./mapbackend
+    build: ./back
     command: gunicorn mapbackend.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/usr/src/app/static
@@ -36,7 +36,7 @@ services:
   nginx-react:
     restart: always  
     build:
-      context: ./google-react
+      context: ./front
       
       dockerfile: Dockerfile
       # dockerfile: Dockerfile
