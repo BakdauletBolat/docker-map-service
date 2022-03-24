@@ -35,9 +35,9 @@ function Tab4({ getAllInf }) {
                       {/* <td>{localty.localitiesGas?.populationCount ? localty.localitiesGas?.populationCount : '-'}</td> */}
                       <td>{getAllInf().localitiesGas.subscribersCount}</td>
                       <td>{getAllInf().localitiesGas.gasLength}</td>
-                      <td>{getAllInf().localitiesGas.jGasLength}</td>
-                      <td>{getAllInf().localitiesGas.oGasLength}</td>
-                      <td>{getAllInf().localitiesGas.tomenKysym}</td>
+                      <td>{(getAllInf().localitiesGas.jGasLength).toFixed(2)}</td>
+                      <td>{(getAllInf().localitiesGas.oGasLength).toFixed(2)}</td>
+                      <td>{(getAllInf().localitiesGas.tomenKysym).toFixed(2)}</td>
                       <td>{getAllInf().localitiesGas.volumeGas}</td>
                       <td>{getAllInf().localitiesGas.grpsh}</td>
                       <td>Темір және полиэтиленді құбырлар</td>

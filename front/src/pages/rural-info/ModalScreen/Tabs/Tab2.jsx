@@ -43,7 +43,7 @@ function Tab2({ getAllInf }) {
                     <td style={{ textAlign: 'center' }}>Бұлақ / Ұңғыма</td>
                     {/* <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterDebit}</td> */}
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterReserves}</td>
-                    <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterLength}</td>
+                    <td style={{ textAlign: 'center' }}>{(getAllInf().localtiesWater.waterLength).toFixed(2)}</td>
                     <td style={{ textAlign: 'center' }}>-</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.zaramdyQ}</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.currentQ}</td>
