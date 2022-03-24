@@ -26,6 +26,7 @@ function Tab2({ getAllInf }) {
                     <th colSpan={4}>Оның ішінде</th>
                     <th rowSpan={2}>2022ж ағымдағы жөндеуден өтетін су құбырлары мен нысандары (ш.қ)</th>
                     <th colSpan={2}>Су есептегіш құралдары</th>
+                    <th colSpan={2}>Меншік иесі</th>
                 </tr>
                 <tr>
                     <th>Салынған жылы </th>
@@ -51,6 +52,7 @@ function Tab2({ getAllInf }) {
                     <td style={{ textAlign: 'center' }}>-</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.wateMetersCount}</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterMatersDontCount}</td>
+                    <td style={{ textAlign: 'center' }}>Ленгер су, МКК, аудандық ТҮКШЖКжАЖ</td>
                 </tr>
             </tbody>
         </Table>

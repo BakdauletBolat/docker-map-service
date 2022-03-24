@@ -107,7 +107,7 @@ class LocalitiesElectr(models.Model):
     trbaganaNumber = BIntegerField(verbose_name='Трансформатордағы бағаналардың жалпы саны (дана)',null=True,blank=True)
     trNumber = BIntegerField(verbose_name='Трансформатор (КТПН)  саны ',null=True,blank=True)
     trCip = BIntegerField(verbose_name='СИП кабель ВЛ-06 кВт (метр)',null=True,blank=True)
-    trVl = BIntegerField(verbose_name='ВЛ-04 кВт (метр)',null=True,blank=True)
+    trVl = BIntegerField(verbose_name='Тозу пайызы (%)',null=True,blank=True)
 
     # polyline = models.ForeignKey("main.PolyLine",on_delete=models.CASCADE,null=True,blank=True)
     localities = BOneToOneField(Localities, reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesElectr')
@@ -135,11 +135,12 @@ class LocalitiesGas(models.Model):
     populationCount = BIntegerField(verbose_name='Халық саны',null=True,blank=True)
     subscribersCount = BIntegerField(verbose_name='Абонент саны ',null=True,blank=True)
     gasLength = BCharField(verbose_name='Газ құбыры жүйесінің ұзындығы',max_length=255,null=True,blank=True)
-    bottomGasLength = BCharField(verbose_name='Жер асты газ құбырлары (метр)',max_length=255,null=True,blank=True)
-    topGasLength = BCharField(verbose_name='Жер үсті газ құбырлары (метр)', max_length=255,null=True,blank=True)
+    bottomGasLength = BCharField(verbose_name='Тозығы жеткен құбыр',max_length=255,null=True,blank=True)
+    topGasLength = BCharField(verbose_name='Тозуы процент', max_length=255,null=True,blank=True)
     typeGas = BCharField(verbose_name='Құбырлардың құрылымы',max_length=255,null=True,blank=True)
     volumeGas = BCharField(verbose_name='Газ тұтыну көлемі ',max_length=255,null=True,blank=True)
     grpsh = BCharField(verbose_name='ГРПШ-6 саны', max_length=255,null=True,blank=True)
+
 
     jGasLength = BCharField(verbose_name='Жоғары қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)
     oGasLength = BCharField(verbose_name='Орта қысымды газ құбырлары (ш.қ (км))',max_length=255,null=True,blank=True)

@@ -60,7 +60,7 @@ class LocalitesElectrAdmin(admin.ModelAdmin):
     def get_localities_name(self,obj):
         return obj.localities.name
 
-    list_display = ('id','get_localities_name','length')
+    list_display = ('id','get_localities_name','length','trVl')
     list_filter = ('localities',)
 
 @admin.register(LocalitiesGas)

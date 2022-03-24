@@ -7,6 +7,7 @@ function Tab4({ getAllInf }) {
 
     const localties = useSelector((state) => state.city.localties);
 
+
     useEffect(() => {
 
     }, [localties])
@@ -16,15 +17,18 @@ function Tab4({ getAllInf }) {
           <Table className="rwd-table" responsive>
                   <thead>
                     <tr>
+                      <th rowSpan={2}>Елді мекен саны</th>
                       <th rowSpan={2}>Абонент саны</th>
                       <th rowSpan={2}>Газ құбыры жүйесінің ұзындығы (ш.қ)</th>
-                      <th colSpan={6}>Оның ішінде:</th>
-                      <th rowSpan={2}>Салынған жылы</th>
+                      <th colSpan={8}>Оның ішінде:</th>
+                      <th rowSpan={2}>Меншік иесі</th>
                     </tr>
                     <tr>
                       <th>Жоғары қысымды газ құбырлары (ш.қ (ш. қ)</th>
                       <th>Орта қысымды газ құбырлары (ш.қ)</th>
                       <th>Төмен қысымды құбырлар</th>
+                      <th>Тозығы жеткен құбырлар (ш. қ)</th>
+                      <th>Тозуы(%)</th>
                       <th>Газ тұтыну көлемі (м3сағат)</th>
                       <th>ГРПШ саны</th>
                       <th>Құрылымы</th>
@@ -32,16 +36,19 @@ function Tab4({ getAllInf }) {
                   </thead>
                   <tbody>
                     <tr>
-                      {/* <td>{localty.localitiesGas?.populationCount ? localty.localitiesGas?.populationCount : '-'}</td> */}
+                      <td>{localties.length}</td>
                       <td>{getAllInf().localitiesGas.subscribersCount}</td>
                       <td>{getAllInf().localitiesGas.gasLength}</td>
                       <td>{(getAllInf().localitiesGas.jGasLength).toFixed(2)}</td>
                       <td>{(getAllInf().localitiesGas.oGasLength).toFixed(2)}</td>
                       <td>{(getAllInf().localitiesGas.tomenKysym).toFixed(2)}</td>
+                      <td>{getAllInf().localitiesGas.tozuZk}</td>
+                      <td>{getAllInf().localitiesGas.tozuPercent}</td>
                       <td>{getAllInf().localitiesGas.volumeGas}</td>
                       <td>{getAllInf().localitiesGas.grpsh}</td>
                       <td>Темір және полиэтиленді құбырлар</td>
-                      <td>-</td>
+
+                      <td>ТО ММЖ департаменті</td>
                     </tr>
                   </tbody>
                 </Table>

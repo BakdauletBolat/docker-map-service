@@ -81,6 +81,8 @@ function ModalFullScreen({ status, setStatus }) {
         jGasLength: 0,
         oGasLength: 0,
         tomenKysym: 0,
+        tozuPercent: 0,
+        tozuZk: 0
       },
       localtiesWater: {
         streetCount: 0,
@@ -142,6 +144,8 @@ function ModalFullScreen({ status, setStatus }) {
       obj.localitiesGas.jGasLength += getValueOrZero(localty.localitiesGas?.jGasLength);
       obj.localitiesGas.oGasLength += getValueOrZero(localty.localitiesGas?.oGasLength);
       obj.localitiesGas.tomenKysym += getValueOrZero(localty.localitiesGas?.tomenKysym);
+      obj.localitiesGas.tozuZk += getValueOrZero(localty.localitiesGas?.bottomGasLength);
+      obj.localitiesGas.tozuPercent += getValueOrZero(localty.localitiesGas?.topGasLength);
 
 
       obj.localtiesElectr.length += getValueOrZero(localty.localitiesElectr?.length);
