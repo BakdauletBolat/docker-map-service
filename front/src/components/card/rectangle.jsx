@@ -20,8 +20,8 @@ function RectangleCard({ item }) {
         const bad = (zaramdyQ * 100) / waterLength;
     
         const percent = {
-            bad: bad,
-            good: 100 - bad
+            bad: 100-bad,
+            good: bad
         }
 
         return percent
