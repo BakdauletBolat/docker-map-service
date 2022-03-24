@@ -121,7 +121,7 @@ function MainPage() {
             <Link to={`/rural/${item.id}`} onClick={() => console.log('clicked')} className='rectangle-grid__item'>
               <img src={item.image} className="rectangle-grid__icon" />
               <div className="black"></div>
-              <p className="rectangle-grid__text">{item.name} ауылдық округі</p>
+              <p className="rectangle-grid__text">{item.name}{item.name === 'Ленгер' ? ' қаласы' : ' ауылдық округі' }</p>
             </Link>
           </SwiperSlide>
         ))}

@@ -127,7 +127,7 @@ function RuralInfo() {
             <Link to={`/localties/${item.id}`} className='rectangle-grid__item'>
               <img src={item.image} className="rectangle-grid__icon" />
               <div className="black"></div>
-              <p className="rectangle-grid__text">{item.name} елді мекені</p>
+              <p className="rectangle-grid__text">{item.name} {item.name == 'Ленгер' ? 'қаласы' : 'елді мекені' }</p>
             </Link>
           </SwiperSlide>
         ))}
