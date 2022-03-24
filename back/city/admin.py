@@ -61,6 +61,7 @@ class LocalitesElectrAdmin(admin.ModelAdmin):
         return obj.localities.name
 
     list_display = ('id','get_localities_name','length','trVl')
+    list_editable = ('trVl',)
     list_filter = ('localities',)
 
 @admin.register(LocalitiesGas)
