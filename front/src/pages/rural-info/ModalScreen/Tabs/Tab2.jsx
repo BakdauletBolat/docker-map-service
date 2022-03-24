@@ -24,7 +24,8 @@ function Tab2({ getAllInf }) {
                     <th rowSpan={2}>Жер асты су қоры хаттамасы </th>
                     <th rowSpan={2}>Су құбырының ұзындығы (ш.қ) </th>
                     <th colSpan={4}>Оның ішінде</th>
-                    <th rowSpan={2}>2022ж ағымдағы жөндеуден өтетін су құбырлары мен нысандары (ш.қ)</th>
+                    <th rowSpan={2}>Тозуы
+                    ( ш, қ)</th>
                     <th colSpan={2}>Су есептегіш құралдары</th>
                     <th colSpan={2}>Меншік иесі</th>
                 </tr>
@@ -49,7 +50,7 @@ function Tab2({ getAllInf }) {
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.zaramdyQ}</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.currentQ}</td>
                     <td style={{ textAlign: 'center' }}>Темір және ПЭ құбырлар</td>
-                    <td style={{ textAlign: 'center' }}>-</td>
+                    <td style={{ textAlign: 'center' }}>{(getAllInf().localtiesWater.waterLength - (getAllInf().localtiesWater.zaramdyQ+getAllInf().localtiesWater.currentQ)).toFixed(2)}</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.wateMetersCount}</td>
                     <td style={{ textAlign: 'center' }}>{getAllInf().localtiesWater.waterMatersDontCount}</td>
                     <td style={{ textAlign: 'center' }}>Ленгер су, МКК, аудандық ТҮКШЖКжАЖ</td>

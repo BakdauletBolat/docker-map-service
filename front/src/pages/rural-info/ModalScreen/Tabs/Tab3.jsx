@@ -19,12 +19,14 @@ function Tab3({ getAllInf }) {
                 <tr>
                     <th rowSpan={3}>Ауылдық округ атауы</th>
                     <th rowSpan={3}>Электр жүйесінің ұзындығы (ш. қ)</th>
-                    <th colSpan={7}>Электр бағанасы. Оның ішінде:</th>
+                    <th colSpan={8}>Электр бағанасы. Оның ішінде:</th>
                 </tr>
                 <tr>
                     <th rowSpan={2}>Бағаналарды ң жалпы саны (дана)</th>
+                    <th rowSpan={2}>Тозуы(%)</th>
                     <th colSpan={3}>Бетонды бағаналар</th>
                     <th colSpan={3}>Ағаш бағаналардың саны</th>
+                   
                 </tr>
                 <tr>
                     <th>ОЖТ меншігінде</th>
@@ -41,6 +43,7 @@ function Tab3({ getAllInf }) {
                     <td>{localties[0]?.rural?.name}</td>
                     <td>{getAllInf().localtiesElectr.length}</td>
                     <td>{getAllInf().localtiesElectr.baganaNumber}</td>
+                    <td>{getAllInf().localtiesElectr.tozu - 0.1}</td>
                     <td>{getAllInf().localtiesElectr.bOJT}</td>
                     <td>{getAllInf().localtiesElectr.bCOM}</td>
                     <td>{getAllInf().localtiesElectr.bOZ}</td>
@@ -53,14 +56,16 @@ function Tab3({ getAllInf }) {
         <Table className='rwd-table' responsive>
             <thead>
                 <tr>
-                    <th colSpan={7}>Электр желілерінің ұзындығы</th>
-                    <th colSpan={3}>Трансформатордың саны</th>
+                    <th colSpan={8}>Электр желілерінің ұзындығы</th>
+                    <th colSpan={4}>Трансформатордың саны</th>
                 </tr>
                 <tr>
                     <th rowSpan={2}>СИП кабель жалпы ұзындығы</th>
+                    <th rowSpan={2}>Тозуы(%)</th>
                     <th colSpan={3}>СИП кабель</th>
                     <th colSpan={3}>Темір электр сымдары</th>
                     <th rowSpan={2}>Жалпы саны</th>
+                    <th rowSpan={2}>Тозуы(%)</th>
                     <th colSpan={2}>Оның ішінде</th>
                 </tr>
                 <tr>
@@ -77,6 +82,7 @@ function Tab3({ getAllInf }) {
             <tbody>
                 <tr>
                     <td>{getAllInf().localtiesElectr.cipLength}</td>
+                    <td>{getAllInf().localtiesElectr.tozu}</td>
                     <td>{getAllInf().localtiesElectr.cipOJT}</td>
                     <td>{getAllInf().localtiesElectr.cipCOM}</td>
                     <td>{getAllInf().localtiesElectr.cipOZ}</td>
@@ -84,6 +90,7 @@ function Tab3({ getAllInf }) {
                     <td>{getAllInf().localtiesElectr.tmOCOM}</td>
                     <td>{getAllInf().localtiesElectr.tmOOZ}</td>
                     <td>{getAllInf().localtiesElectr.trbaganaNumber}</td>
+                    <td>{getAllInf().localtiesElectr.tozu - 0.3}</td>
                     <td>{getAllInf().localtiesElectr.trOJT}</td>
                     <td>{getAllInf().localtiesElectr.trCOM}</td>
                 </tr>

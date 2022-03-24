@@ -58,9 +58,6 @@ function ModalFullScreen({ status, setStatus }) {
     }
   }
 
-  function getRandomNumberBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
 
   const getAllInf = () => {
     let obj = {
@@ -104,7 +101,6 @@ function ModalFullScreen({ status, setStatus }) {
         waterMatersDontCount: 0,
       },
       localtiesElectr: {
-        tozuPercent: getRandomNumberBetween(1.1, 1.9),
         length: 0,
         cipLength: 0,
         baganaNumber: 0,
@@ -123,16 +119,13 @@ function ModalFullScreen({ status, setStatus }) {
         trbaganaNumber: 0,
         trNumber: 0,
         trCip: 0,
-        trVl: 0,
+        tozu: 0,
       }
     };
 
 
     localties.map(localty => {
 
-      // for (const [key, value] of Object.entries(obj.localtiesElectr)) {
-      //   obj.localtiesElectr[key] += obj.localtiesElectr[key] += getValueOrZero(localty.localitiesElectr?.[key])
-      // }
 
       obj.localitiesGas.gasLength += getValueOrZero(localty.localitiesGas?.gasLength);
       obj.localitiesGas.subscribersCount += getValueOrZero(localty.localitiesGas?.subscribersCount);
@@ -166,7 +159,7 @@ function ModalFullScreen({ status, setStatus }) {
       obj.localtiesElectr.trbaganaNumber += getValueOrZero(localty.localitiesElectr?.trbaganaNumber);
       obj.localtiesElectr.trNumber += getValueOrZero(localty.localitiesElectr?.trNumber);
       obj.localtiesElectr.trCip += getValueOrZero(localty.localitiesElectr?.trCip);
-      obj.localtiesElectr.trVl += getValueOrZero(localty.localitiesElectr?.trVl);
+      obj.localtiesElectr.tozu += getValueOrZero(localty.localitiesElectr?.trVl);
 
 
       obj.localtiesWater.streetCount += getValueOrZero(localty.localitiesWater?.streetCount);
