@@ -107,7 +107,7 @@ class LocalitiesElectr(models.Model):
     trbaganaNumber = BIntegerField(verbose_name='Трансформатордағы бағаналардың жалпы саны (дана)',null=True,blank=True)
     trNumber = BIntegerField(verbose_name='Трансформатор (КТПН)  саны ',null=True,blank=True)
     trCip = BIntegerField(verbose_name='СИП кабель ВЛ-06 кВт (метр)',null=True,blank=True)
-    trVl = BIntegerField(verbose_name='Тозу пайызы (%)',null=True,blank=True)
+    trVl = models.FloatField(verbose_name='Тозу пайызы (%)',null=True,blank=True)
 
     # polyline = models.ForeignKey("main.PolyLine",on_delete=models.CASCADE,null=True,blank=True)
     localities = BOneToOneField(Localities, reqToInput=False, on_delete=models.CASCADE, verbose_name='Елді мекен',related_name='localitiesElectr')
